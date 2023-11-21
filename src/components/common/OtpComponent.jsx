@@ -5,7 +5,7 @@ const OtpComponent = () => {
   const [otp, setOtp] = useState("");
 
   return (
-    <div className="flex justify-center flex-col items-center gap-24 rounded-lg shadow-sm shadow-slate-800 border-gray-900 border-2 w-[60%] mx-auto  h-[88vh]">
+    <div className="flex justify-center flex-col mt-10 items-center gap-24 rounded-lg shadow-sm shadow-slate-800 border-gray-900 border-2 w-[60%] mx-auto  h-[88vh]">
       <div className="flex justify-center flex-col w-[60%] gap-4 items-center">
         <h1 className="text-4xl font-bold text-center border-b-2 border-secondary w-fit">
           OTP CODE
