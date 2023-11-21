@@ -3,6 +3,7 @@ import "./App.css";
 import Layout from "./Layout/Layout";
 import HomePage from "./pages/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
+import UserLayout from "./Layout/UserLayout";
 function App() {
   const router = createBrowserRouter([
     {
@@ -16,7 +17,12 @@ function App() {
       ],
     },
     {
-      path: "/dashboard",
+      path: "/organizer",
+      element: <UserLayout />,
+      children: [{}],
+    },
+    {
+      path: "/admin",
       element: <AdminLayout />,
       children: [{}],
     },
