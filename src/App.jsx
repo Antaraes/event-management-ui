@@ -4,6 +4,7 @@ import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
+import OtpInput from "./components/forms/OtpComponent";
 function App() {
   const router = createBrowserRouter([
     {
