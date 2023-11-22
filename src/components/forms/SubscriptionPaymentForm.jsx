@@ -20,14 +20,7 @@ const SubscriptionPaymentForm = () => {
       value: "email",
       required: true,
     },
-    {
-      labelText: "Phone Number",
-      labelId: "phone",
-      type: "text",
-      tag: "Input",
-      value: "phone",
-      required: true,
-    },
+
     {
       labelText: "Payment Method",
       labelId: "paymentMethod",
@@ -42,6 +35,10 @@ const SubscriptionPaymentForm = () => {
         {
           value: "wave",
           label: "Wave",
+        },
+        {
+          value: "PayPal",
+          label: "PayPal",
         },
       ],
     },
