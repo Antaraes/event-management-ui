@@ -1,33 +1,18 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.css";
-import Layout from "./Layout/Layout";
-import HomePage from "./pages/HomePage";
-import AdminLayout from "./Layout/AdminLayout";
-import UserLayout from "./Layout/UserLayout";
+import React from "react";
+import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
+import EventDetailText from "./components/carousel/EventDetailText";
+import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
+import EventDetail from "./pages/User/EventDetail";
+
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        {
-          index: true,
-          element: <HomePage />,
-        },
-      ],
-    },
-    {
-      path: "/organizer",
-      element: <UserLayout />,
-      children: [{}],
-    },
-    {
-      path: "/admin",
-      element: <AdminLayout />,
-      children: [{}],
-    },
-  ]);
-  return <RouterProvider router={router} />;
+  
+  return (
+    <div className="bg-black px-10 py-2 min-h-screen">
+        {/* <OrgNameAndEvent /> */}
+        {/* <EventDetail /> */}
+      </div >
+  );
 }
 
 export default App;
