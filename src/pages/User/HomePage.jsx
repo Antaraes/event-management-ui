@@ -1,8 +1,13 @@
 import React from "react";
-import Subscription from "./Subscription";
+import Jumboltron from "../../components/Home/Jumboltron";
 
 const HomePage = () => {
-  return null;
+  return (
+    <div className="px-16 bg-black">
+      <div className="bg-primary">HomePage</div>
+      <Jumboltron />
+    </div>
+  );
 };
 
 export default HomePage;
