@@ -6,8 +6,14 @@ import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
 import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
+import Subscription from "./pages/User/Subscription";
+import LoginPage from "./pages/User/LoginPage";
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/user/login",
+      element: <LoginPage />,
+    },
     {
       path: "/",
       element: <Layout />,
@@ -15,6 +21,10 @@ function App() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: "/subscriptions",
+          element: <Subscription />,
         },
       ],
     },

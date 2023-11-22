@@ -1,7 +1,8 @@
 import React from "react";
+import Subscription from "./Subscription";
 
 const HomePage = () => {
-  return <div className="bg-primary">HomePage</div>;
+  return null;
 };
 
 export default HomePage;
