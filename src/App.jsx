@@ -8,6 +8,7 @@ import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
+import { Toaster } from "react-hot-toast";
 function App() {
   const router = createBrowserRouter([
     {
@@ -48,7 +49,13 @@ function App() {
       children: [{}],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+
+      <Toaster position="top-center" reverseOrder={false} />
+    </>
+  );
 }
 
 export default App;
