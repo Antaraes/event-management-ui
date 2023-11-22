@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.EZDrawer__overlay {
+    background: transparent !important;
+}
