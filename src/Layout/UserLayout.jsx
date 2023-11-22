@@ -4,7 +4,7 @@ import OrganizerProfile from "../pages/User/OrganizerProfile";
 import OrganizerDashboard from "../pages/User/OrganizerDashboard";
 
 const UserLayout = () => {
-  return <OrganizerDashboard />;
+  return <OrganizerProfile />;
 };
 
 export default UserLayout;

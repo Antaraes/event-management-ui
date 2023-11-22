@@ -5,3 +5,5 @@ const API = axios.create({
 });
 
 export const Login = (data) => API.post("/auth/login", data);
+export const getOrganizerProfile = (organizerId) =>
+  API.get(`/organizer/${organizerId}`);
