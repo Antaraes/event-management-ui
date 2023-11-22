@@ -4,8 +4,11 @@ import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
+import OrganizerProfile from "./pages/User/OrganizerProfile";
+import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
+import { Toaster } from "react-hot-toast";
 function App() {
   const router = createBrowserRouter([
     {
@@ -29,7 +32,16 @@ function App() {
     {
       path: "/organizer",
       element: <UserLayout />,
-      children: [{}],
+      children: [
+        {
+          path: "/organizer/profile/:organizerId",
+          element: <OrganizerProfile />,
+        },
+        {
+          path: "/organizer/dashboard/:organizerId",
+          element: <OrganizerDashboard />,
+        },
+      ],
     },
     {
       path: "/admin",
@@ -37,7 +49,13 @@ function App() {
       children: [{}],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+
+      <Toaster position="top-center" reverseOrder={false} />
+    </>
+  );
 }
 
 export default App;

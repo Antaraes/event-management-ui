@@ -1,8 +1,8 @@
 import React from "react";
-import OtpInput from "../components/common/OtpComponent";
+import { Outlet } from "react-router-dom";
 
 const UserLayout = () => {
-  return <OtpInput />;
+  return <Outlet />;
 };
 
 export default UserLayout;
