@@ -4,8 +4,14 @@ import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
+import Subscription from "./pages/User/Subscription";
+import LoginPage from "./pages/User/LoginPage";
 function App() {
   const router = createBrowserRouter([
+    {
+      path: "/user/login",
+      element: <LoginPage />,
+    },
     {
       path: "/",
       element: <Layout />,
@@ -13,6 +19,10 @@ function App() {
         {
           index: true,
           element: <HomePage />,
+        },
+        {
+          path: "/subscriptions",
+          element: <Subscription />,
         },
       ],
     },
