@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import ProfileEventCard from "../../components/User/ProfileEventCard";
 import useFetchData from "../../hooks/useFetchData";
 import { getOrganizerProfile } from "../../api/index";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateOrganizerProfile } from "../../api/index";
+import toast from "react-hot-toast";
 function OrganizerProfile() {
+  const navigate = useNavigate();
   const { organizerId } = useParams();
   const { data, error, isLoading } = useFetchData(
     ["organizer", organizerId],
@@ -22,6 +25,23 @@ function OrganizerProfile() {
       [name]: e.target.value,
     }));
     setShouldUpdateBtnAppear(true);
+  };
+
+  const handleUpdateClick = () => {
+    const { name, companyName, contact, bio } = organizerData;
+    if (
+      name.trim() == "" ||
+      companyName.trim() == "" ||
+      contact.trim() == "" ||
+      bio.trim() == ""
+    ) {
+      toast.error("Field Shouldnt Be Black");
+      return;
+    }
+    const updatedData = { name, companyName, contact, bio };
+    updateOrganizerProfile(organizerId, updatedData);
+    navigate("/");
+    toast.success("Successfully Updated!");
   };
 
   return (
@@ -183,7 +203,12 @@ function OrganizerProfile() {
         <div className="flex justify-between p-3">
           <button className=" bg-sidebar p-2 rounded-lg">Back</button>
           {shouldUpdateBtnAppear && (
-            <button className=" bg-secondary p-2 rounded-lg">Update</button>
+            <button
+              className=" bg-secondary p-2 rounded-lg"
+              onClick={handleUpdateClick}
+            >
+              Update
+            </button>
           )}
         </div>
       </div>
