@@ -1,8 +1,9 @@
 import React from "react";
 import OtpInput from "../components/common/OtpComponent";
+import OrganizerDashboard from "../pages/User/OrganizerDashboard";
 
 const UserLayout = () => {
-  return <OtpInput />;
+  return <OrganizerDashboard />;
 };
 
 export default UserLayout;
