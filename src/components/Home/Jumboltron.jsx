@@ -12,7 +12,7 @@ const Jumboltron = () => {
         </p>
         <div className="relative">
             <input className="w-[75vw] h-[60px] border-2 border-white bg-transparent rounded-md text-white text-xl px-4" type="text" />
-            <div className="flex absolute right-[115px] top-0 bottom-0 gap-2 my-2 me-2">
+            <div className="flex absolute right-[90px] top-0 bottom-0 gap-2 my-2">
                 <button className="w-auto bg-slate-100/10 rounded-md px-3 hover:ring-1 hover:ring-white"><Icon icon="ion:filter" color="white" width="22" /></button>
                 <button className="w-auto bg-slate-100/10 rounded-md px-3 hover:ring-1 hover:ring-white"><Icon icon="iconamoon:search" color="white" width="22"/></button>
             </div>
