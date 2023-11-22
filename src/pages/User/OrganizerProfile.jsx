@@ -39,7 +39,10 @@ function OrganizerProfile() {
                 {isLoading && "Loading..."}
               </span>
               <div className="flex gap-1 flex-col justify-end">
-                <span>Account Level : 4</span>
+                <span>
+                  Account Level : {organizerData && data.accountLevel}
+                  {isLoading && "Loading..."}
+                </span>
                 <button className="bg-secondary text-white p-2 rounded-md">
                   Upgrade
                 </button>
@@ -154,9 +157,27 @@ function OrganizerProfile() {
         </div>
 
         <div className="mt-6 h-[280px] flex gap-3 ">
-          <div className="w-[160%]  flex gap-4 flex-col">
+          <div className="w-[140%]  flex gap-4 flex-col">
             <span>Bio :</span>
-            <textarea className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3" />
+            {organizerData && (
+              <textarea
+                value={organizerData.bio}
+                onChange={(e) => handleInputChange("bio", e)}
+                className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3"
+              />
+            )}
+            {isLoading && "Loading...."}
+          </div>
+          <div className="w-full  flex gap-4 flex-col">
+            <span>Contact :</span>
+            {organizerData && (
+              <textarea
+                value={organizerData.contact}
+                onChange={(e) => handleInputChange("contact", e)}
+                className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3"
+              />
+            )}
+            {isLoading && "Loading...."}
           </div>
         </div>
         <div className="flex justify-between p-3">
