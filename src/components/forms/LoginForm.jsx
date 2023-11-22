@@ -20,13 +20,6 @@ const LoginForm = ({}) => {
       value: password,
       required: true,
     },
-    {
-      labelText: "Password ",
-      labelId: "password",
-      type: "password",
-      value: password,
-      required: true,
-    },
   ];
   return <Form config={config} btnText="Login" onChange={onChange} onSubmit={onSubmit} />;
 };

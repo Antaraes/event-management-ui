@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import ProductDisplay from "../../components/subscription/ProductDisplay";
+import AlertModal from "../../components/common/AlertModal";
 
 const SuccessDisplay = ({ sessionId }) => {
   return (
@@ -27,7 +28,7 @@ const Message = ({ message }) => (
 );
 const Subscription = ({ user }) => {
   let [message, setMessage] = useState("");
-  let [success, setSuccess] = useState(false);
+  let [success, setSuccess] = useState(true);
   let [sessionId, setSessionId] = useState("");
 
   useEffect(() => {
@@ -45,13 +46,7 @@ const Subscription = ({ user }) => {
     }
   }, [sessionId]);
 
-  if (!success && message === "") {
-    return <ProductDisplay />;
-  } else if (success && sessionId !== "") {
-    return <SuccessDisplay sessionId={sessionId} />;
-  } else {
-    return <Message message={message} />;
-  }
+  return <ProductDisplay />;
 };
 
 export default Subscription;

@@ -1,8 +1,11 @@
 // ProductDisplay.js
-import React from "react";
+import React, { useState } from "react";
 import { subscriptions } from "../../utils/subscription";
 import Spinner from "../common/Spinner";
 import SubscriptionPaymentForm from "../forms/SubscriptionPaymentForm";
+import AlertModal from "../common/AlertModal";
+import { AnimatePresence } from "framer-motion";
+import OtpComponent from "../common/OtpComponent";
 
 const PlanCard = ({ title, price, features, product_id }) => (
   <div
@@ -42,26 +45,30 @@ const PlanCard = ({ title, price, features, product_id }) => (
   </div>
 );
 
-const ProductDisplay = () => (
-  <section>
-    <div className="flex min-h-screen pt-[30px] px-[40px]">
-      <div className="min-w-full">
-        {/* Your other content */}
+const ProductDisplay = () => {
+  const [modal, setModal] = useState(true);
+  return (
+    <>
+      <section>
+        <div className="flex h-screen p-5">
+          <div className="min-w-full">
+            {/* Your other content */}
 
-        <div className="mt-[20px] grid grid-cols-3 gap-[20px]">
-          {subscriptions.map((item) => (
-            <PlanCard
-              title={item.title}
-              price={item.price}
-              features={item.features}
-              product_id={item.product_id}
-            />
-          ))}
+            <div className="mt-[20px] grid grid-cols-3 gap-[20px]">
+              {subscriptions.map((item) => (
+                <PlanCard
+                  title={item.title}
+                  price={item.price}
+                  features={item.features}
+                  product_id={item.product_id}
+                />
+              ))}
+            </div>
+          </div>
         </div>
-        <SubscriptionPaymentForm />
-      </div>
-    </div>
-  </section>
-);
+      </section>
+    </>
+  );
+};
 
 export default ProductDisplay;

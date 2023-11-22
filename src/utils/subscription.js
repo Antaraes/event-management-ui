@@ -1,6 +1,6 @@
 const subscriptions = [
   {
-    title: "Basic User",
+    title: "Normal User",
     price: "Free",
     features: ["Create 1 Event per month", "Access to Basic Events", "Limited Customer Support"],
     product_id: "prod_BasicUserProductID",
