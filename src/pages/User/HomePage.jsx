@@ -1,6 +1,7 @@
 import React from "react";
 import Jumboltron from "../../components/Home/Jumboltron";
 import EventsCarousel from "../../components/Home/EventsCarousel";
+import EventCardCarousel from "../../components/Home/EventCardCarousel";
 
 const HomePage = () => {
   const events = [
@@ -43,7 +44,7 @@ const HomePage = () => {
       <h1 className="flex text-start text-white text-4xl font-bold my-10">Upcoming Popular Events</h1>
       <EventsCarousel events={events}/>
       <h1 className="flex text-start text-white text-4xl font-bold my-10">Popular Events Today</h1>
-      <EventsCarousel events={events}/>
+      <EventCardCarousel events={events}/>
     </div>
   );
 };
