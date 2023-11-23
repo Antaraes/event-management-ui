@@ -1,4 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import React from "react";
+import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
+import EventDetailText from "./components/carousel/EventDetailText";
+import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
+import EventDetail from "./pages/User/EventDetail";
 import "./index.css";
 import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
