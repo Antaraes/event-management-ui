@@ -57,8 +57,7 @@ const HomePage = (props) => {
   ];
 
   return (
-    <div className="px-16 bg-black">
-      <div className="bg-primary">HomePage</div>
+    <div className="px-16 mt-10 bg-black">
       
       <Jumboltron />
       <h1 className="flex text-start text-white text-4xl font-bold my-10">
@@ -72,7 +71,7 @@ const HomePage = (props) => {
       <h1 className="flex text-start text-white text-4xl font-bold my-10">
         Top Contributors
       </h1>
-      <div className="my-20">
+      <div>
       <ContributorCarousel contributors={contributors} />
       </div>
     </div>

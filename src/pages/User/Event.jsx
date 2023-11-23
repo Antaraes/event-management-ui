@@ -35,7 +35,7 @@ export default function Event() {
           ]
         }
       } />
-      <CardList data={events} />
+      <CardList data={events} link={'/event/detail/'} />
     </div>
   )
 }

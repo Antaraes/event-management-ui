@@ -10,7 +10,8 @@
 }
 
 body {
-    background: #000
+    background: #000;
+    overflow-x: hidden;
 }
 
 /* pagination style */

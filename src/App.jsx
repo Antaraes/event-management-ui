@@ -10,7 +10,7 @@ import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
 import Event from './pages/User/Event'
-import Organizer from "./pages/User/Organizer";
+import Contributor from "./pages/User/Contributor";
 import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
@@ -60,10 +60,6 @@ function App() {
           path: "/organizer",
           children: [
             {
-              path: '/organizer',
-              element: <Organizer />
-            },
-            {
               path: "/organizer/profile/:organizerId",
               element: <OrganizerProfile />,
             },
@@ -74,11 +70,19 @@ function App() {
           ],
         },
         {
+          path: '/contributor',
+          element: <Contributor />
+        },
+        {
+          path: '/contributor/detail/:id',
+          element: <OrgNameAndEvent />
+        },
+        {
           path: "/event",
           element: <Event />,
       },
         {
-          path: "/event/:id",
+          path: "/event/detail/:id",
           element: <EventDetail />
         }
       ]

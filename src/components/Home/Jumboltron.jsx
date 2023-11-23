@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react';
 
 const Jumboltron = () => {
   return (
-    <section className="w-full bg-center bg-no-repeat bg-[url('src/assets/images/eventshub_evergreen_opengraph_1200x630_2x.jpg')] bg-gray-700 bg-blend-multiply bg-cover">
+    <section className="w-full bg-center bg-no-repeat bg-[url('https://www.elementalproduction.com/wp-content/uploads/2021/05/corporate-events.jpg')] bg-gray-700 bg-blend-multiply bg-cover">
       <div className="px-4 mx-auto max-w-screen-xl text-center py-16">
         <h1 className="mb-4 text-4xl font-bold tracking-tight leading-none text-white">
           FIND YOUR PERFECT SEAT AT EVENTHUB AND BE PART OF THE EXCITING EVENTS

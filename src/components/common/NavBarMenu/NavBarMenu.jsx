@@ -36,4 +36,8 @@ const btn = [
     title : "Trending",
     path : "/event"
   },
+  {
+    title : "Profile",
+    path : "/organizer/profile/1"
+  },
 ]

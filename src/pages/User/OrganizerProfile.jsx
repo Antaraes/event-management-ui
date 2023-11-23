@@ -201,7 +201,7 @@ function OrganizerProfile() {
           </div>
         </div>
         <div className="flex justify-between p-3">
-          <button className=" bg-sidebar p-2 rounded-lg">Back</button>
+          {/* <button className=" bg-sidebar p-2 rounded-lg">Back</button> */}
           {shouldUpdateBtnAppear && (
             <button
               className=" bg-secondary p-2 rounded-lg"

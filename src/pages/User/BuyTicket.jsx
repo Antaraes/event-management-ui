@@ -13,7 +13,7 @@ const BuyTicket = () => {
 
   return (
     <section>
-      <div className=" ">
+      <div className="mt-10">
         <img
           src={event.thumbnail}
           alt=""
