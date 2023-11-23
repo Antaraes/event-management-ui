@@ -4,7 +4,6 @@ import { NavLink, useLocation } from "react-router-dom";
 
 const NavButton = (props) => {
   const location = useLocation();
-  console.log('location',location);
   const currentLocation = location.pathname.split('/')[1];
   console.log('currentLocation',currentLocation);
 
