@@ -1,10 +1,11 @@
 import React from "react";
 import Jumboltron from "../../components/Home/Jumboltron";
+import SideDraw from "../../components/common/Drawer/SideDraw";
 import EventsCarousel from "../../components/Home/EventsCarousel";
 import EventCardCarousel from "../../components/Home/EventCardCarousel";
 import ContributorCarousel from "../../components/Home/ContributorCarousel";
 
-const HomePage = () => {
+const HomePage = (props) => {
   const events = [
     {
       img: "https://images.squarespace-cdn.com/content/v1/5aadc54285ede1bd72181a3a/1521339647830-LKHTH62ZRY5TCGVCW81P/shutterstock_538256848.jpg?format=1500w",
@@ -59,6 +60,7 @@ const HomePage = () => {
   return (
     <div className="px-16 bg-black">
       <div className="bg-primary">HomePage</div>
+      <SideDraw open={props.open} onClose={props.toggleDrawer} />
       <Jumboltron />
       <h1 className="flex text-start text-white text-4xl font-bold my-10">
         Upcoming Popular Events

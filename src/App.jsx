@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import React from "react";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
@@ -14,7 +15,14 @@ import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
 import { Toaster } from "react-hot-toast";
+
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
   const router = createBrowserRouter([
     {
       path: "/user/login",
@@ -22,11 +30,42 @@ function App() {
     },
     {
       path: "/",
-      element: <Layout />,
+      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
       children: [
         {
           index: true,
-          element: <HomePage />,
+          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
+        },
+      ],
+    },
+    {
+      path: "/Trending",
+      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
+      children: [
+        {
+          index: true,
+          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
+        },
+      ],
+    },
+
+    {
+      path: "/Upcoming",
+      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
+      children: [
+        {
+          index: true,
+          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
+        },
+      ],
+    },
+    {
+      path: "/CreateEvent",
+      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
+      children: [
+        {
+          index: true,
+          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
         },
         {
           path: "/subscriptions",
@@ -54,6 +93,7 @@ function App() {
       children: [{}],
     },
   ]);
+
   return (
     <>
       <RouterProvider router={router} />
@@ -61,6 +101,7 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );
+
 }
 
 export default App;
