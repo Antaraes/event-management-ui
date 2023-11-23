@@ -5,7 +5,7 @@ const Input = ({ children, lableId, type, onChange, value, required = false }) =
     <div className="">
       <label
         htmlFor={lableId}
-        className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+        className="block text-white font-semibold text-[14px] tracking-wider"
       >
         {children}
       </label>
@@ -18,7 +18,7 @@ const Input = ({ children, lableId, type, onChange, value, required = false }) =
           onChange={onChange}
           value={value}
           required={required}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="block w-full p-2 bg-slate-900 text-white border-b border-white focus:outline-none focus:bg-black tracking-wider"
         />
       </div>
     </div>
