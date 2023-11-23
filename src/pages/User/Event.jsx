@@ -11,17 +11,17 @@ export default function Event() {
   const dispatch = useDispatch();
 
   const events = [
-    { name: "Event-1" },
-    { name: "Event-2" },
-    { name: "Event-3" },
-    { name: "Event-4" },
-    { name: "Event-5" },
-    { name: "Event-6" }
+    { id:1, name: "Event-1" },
+    { id:2, name: "Event-2" },
+    { id:3, name: "Event-3" },
+    { id:4, name: "Event-4" },
+    { id:5, name: "Event-5" },
+    { id:6, name: "Event-6" }
   ]
 
   return (
-    <div className='px-16'>
-      <Filter options={
+    <div className='px-16 mt-10'>
+    <Filter options={
         {
           inputs: [
             { label: "Event From", type: "date" , value: eventFrom, action: (value) => dispatch(setEventFrom(value))},

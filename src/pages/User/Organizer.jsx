@@ -17,7 +17,7 @@ export default function Contributor() {
   ]
 
   return (
-    <div className='px-16'>
+    <div className='px-16 mt-10'>
       <Filter options={
         {
           inputs: [

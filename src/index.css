@@ -8,6 +8,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     background: #000
 }
@@ -28,4 +29,8 @@ body {
 
 .pagination .active {
     @apply bg-secondary text-white;
+}
+
+.EZDrawer__overlay {
+    background: transparent !important;
 }
