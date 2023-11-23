@@ -42,6 +42,10 @@ function App() {
           element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
         },
         {
+          path: "/event-detail/:eventId",
+          element: <EventDetail />,
+        },
+        {
           path: "/subscriptions",
           element: <Subscription />,
         },
