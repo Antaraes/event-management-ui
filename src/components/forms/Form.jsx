@@ -4,7 +4,7 @@ import Spinner from "../common/Spinner";
 import Select from "./Select";
 const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
   return (
-    <form className="space-y-6" action="#" method="POST" onSubmit={onSubmit}>
+    <form className="space-y-6 text-black" action="#" method="POST" onSubmit={onSubmit}>
       {config.map((item, index) => {
         if (item.tag === "select") {
           return (
@@ -12,19 +12,19 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
               key={index}
               labelId={item.labelId}
               labelText={item.labelText}
-              onChange={item.onChange}
+              onChange={item.onChange} // Pass the onChange prop here
               value={item.value}
               required={item.required}
               options={item.options}
-            ></Select>
+            />
           );
         } else {
           return (
             <Input
               key={index}
-              lableId={item.labelId}
+              labelId={item.labelId}
               type={item.type}
-              onChange={onChange}
+              onChange={item.onChange} // Pass the onChange prop here
               value={item.value}
               required={item.required}
             >
@@ -41,6 +41,14 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
           {isLoading ? <Spinner sm /> : btnText}
         </button>
       </div>
+      <input
+        name={"lableId"}
+        type={"text"}
+        autoComplete="text"
+        onChange={(e) => console.log(e.target.value)}
+        required
+        className="text-black"
+      />
     </form>
   );
 };

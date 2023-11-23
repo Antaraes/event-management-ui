@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
+import EventDetailText from "./components/carousel/EventDetailText";
+import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
+import EventDetail from "./pages/User/EventDetail";
 import "./index.css";
 import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
@@ -9,6 +13,7 @@ import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
+import RegisterPage from "./pages/User/RegisterPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -24,39 +29,12 @@ function App() {
       element: <LoginPage />,
     },
     {
+      path: "/user/register",
+      element: <RegisterPage />,
+    },
+    {
       path: "/",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
-      children: [
-        {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
-        },
-      ],
-    },
-    {
-      path: "/Trending",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
-      children: [
-        {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
-        },
-      ],
-    },
-
-    {
-      path: "/Upcoming",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
-      children: [
-        {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
-        },
-      ],
-    },
-    {
-      path: "/CreateEvent",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
+      element: <Layout />,
       children: [
         {
           index: true,
@@ -66,6 +44,7 @@ function App() {
           path: "/subscriptions",
           element: <Subscription />,
         },
+        
       ],
     },
     {

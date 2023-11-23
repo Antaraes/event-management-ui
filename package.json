@@ -15,7 +15,11 @@
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.0",
     "axios": "^1.6.2",
+<<<<<<< HEAD
     "chart.js": "^4.4.0",
+=======
+    "prop-types": "^15.8.1",
+>>>>>>> a98eed223b83202426e221fd9b29a1493f1c5fab
     "classnames": "^2.3.2",
     "framer-motion": "^10.16.5",
     "react": "^18.2.0",
@@ -23,7 +27,9 @@
     "react-dom": "^18.2.0",
     "react-google-charts": "^4.0.1",
     "react-hot-toast": "^2.4.1",
+    "react-icon": "^1.0.0",
     "react-icons": "^4.12.0",
+<<<<<<< HEAD
     "react-modern-drawer": "^1.2.2",
     "react-otp-input": "^3.1.0",
     "react-query": "^3.39.3",
@@ -31,6 +37,16 @@
     "react-router-dom": "^6.19.0",
     "swiper": "^11.0.4",
     "util-deprecate": "^1.0.2"
+=======
+    "react-query": "^3.39.3",
+    "react-redux": "^8.1.3",
+    "react-router-dom": "^6.19.0",
+    "react-hot-toast": "^2.4.1",
+    "react-google-charts": "^4.0.1",
+    "react-otp-input": "^3.1.0",
+    "swiper": "^11.0.4"
+
+>>>>>>> a98eed223b83202426e221fd9b29a1493f1c5fab
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",
@@ -43,6 +59,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "postcss": "^8.4.31",
+    "sass": "^1.69.5",
+    "scss": "^0.2.4",
     "tailwindcss": "^3.3.5",
     "vite": "^5.0.0"
   }

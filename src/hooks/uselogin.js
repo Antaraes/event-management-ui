@@ -6,9 +6,8 @@ export default function useLogin() {
     password: "",
   });
   const { email, password } = formData;
-  const onChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+  const onChange = (field, event) => {
+    setFormData({ ...formData, [field]: event.target.value });
   };
   const onSubmit = (event) => {
     event.preventDefault();
