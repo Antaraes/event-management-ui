@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProfileEventCard from "../../components/User/ProfileEventCard";
 import useFetchData from "../../hooks/useFetchData";
 import { getOrganizerProfile } from "../../api/index";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { updateOrganizerProfile } from "../../api/index";
 import toast from "react-hot-toast";
 function OrganizerProfile() {
@@ -63,9 +63,12 @@ function OrganizerProfile() {
                   Account Level : {organizerData && data.accountLevel}
                   {isLoading && "Loading..."}
                 </span>
-                <button className="bg-secondary text-white p-2 rounded-md">
+                <Link
+                  to={"/organizer/subscriptions"}
+                  className="bg-secondary text-white p-2 w-fit rounded-md"
+                >
                   Upgrade
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -201,7 +204,7 @@ function OrganizerProfile() {
           </div>
         </div>
         <div className="flex justify-between p-3">
-          <button className=" bg-sidebar p-2 rounded-lg">Back</button>
+          {/* <button className=" bg-sidebar p-2 rounded-lg">Back</button> */}
           {shouldUpdateBtnAppear && (
             <button
               className=" bg-secondary p-2 rounded-lg"

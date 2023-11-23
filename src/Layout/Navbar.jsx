@@ -11,12 +11,12 @@ const Navbar = () => {
   return (
     <div className="bg-primary z-50 w-full flex justify-between fixed">
       <div className="h-10 w-[145px] bg-navbrand relative px-3 rounded-br-3xl overflow-hidden flex">
-        <p className="h-full pt-[5px] text-xl font-bold text-sidemenu cursor-pointer">EVENTHUB</p>
+        <p className="h-full pt-[5px] text-xl font-bold text-sidemenu cursor-pointer"><NavLink to="/">EVENTHUB</NavLink></p>
         <span className="h-20 w-[30px] bg-sidebar absolute rotate-45 top-0 right-0"></span>
       </div>
       <div className="h-10 w-[200px] bg-navbrand relative px-3 rounded-bl-3xl overflow-hidden flex">
         <p className="h-full pt-[5px] text-xl font-bold text-sidemenu ml-5">
-          <NavLink to="/home" activeClassName="text-active">Home</NavLink>
+          <NavLink to="/" activeClassName="text-active">Home</NavLink>
         </p>
         <p className="h-full pt-[5px] text-xl font-bold text-sidemenu ml-5 cursor-pointer" onClick={()=>dispatch(setDrawer())}>
           Menu

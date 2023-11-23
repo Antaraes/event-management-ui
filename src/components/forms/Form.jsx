@@ -2,6 +2,7 @@ import React from "react";
 import Input from "./Input";
 import Spinner from "../common/Spinner";
 import Select from "./Select";
+import { Link } from "react-router-dom";
 const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
   return (
     <form className="space-y-6 text-black" action="#" method="POST" onSubmit={onSubmit}>
@@ -34,12 +35,12 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
         }
       })}
       <div className="flex items-center justify-center py-5">
-        <button
+        <Link to='/organizer/dashboard/1'
           type="submit"
           className="flex px-5 py-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
         >
           {isLoading ? <Spinner sm /> : btnText}
-        </button>
+        </Link>
       </div>
     </form>
   );

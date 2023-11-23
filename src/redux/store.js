@@ -1,6 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./Theme/themeSlice";
-import globalReducer from './global/globalSlice'
+import filterSlice from "./Filter/eventSlice";
+import contributorSlice from "./Filter/contributorSlice";
+import globalSlice from "./global/globalSlice";
+
 export const store = configureStore({
-  reducer: { theme: themeReducer,global:globalReducer },
+  reducer: {
+    global: globalSlice,
+    theme: themeReducer,
+    event: filterSlice,
+    contributor: contributorSlice,
+  },
 });

@@ -8,9 +8,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import 'swiper/css/effect-coverflow';
+import { Link } from "react-router-dom";
 
 const ContributorCarousel = ({contributors}) => {
     return ( 
+      <>
         <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Pagination]}
         slidesPerView={'5'}
@@ -29,7 +31,13 @@ const ContributorCarousel = ({contributors}) => {
             <ContributorCard contributor={contributor} />
           </SwiperSlide>;
         })}
-      </Swiper>
+        </Swiper>
+        <div className="flex justify-center items-center mt-4">
+          <Link to="/contributor">
+            <button className="px-4 py-1 text-white bg-orange-400 text-center rounded-md">See more</button>
+          </Link>
+        </div>
+      </>
      );
 }
  

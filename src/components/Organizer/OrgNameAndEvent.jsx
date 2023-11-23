@@ -1,6 +1,18 @@
+import CardList from "../Card/CardList";
+
 const OrgNameAndEvent = () => {
+
+  const events = [
+    { id:1, name: "Event-1" },
+    { id:2, name: "Event-2" },
+    { id:3, name: "Event-3" },
+    { id:4, name: "Event-4" },
+    { id:5, name: "Event-5" },
+    { id:6, name: "Event-6" }
+  ]
+
   return (
-    <div className="mt-5 text-white">
+    <div className="mt-10 px-16 text-white">
       <div className="flex items-center justify-evenly h-[300px]">
         <div className="flex-1 flex justify-center items-center">
         <img
@@ -73,6 +85,7 @@ const OrgNameAndEvent = () => {
             Event From John Doe
         </h1>
       </div>
+      <CardList data={events} link={'/event/detail/'} />
     </div>
   );
 };
