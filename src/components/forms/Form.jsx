@@ -41,14 +41,6 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
           {isLoading ? <Spinner sm /> : btnText}
         </button>
       </div>
-      <input
-        name={"lableId"}
-        type={"text"}
-        autoComplete="text"
-        onChange={(e) => console.log(e.target.value)}
-        required
-        className="text-black"
-      />
     </form>
   );
 };
