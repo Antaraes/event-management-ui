@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
 
-import NavBarMenu from "../components/common/NavBarMenu/NavBarMenu";
 
-const Layout = ({toggleDrawer, isOpen}) => {
+
+const Layout = () => {
  return (
     <div className="h-screen w-screen bg-primary">
-      <Navbar toggleBackdrop={toggleDrawer} />  
-      <Outlet toggleDrawer={toggleDrawer} open={isOpen} />
+      <Sidebar />
+      <Navbar />  
+      <Outlet/>
       <Footer />
     </div>
   );
