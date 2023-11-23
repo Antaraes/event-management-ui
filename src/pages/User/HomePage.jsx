@@ -2,6 +2,7 @@ import React from "react";
 import Jumboltron from "../../components/Home/Jumboltron";
 import EventsCarousel from "../../components/Home/EventsCarousel";
 import EventCardCarousel from "../../components/Home/EventCardCarousel";
+import ContributorCarousel from "../../components/Home/ContributorCarousel";
 
 const HomePage = () => {
   const events = [
@@ -37,14 +38,42 @@ const HomePage = () => {
     },
   ];
 
+  const contributors = [
+    {
+      img: "https://www.svgrepo.com/show/303445/dell-2-logo.svg",
+    },
+    {
+      img: "https://www.svgrepo.com/show/303260/tiktok-logo-logo.svg",
+    },
+    {
+      img: "https://www.svgrepo.com/show/303235/salesforce-2-logo.svg",
+    },
+    {
+      img: "https://www.svgrepo.com/show/303132/coca-cola-logo.svg",
+    },
+    {
+      img: "https://www.svgrepo.com/show/303126/heineken-14-logo.svg",
+    },
+  ];
+
   return (
     <div className="px-16 bg-black">
       <div className="bg-primary">HomePage</div>
       <Jumboltron />
-      <h1 className="flex text-start text-white text-4xl font-bold my-10">Upcoming Popular Events</h1>
-      <EventsCarousel events={events}/>
-      <h1 className="flex text-start text-white text-4xl font-bold my-10">Popular Events Today</h1>
-      <EventCardCarousel events={events}/>
+      <h1 className="flex text-start text-white text-4xl font-bold my-10">
+        Upcoming Popular Events
+      </h1>
+      <EventsCarousel events={events} />
+      <h1 className="flex text-start text-white text-4xl font-bold my-10">
+        Popular Events Today
+      </h1>
+      <EventCardCarousel events={events} />
+      <h1 className="flex text-start text-white text-4xl font-bold my-10">
+        Top Contributors
+      </h1>
+      <div className="my-20">
+      <ContributorCarousel contributors={contributors} />
+      </div>
     </div>
   );
 };
