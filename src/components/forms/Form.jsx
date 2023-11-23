@@ -33,24 +33,17 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
           );
         }
       })}
-      <div>
+      <div className="flex items-center justify-center py-5">
         <button
           type="submit"
-          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          className="flex px-5 py-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
         >
           {isLoading ? <Spinner sm /> : btnText}
         </button>
       </div>
-      <input
-        name={"lableId"}
-        type={"text"}
-        autoComplete="text"
-        onChange={(e) => console.log(e.target.value)}
-        required
-        className="text-black"
-      />
     </form>
   );
 };
+
 
 export default Form;
