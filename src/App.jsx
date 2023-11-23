@@ -15,6 +15,7 @@ import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
 import RegisterPage from "./pages/User/RegisterPage";
 import { Toaster } from "react-hot-toast";
+import CreateEvent from "./pages/User/CreateEvent";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,23 +45,26 @@ function App() {
           path: "/subscriptions",
           element: <Subscription />,
         },
-        
-      ],
-    },
-    {
-      path: "/organizer",
-      element: <UserLayout />,
-      children: [
         {
-          path: "/organizer/profile/:organizerId",
-          element: <OrganizerProfile />,
+          path: "/create-event",
+          element: <CreateEvent />,
         },
         {
-          path: "/organizer/dashboard/:organizerId",
-          element: <OrganizerDashboard />,
+          path: "/organizer",
+          children: [
+            {
+              path: "/organizer/profile/:organizerId",
+              element: <OrganizerProfile />,
+            },
+            {
+              path: "/organizer/dashboard/:organizerId",
+              element: <OrganizerDashboard />,
+            },
+          ],
         },
       ],
     },
+
     {
       path: "/admin",
       element: <AdminLayout />,
@@ -75,7 +79,6 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );
-
 }
 
 export default App;

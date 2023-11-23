@@ -4,14 +4,14 @@ import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 
-
-
 const Layout = () => {
- return (
+  return (
     <div className="h-screen w-screen bg-primary">
       <Sidebar />
-      <Navbar />  
-      <Outlet/>
+      <Navbar />
+      <div className="p-5">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );
