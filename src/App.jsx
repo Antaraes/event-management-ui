@@ -13,6 +13,7 @@ import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
+import RegisterPage from "./pages/User/RegisterPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
     {
       path: "/user/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/user/register",
+      element: <RegisterPage />,
     },
     {
       path: "/",

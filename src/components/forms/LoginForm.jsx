@@ -1,6 +1,5 @@
-"use client";
 import { FC } from "react";
-import useLogin from "../../hooks/use-login";
+import useLogin from "../../hooks/uselogin";
 import Form from "./Form";
 
 const LoginForm = ({}) => {
@@ -11,12 +10,14 @@ const LoginForm = ({}) => {
       labelId: "email",
       type: "email",
       value: email,
+      onChange: (event) => onChange("email", event),
       required: true,
     },
     {
       labelText: "Password ",
       labelId: "password",
       type: "password",
+      onChange: (event) => onChange("password", event),
       value: password,
       required: true,
     },
