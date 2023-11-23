@@ -70,5 +70,5 @@ export const promoteToAdmin = (staffId, data) => API.put(`/admin/update/${staffI
 export const deactivateAccount = (accountId, data) => API.put(`/admin/deactivate/${accountId}`, data);
 
 //Organizer Dashboard
-export const getBarChartByOrganizerId = (organizerId) => API.get(`//organizer-dashboard/barchart/${organizerId}`);
-export const getDataOverviewByOrganizerId = (organizerId) => API.get(`/organizer-dashboard/overview-data/${organizerId}`);
+export const   getOrganizerDashboardBarChartData = (organizerId) => API.get(`//organizer-dashboard/barchart/${organizerId}`);
+export const   getOrganizerDashboardOverviewData = (organizerId) => API.get(`/organizer-dashboard/overview-data/${organizerId}`);
