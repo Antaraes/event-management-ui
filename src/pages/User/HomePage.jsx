@@ -1,6 +1,5 @@
 import React from "react";
 import Jumboltron from "../../components/Home/Jumboltron";
-import SideDraw from "../../components/common/Drawer/SideDraw";
 import EventsCarousel from "../../components/Home/EventsCarousel";
 import EventCardCarousel from "../../components/Home/EventCardCarousel";
 import ContributorCarousel from "../../components/Home/ContributorCarousel";
@@ -60,7 +59,7 @@ const HomePage = (props) => {
   return (
     <div className="px-16 bg-black">
       <div className="bg-primary">HomePage</div>
-      <SideDraw open={props.open} onClose={props.toggleDrawer} />
+      
       <Jumboltron />
       <h1 className="flex text-start text-white text-4xl font-bold my-10">
         Upcoming Popular Events

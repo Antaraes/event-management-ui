@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import React from "react";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -30,38 +29,7 @@ function App() {
     },
     {
       path: "/",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
-      children: [
-        {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
-        },
-      ],
-    },
-    {
-      path: "/Trending",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
-      children: [
-        {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
-        },
-      ],
-    },
-
-    {
-      path: "/Upcoming",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
-      children: [
-        {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
-        },
-      ],
-    },
-    {
-      path: "/CreateEvent",
-      element: <Layout toggleDrawer={toggleDrawer} isOpen={isOpen} />,
+      element: <Layout />,
       children: [
         {
           index: true,
@@ -71,6 +39,7 @@ function App() {
           path: "/subscriptions",
           element: <Subscription />,
         },
+        
       ],
     },
     {
