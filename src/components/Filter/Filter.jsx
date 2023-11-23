@@ -45,7 +45,7 @@ export default function Filter({ options }) {
             <div className='w-full flex justify-center items-center text-white px-20 overflow-hidden overflow-x-auto h-[45px]'>
                 {options.data.map((op, index) => op.value && (
                     <span key={index} className='px-2 py-1 text-[1rem] text-white font-semibold bg-[#ffffff53] mt-3 mx-1 rounded flex gap-1'>{op.value}
-                        <InlineIcon onClick={() => op.remove()} icon='ion:backspace-sharp' color="white" width={"1.5rem"} className='cursor-pointer'/>
+                        <InlineIcon onClick={() => op.remove()} icon='ion:close' color="white" width={"1.5rem"} className='cursor-pointer'/>
                     </span>
                 ))}
             </div>
