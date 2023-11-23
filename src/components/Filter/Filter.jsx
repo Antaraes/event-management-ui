@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { Icon, InlineIcon } from '@iconify/react';
-import { useSelector, useDispatch} from 'react-redux'
 export default function Filter({ options }) {
-    const eventFrom = useSelector((state) => state.eventFrom);
     const [isOpen, setIsOpen] = useState(false);
-    const [selected, setSelected] = useState('');
 
 
     const toggle = () => {
@@ -18,7 +15,7 @@ export default function Filter({ options }) {
     return (
         <section className='w-full mx-auto flex flex-col items-center'>
             <div className='w-[50vw] mx-auto h-[50px] relative'>
-                <input className='w-full h-full border border-white text-white p-2 bg-transparent rounded-md' type="text" />
+                <input className='w-full h-full border border-white text-black p-2 bg-transparent rounded-md' type="text" />
                 <div className='absolute right-0 top-0'>
                     <button className='bg-[#ffffff60] hover:bg-[#ffffff96] p-2 m-1 rounded-md relative'>
                         <InlineIcon onClick={toggle} icon="ion:filter" color="white" width={"1.5rem"} />
@@ -27,7 +24,7 @@ export default function Filter({ options }) {
                             <div className='w-[20vw] max-h-[200px] overflow-y-auto absolute right-0 top-[37px] bg-white rounded z-20 shadow-md'>
                                 {
                                     options.inputs.map((op, index) => (
-                                        <div key={index} className='text-start p-1 px-2 border-b '>
+                                        <div key={index} className='text-black text-start p-1 px-2 border-b '>
                                             <label className='pe-2 font-semibold'>{op.label}</label>
                                             <input onChange={(e) => op.action(e.target.value)} type={op.type} value = { op.value && op.value } checked={op.type === 'checkbox' && op.value }
                                                 className={`font-semibold truncate ${op.type === 'date' ? ' block border w-full px-2 rounded-md' : ''}`} />

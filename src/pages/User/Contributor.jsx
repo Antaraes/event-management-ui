@@ -10,10 +10,10 @@ export default function Contributor() {
   const dispatch = useDispatch();
 
   const contributors = [
-      {name: "Contri-1"},
-      {name: "Contri-2"},
-      {name: "Contri-3"},
-      {name: "Contri-4"}
+      {id:1, name: "Contri-1"},
+      {id:2, name: "Contri-2"},
+      {id:3, name: "Contri-3"},
+      {id:4, name: "Contri-4"}
   ]
 
   return (
@@ -29,7 +29,7 @@ export default function Contributor() {
         }
       }
       />
-        <CardList data={contributors} />
+      <CardList data={contributors} link={'/contributor/detail/'} />
     </div>
   )
 }

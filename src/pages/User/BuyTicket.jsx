@@ -22,13 +22,36 @@ const BuyTicket = () => {
   };
 
   return (
-    <>
-      <section>
-        <div className=" ">
-          <img
-            src={event.thumbnail}
-            alt=""
-            className=" w-screen h-[40vh] object-cover rounded-md grayscale-0 items-center"
+    <section>
+      <div className="mt-10">
+        <img
+          src={event.thumbnail}
+          alt=""
+          className=" w-screen h-[40vh] object-cover rounded-md grayscale-0 items-center"
+        />
+      </div>
+      <div className="flex my-5 ">
+        <div className="w-[55%]">
+          <TicketTypeCard
+            image={
+              "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
+            }
+            price={8000}
+            type={"Normal"}
+          />
+          <TicketTypeCard
+            image={
+              "https://plus.unsplash.com/premium_photo-1682855222843-0cd0827ed6e3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
+            }
+            price={8000}
+            type={"VIP"}
+          />
+          <TicketTypeCard
+            image={
+              "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
+            }
+            price={8000}
+            type={"VVIP"}
           />
         </div>
         <div className="flex my-5 ">

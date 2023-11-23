@@ -5,14 +5,14 @@ import image from "../assets/footer_photo.png";
 const Footer = () => {
   return (
     <div>
-      <div className="w-full border-t-2 border-gray-500 h-full flex justify-center items-center bg-primary">
+      <div className="w-full border-t-2 border-gray-500 flex justify-center items-center bg-primary">
         <div className="w-full h-auto rounded-3xl ">
-          <div className="mt-[90px]">
+          <div className="mt-5">
             <p className="text-[#acabab] text-center">
               Work with us! Let everyone know by <span className="text-white">EVENTHUB</span>.
             </p>
           </div>
-          <div className="h-[50px] w-[100%] mt-[20px] flex">
+          <div className="mt-[20px] flex">
             <div className="mx-10 h-[50px] w-[50%]">
               <img src={image} alt="Hello" />
             </div>
