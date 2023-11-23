@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* global usage */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: #000
+}
+
+/* pagination style */
+.custom-pagination {
+    @apply flex justify-center mt-8;
+}
+
+.pagination a,
+.pagination span {
+    @apply inline-block px-3 py-2 text-white border border-secondary hover:bg-secondary hover:text-white;
+}
+
+.pagination .disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+.pagination .active {
+    @apply bg-secondary text-white;
+}
