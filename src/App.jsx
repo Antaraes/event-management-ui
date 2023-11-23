@@ -9,7 +9,7 @@ import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
-import Event from './pages/User/Event'
+import Event from "./pages/User/Event";
 import Organizer from "./pages/User/Organizer";
 import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
@@ -19,6 +19,7 @@ import RegisterPage from "./pages/User/RegisterPage";
 import { Toaster } from "react-hot-toast";
 import CreateEvent from "./pages/User/CreateEvent";
 import BuyTicket from "./pages/User/BuyTicket";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,6 +42,10 @@ function App() {
       element: <Layout />,
       children: [
         {
+          path: "*",
+          element: <PageNotFound />,
+        },
+        {
           index: true,
           element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
         },
@@ -60,8 +65,8 @@ function App() {
           path: "/organizer",
           children: [
             {
-              path: '/organizer',
-              element: <Organizer />
+              path: "/organizer",
+              element: <Organizer />,
             },
             {
               path: "/organizer/profile/:organizerId",
@@ -76,18 +81,18 @@ function App() {
         {
           path: "/event",
           element: <Event />,
-      },
+        },
         {
           path: "/event/:id",
-          element: <EventDetail />
-        }
-      ]
+          element: <EventDetail />,
+        },
+      ],
     },
     {
       path: "/admin",
       element: <AdminLayout />,
       children: [{}],
-    }
+    },
   ]);
 
   return (
