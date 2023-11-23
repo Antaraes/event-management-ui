@@ -9,11 +9,16 @@ import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
 import LoginPage from "./pages/User/LoginPage";
 import { Toaster } from "react-hot-toast";
+import RegisterPage from "./pages/User/RegisterPage";
 function App() {
   const router = createBrowserRouter([
     {
       path: "/user/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/user/register",
+      element: <RegisterPage />,
     },
     {
       path: "/",
