@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -16,6 +20,8 @@ import LoginPage from "./pages/User/LoginPage";
 import RegisterPage from "./pages/User/RegisterPage";
 import { Toaster } from "react-hot-toast";
 import CreateEvent from "./pages/User/CreateEvent";
+import BuyTicket from "./pages/User/BuyTicket";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,12 +44,12 @@ function App() {
       element: <Layout />,
       children: [
         {
-          index: true,
-          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
+          path: "*",
+          element: <PageNotFound />,
         },
         {
-          path: "/event-detail/:eventId",
-          element: <EventDetail />,
+          index: true,
+          element: <HomePage open={isOpen} toggleDrawer={toggleDrawer} />,
         },
         {
           path: "/subscriptions",
@@ -54,8 +60,16 @@ function App() {
           element: <CreateEvent />,
         },
         {
+          path: "/create-ticket",
+          element: <BuyTicket />,
+        },
+        {
           path: "/organizer",
           children: [
+            {
+              path: "/organizer",
+              element: <Organizer />,
+            },
             {
               path: "/organizer/profile/:organizerId",
               element: <OrganizerProfile />,
@@ -66,9 +80,16 @@ function App() {
             },
           ],
         },
+        {
+          path: "/event",
+          element: <Event />,
+        },
+        {
+          path: "/event/:id",
+          element: <EventDetail />,
+        },
       ],
     },
-
     {
       path: "/admin",
       element: <AdminLayout />,
@@ -79,7 +100,6 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );
