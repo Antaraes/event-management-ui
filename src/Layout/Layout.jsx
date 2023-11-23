@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
+import Sidebar from "./Sidebar";
+
+
 
 const Layout = () => {
-  return (
-    <>
-      <Navbar />
-      <Outlet />
+ return (
+    <div className="h-screen w-screen bg-primary">
+      <Sidebar />
+      <Navbar />  
+      <Outlet/>
       <Footer />
-    </>
+    </div>
   );
 };
 

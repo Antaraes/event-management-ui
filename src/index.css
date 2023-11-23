@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.EZDrawer__overlay {
+    background: transparent !important;
+}
+
 * {
   padding: 0;
   margin: 0;

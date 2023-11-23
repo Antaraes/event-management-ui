@@ -6,7 +6,7 @@ const initialState = {
 
 export const themeSlice = createSlice({
   name: "theme",
-  initialState,
+  initialState:initialState,
   reducers: {
     setMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
