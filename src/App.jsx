@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -9,6 +9,8 @@ import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
+import Event from './pages/User/Event'
+import Organizer from "./pages/User/Organizer";
 import OrganizerProfile from "./pages/User/OrganizerProfile";
 import OrganizerDashboard from "./pages/User/OrganizerDashboard";
 import Subscription from "./pages/User/Subscription";
@@ -58,6 +60,10 @@ function App() {
           path: "/organizer",
           children: [
             {
+              path: '/organizer',
+              element: <Organizer />
+            },
+            {
               path: "/organizer/profile/:organizerId",
               element: <OrganizerProfile />,
             },
@@ -67,20 +73,26 @@ function App() {
             },
           ],
         },
-      ],
+        {
+          path: "/event",
+          element: <Event />,
+      },
+        {
+          path: "/event/:id",
+          element: <EventDetail />
+        }
+      ]
     },
-
     {
       path: "/admin",
       element: <AdminLayout />,
       children: [{}],
-    },
+    }
   ]);
 
   return (
     <>
       <RouterProvider router={router} />
-
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );

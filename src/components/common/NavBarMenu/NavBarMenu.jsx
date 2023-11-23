@@ -18,11 +18,11 @@ export default NavBarMenu;
 const btn = [
   {
     title : "Upcoming",
-    path : "/Upcoming"
+    path : "/event"
   },
   {
     title : "All Events",
-    path : "/AllEvents"
+    path : "/event"
   },
   {
     title : "Become an Organizer",
@@ -30,10 +30,10 @@ const btn = [
   },
   {
     title : "Create Event",
-    path : "/CreateEvent"
+    path : "/user/login"
   },
   {
     title : "Trending",
-    path : "/Trending"
+    path : "/event"
   },
 ]

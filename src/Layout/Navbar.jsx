@@ -16,7 +16,7 @@ const Navbar = () => {
       </div>
       <div className="h-10 w-[200px] bg-navbrand relative px-3 rounded-bl-3xl overflow-hidden flex">
         <p className="h-full pt-[5px] text-xl font-bold text-sidemenu ml-5">
-          <NavLink to="/home" activeClassName="text-active">Home</NavLink>
+          <NavLink to="/" activeClassName="text-active">Home</NavLink>
         </p>
         <p className="h-full pt-[5px] text-xl font-bold text-sidemenu ml-5 cursor-pointer" onClick={()=>dispatch(setDrawer())}>
           Menu

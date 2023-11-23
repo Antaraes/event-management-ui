@@ -30,7 +30,7 @@ const EventCardCarousel = ({events}) => {
         }}
       >
         {events.map((event, index) => {
-          return  <SwiperSlide key={index}>
+          return <SwiperSlide key={index}>
             <EventCard key={index} event={event} />
           </SwiperSlide>;
         })}
