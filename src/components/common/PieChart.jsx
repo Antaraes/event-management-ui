@@ -1,0 +1,45 @@
+import React, { useEffect, useState } from "react";
+import Chart from "react-google-charts";
+
+function PieChart({ pieChartData }) {
+  const [pieData, setPieData] = useState([]);
+  console.log(pieChartData);
+  useEffect(() => {
+    if (pieChartData.length > 0) {
+      setPieData(pieChartData);
+    }
+  }, [pieChartData]);
+
+  return (
+    <>
+      {pieData.length > 0 && (
+        <Chart
+          width={"500px"}
+          height={"300px"}
+          chartType="PieChart"
+          loader={<div>Loading Chart</div>}
+          data={pieData}
+          options={{
+            title: "Ticket Distribution",
+            backgroundColor: "transparent",
+            chartArea: {
+              left: 10,
+              top: 10,
+              width: "90%",
+
+              height: "80%",
+            },
+            legend: {
+              textStyle: {
+                color: "#000",
+              },
+            },
+          }}
+          rootProps={{ "data-testid": "2" }}
+        />
+      )}
+    </>
+  );
+}
+
+export default PieChart;
