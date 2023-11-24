@@ -20,6 +20,10 @@ const btn = [
     title : "Upcoming",
     path : "/event"
   },
+   {
+    title : "Trending",
+    path : "/event"
+  },
   {
     title : "All Events",
     path : "/event"
@@ -31,13 +35,5 @@ const btn = [
   {
     title : "Create Event",
     path : "/user/login"
-  },
-  {
-    title : "Trending",
-    path : "/event"
-  },
-  {
-    title : "Profile",
-    path : "/organizer/profile/1"
-  },
+  }
 ]
