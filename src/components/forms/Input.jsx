@@ -2,25 +2,23 @@ import React from "react";
 
 const Input = ({ children, lableId, type, onChange, value, required = false }) => {
   return (
-    <div className="">
+    <div className="relative z-0 w-full mb-5 group">
+      <input
+        id={lableId}
+        name={lableId}
+        type={type}
+        autoComplete="text"
+        onChange={onChange}
+        value={value}
+        required={required}
+        className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+      />
       <label
         htmlFor={lableId}
-        className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
+        className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
       >
         {children}
       </label>
-      <div className="mt-2">
-        <input
-          id={lableId}
-          name={lableId}
-          type={type}
-          autoComplete="text"
-          onChange={onChange}
-          value={value}
-          required={required}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        />
-      </div>
     </div>
   );
 };

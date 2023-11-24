@@ -4,21 +4,29 @@ import PieChart from "../../components/common/PieChart";
 import BarChartVertical from "../../components/common/BarChartVertical";
 import LineChart from "../../components/common/LineChart";
 import OverviewBlock from "../../components/common/OverviewBlock";
-
+import useFetchData from "../../hooks/useFetchData";
+import {
+  getOrganizerDashboardBarChartData,
+  getOrganizerDashboardOverviewData,
+} from "../../api/index";
+import { Link, useParams } from "react-router-dom";
 const OrganizerDashboard = () => {
+  const { organizerId } = useParams();
+  const { data: chartData } = useFetchData(
+    ["organizer-dashboard-bardata", organizerId],
+    () => getOrganizerDashboardBarChartData(organizerId)
+  );
+
+  const { data: overviewData } = useFetchData(
+    ["organizer-dashboard-overview", organizerId],
+    () => getOrganizerDashboardOverviewData(organizerId)
+  );
   const pieChartData = [
     ["Color", "Tickets"],
     ["Kpay", 20],
     ["Wave", 15],
     ["A+", 3],
     ["AYA Pay", 5],
-  ];
-
-  const barDataProps = [
-    ["Ticket Type", "Mon", "Tue", "Wed", "Thu", "Fri"],
-    ["Normal", 12, 8, 6, 10, 15],
-    ["VIP", 1, 5, 3, 8, 10],
-    ["VVIP", 3, 2, 1, 5, 3],
   ];
 
   const lineData = [
@@ -31,23 +39,34 @@ const OrganizerDashboard = () => {
 
   return (
     <>
-      <h1 className="text-3xl mx-auto p-4 text-center">Organizer Dashboard</h1>
+      <div className="flex justify-between items-center px-20 mx-auto my-10">
+        <h1 className="text-3xl">Organizer Dashboard</h1>
+        <Link to='/create-event'>
+          <span className="px-3 py-2 rounded bg-green-400 font-semibold">Create event</span>
+        </Link>
+      </div>
       <div className="bg-white rounded-2xl text-primary  grid grid-cols-2  p-8 mx-auto w-[85%] border-2 border-gray-900 min-h-[90vh] max-h-fit">
         <div>
           <h2 className="text-xl">Total Tickets Sell - Bar Chart</h2>
-          <BarChartVertical barDataProps={barDataProps} />
+          {chartData && (
+            <BarChartVertical barDataProps={chartData.totalTicketSaleByType} />
+          )}
         </div>
         <div className="text-black p-3 h-fit">
           <h2 className="text-xl">Pie Chart Example</h2>
-          <PieChart pieChartData={pieChartData} />
+          {chartData && (
+            <PieChart pieChartData={chartData.toalTicketByPayment} />
+          )}
         </div>
         <div className="text-black  h-fit">
           <h2 className="text-xl">Line Chart</h2>
-          <LineChart lineData={lineData} />
+          {chartData && (
+            <LineChart lineData={chartData.totalTicketSaleByEvent} />
+          )}
         </div>
         <div className="text-black  h-fit">
           <h2 className="text-xl">Overview</h2>
-          <OverviewBlock />
+          {overviewData && <OverviewBlock overviewData={overviewData} />}
         </div>
       </div>
     </>

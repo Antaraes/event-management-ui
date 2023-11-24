@@ -2,11 +2,8 @@ import React from "react";
 
 const Select = ({ labelText, labelId, onChange, value, options, required = false }) => {
   return (
-    <div>
-      <label
-        htmlFor={labelId}
-        className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
-      >
+    <div className="relative z-0 w-full mb-5 group">
+      <label htmlFor={labelId} className="block text-gray-400 text-xs tracking-wider">
         {labelText}
       </label>
       <div className="mt-2">
@@ -16,7 +13,7 @@ const Select = ({ labelText, labelId, onChange, value, options, required = false
           onChange={onChange}
           value={value}
           required={required}
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="block py-2.5 px-0 w-full text-xs text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>

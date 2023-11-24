@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const EventDetailText = () => {
   return (
     <div className="text-white py-0">
@@ -9,7 +11,9 @@ const EventDetailText = () => {
             Open Now
           </div>
         </div>
-        <button className="bg-purchase py-2 px-6 rounded-xl">go to purchase</button>
+        <Link to="/create-ticket">
+          <button className="bg-purchase py-2 px-6 rounded-xl">go to purchase</button>
+        </Link>
       </div>
       <div className="mt-7">
         <p className="text-lg">
