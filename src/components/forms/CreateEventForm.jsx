@@ -1,9 +1,11 @@
 import React from "react";
 import Input from "./Input";
 import useEventRegister from "../../hooks/useEventRegister";
+import DatePicker from "./DatePicker";
 
 const CreateEventForm = () => {
-  const { name,
+  const {
+    name,
     eventStartDate,
     eventEndDate,
     ticketOpenDate,
@@ -11,7 +13,10 @@ const CreateEventForm = () => {
     contact,
     location,
     thumbnail,
-    description, onChange, onSubmit } = useEventRegister();
+    description,
+    onChange,
+    onSubmit,
+  } = useEventRegister();
   const config = [
     {
       labelText: "Name",
@@ -29,38 +34,7 @@ const CreateEventForm = () => {
       value: contact,
       required: true,
     },
-    {
-      labelText: "Event Start Date",
-      labelId: "eventStartDate",
-      type: "date",
-      onChange: (event) => onChange("eventStartDate", event),
-      value: eventStartDate,
-      required: true,
-    },
-    {
-      labelText: "Event End Date",
-      labelId: "eventEndDate",
-      type: "date",
-      onChange: (event) => onChange("eventEndDate", event),
-      value: eventEndDate,
-      required: true,
-    },
-    {
-      labelText: "Ticket Open Date",
-      labelId: "ticketOpenDate",
-      type: "date",
-      onChange: (event) => onChange("ticketOpenDate", event),
-      value: ticketOpenDate,
-      required: true,
-    },
-    {
-      labelText: "Ticket Close Date",
-      labelId: "ticketCloseDate",
-      type: "date",
-      onChange: (event) => onChange("ticketCloseDate", event),
-      value: ticketCloseDate,
-      required: true,
-    },
+
     {
       labelText: "Location",
       labelId: "location",
@@ -86,29 +60,14 @@ const CreateEventForm = () => {
       onChange: (event) => onChange("thumbnail", event),
       value: thumbnail,
       required: true,
-      image:"image/*"
-    }
-  ]
+      image: "image/*",
+    },
+  ];
   return (
     <div className="mx-24 mt-8">
       <form action="">
         <div className="grid grid-cols-2 gap-4">
-          { 
-            config.map((item,index)=>(
-              <Input
-              key={index}
-              labelId={item.labelId}
-              type={item.type}
-              onChange={item.onChange} // Pass the onChange prop here
-              value={item.value}
-              required={item.required}
-            >
-              {item.labelText}
-            </Input>
-            ))
-          }
-          </div>
-          { fileItem.map((item,index)=>(
+          {config.map((item, index) => (
             <Input
               key={index}
               labelId={item.labelId}
@@ -116,12 +75,29 @@ const CreateEventForm = () => {
               onChange={item.onChange} // Pass the onChange prop here
               value={item.value}
               required={item.required}
-              accept={item.image}
             >
               {item.labelText}
             </Input>
-          ))
-        }
+          ))}
+          <DatePicker labelText={"Event Start Date"} lableId={"Event Start Date"} />
+          <DatePicker labelText={"Event End Date"} lableId={"Event End Date"} />
+          <DatePicker labelText={"Ticket Open Date"} lableId={"Event End Date"} />
+          <DatePicker labelText={"Ticket Close Date"} lableId={"Event End Date"} />
+        </div>
+
+        {fileItem.map((item, index) => (
+          <Input
+            key={index}
+            labelId={item.labelId}
+            type={item.type}
+            onChange={item.onChange} // Pass the onChange prop here
+            value={item.value}
+            required={item.required}
+            accept={item.image}
+          >
+            {item.labelText}
+          </Input>
+        ))}
       </form>
     </div>
   );
