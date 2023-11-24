@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ children, lableId, type, onChange, value, required = false }) => {
+const Input = ({ children, style, disabled, lableId, type, placeholder, onChange, value, required = false }) => {
   return (
     <div className="relative z-0 w-full mb-5 group">
       <input
@@ -11,7 +11,9 @@ const Input = ({ children, lableId, type, onChange, value, required = false }) =
         onChange={onChange}
         value={value}
         required={required}
-        className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder={placeholder}
+        disabled={disabled}
+        className={ style ? style : ` block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer`} 
       />
       <label
         htmlFor={lableId}
