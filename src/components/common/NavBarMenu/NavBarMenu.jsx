@@ -8,15 +8,15 @@ const NavBarMenu = () => {
   const btn = [
     {
       title: "Upcoming",
-      path: "/event/upcoming"
+      path: "/event"
     },
     {
       title: "Trending",
-      path: "/event/trending"
+      path: "/event"
     },
     {
       title: "All Events",
-      path: "/event/allEvent"
+      path: "/event"
     },
     {
       title: "Become an Organizer",

@@ -28,7 +28,7 @@ const Sidebar = () => {
       position: "left",
     }}
   >
-    <span className="h-14 w-[1000px] z-10 -left-[244px] overflow-hidden  top-10 absolute -rotate-45 bg-navbrand/80"></span>
+    <span className="h-14 w-[1000px] z-10 -left-[244px] overflow-hidden top-10 absolute -rotate-45 bg-navbrand/80"></span>
     <NavBarMenu />
     { isUserActive &&
       <div className="bg-[#ffffff1e] absolute ps-5 pt-10 py-20 w-full bottom-0 flex justify-center items-center gap-x-2 shadow-md">
