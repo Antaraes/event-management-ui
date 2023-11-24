@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* global usage */
 * {
     margin: 0;
@@ -35,4 +36,5 @@ body {
 .EZDrawer__overlay {
     background: transparent !important;
 }
+
 

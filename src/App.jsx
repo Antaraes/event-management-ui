@@ -13,6 +13,8 @@ import Layout from "./Layout/Layout";
 import HomePage from "./pages/User/HomePage";
 import AdminLayout from "./Layout/AdminLayout";
 import UserLayout from "./Layout/UserLayout";
+
+import Sidebar from "./components/Admin/sidebar";
 import Event from "./pages/User/Event";
 import Contributor from "./pages/User/Contributor";
 import OrganizerProfile from "./pages/User/OrganizerProfile";
@@ -44,6 +46,7 @@ function App() {
     {
       path: "/",
       element: <Layout />,
+
       children: [
         {
           path: "*",
@@ -100,7 +103,12 @@ function App() {
     {
       path: "/admin",
       element: <AdminLayout />,
-      children: [{}],
+      children: [
+        {
+          path: "/admin/sidebar",
+          element: <Sidebar />,
+        },
+      ],
     },
   ]);
 
