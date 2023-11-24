@@ -5,7 +5,7 @@ import image from "../assets/footer_photo.png";
 const Footer = () => {
   return (
     <div>
-      <div className="w-full border-t-2 border-gray-500 flex justify-center items-center bg-primary">
+      <div className="w-full border-t-2 border-gray-500 flex justify-center items-center black-gradient">
         <div className="w-full h-auto rounded-3xl ">
           <div className="mt-5">
             <p className="text-[#acabab] text-center">

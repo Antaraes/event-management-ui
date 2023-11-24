@@ -3,7 +3,13 @@ import Input from "./Input";
 import Spinner from "../common/Spinner";
 import Select from "./Select";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserActive } from "../../redux/global/globalSlice";
+
 const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
+
+  const dispatch = useDispatch();
+
   return (
     <form className="space-y-6 text-black" action="#" method="POST" onSubmit={onSubmit}>
       {config.map((item, index) => {
@@ -35,7 +41,7 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
         }
       })}
       <div className="flex items-center justify-center py-5">
-        <Link to='/organizer/dashboard/1'
+        <Link onClick={() => dispatch(setUserActive(true))} to='/organizer/dashboard/655db72a40abeabdf4678ec9'
           type="submit"
           className="flex px-5 py-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
         >

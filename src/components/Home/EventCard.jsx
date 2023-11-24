@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const EventCard = ({ event }) => {
   return (
     <Link to='event/detail/1'>
-      <div className="flex justify-center bg-black">
+      <div className="flex justify-center black-gradient">
         <div className="relative">
           <img className="w-[65vw] h-[450px] rounded-lg" src={event.img} />
           <div className="absolute bottom-0 left-0 p-2">

@@ -14,7 +14,7 @@ const EventDetail = () => {
   ]
 
   return (
-    <div className="px-16 mt-10">
+    <div className="px-16 py-12">
       <EventDetailCarousel />
       <EventDetailText />
       <CardList data={events} link={'/event/detail/'} />
