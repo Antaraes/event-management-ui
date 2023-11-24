@@ -1,7 +1,8 @@
+import { Checkbox } from "@material-tailwind/react";
 import React from "react";
 
 const CreateTicketsForm = () => {
-  return <div>CreateTicketsForm</div>;
+  return <div>CreateTicketForm</div>;
 };
 
 export default CreateTicketsForm;
