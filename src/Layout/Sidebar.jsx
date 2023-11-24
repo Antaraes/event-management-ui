@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   const isDrawer = useSelector((state) => state.global.isDrawer);
   const isUserActive = useSelector(state => state.global.isUserActive);
-  console.log(isDrawer);
   const dispatch = useDispatch();
 
   const handleClose = () => {
