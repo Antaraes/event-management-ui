@@ -1,7 +1,7 @@
 import React from "react";
-import Input from "./Input";
-import useEventRegister from "../../hooks/useEventRegister";
-import DatePicker from "./DatePicker";
+import Input from "../Input";
+import useEventRegister from "../../../hooks/useEventRegister";
+import DatePicker from "../DatePicker";
 
 const CreateEventForm = () => {
   const {
@@ -64,7 +64,7 @@ const CreateEventForm = () => {
     },
   ];
   return (
-    <div className="mx-24 mt-8">
+    <div className="mx-24 mt-8 border p-10 border-2">
       <form action="">
         <div className="grid grid-cols-2 gap-4">
           {config.map((item, index) => (

@@ -1,8 +1,11 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { Stepper, Step, Button } from "@material-tailwind/react";
 import OtpComponent from "./common/OtpComponent";
-import CreateEventForm from "./forms/CreateEventForm";
-import CreatePaymentForm from "./forms/CreatePaymentForm";
+import CreateEventForm from "./forms/Event/CreateEventForm";
+import CreatePaymentForm from "./forms/Event/CreatePaymentForm";
+import CreateTicketsForm from "./forms/Event/CreateTicketsForm";
+import AlertModal from "./common/AlertModal";
+import { AnimatePresence } from "framer-motion";
 
 const NEXT_STEP = "NEXT_STEP";
 const PREV_STEP = "PREV_STEP";
@@ -18,6 +21,7 @@ const stepperReducer = (state, action) => {
 };
 
 export function FormStepper() {
+  const [isModal, setIsModal] = useState(false);
   const initialState = {
     activeStep: 0,
     isLastStep: false,
@@ -30,7 +34,7 @@ export function FormStepper() {
     if (state.activeStep < 2) {
       dispatch({ type: NEXT_STEP });
     } else {
-      console.log("submit");
+      setIsModal(true);
     }
   };
 
@@ -55,8 +59,8 @@ export function FormStepper() {
 
       <div className="h-auto ">
         {state.activeStep === 0 && <CreateEventForm />}
-        {state.activeStep === 1 && <CreatePaymentForm />}
-        {state.activeStep === 2 && <OtpComponent />}
+        {state.activeStep === 1 && <CreateTicketsForm />}
+        {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
       <div className="mt-16 flex justify-between">
@@ -67,6 +71,9 @@ export function FormStepper() {
           {state.activeStep === 2 ? "Submit" : "Next"}
         </Button>
       </div>
+      <AnimatePresence>
+        {isModal && <AlertModal isModal={setIsModal} children={<OtpComponent />} />}
+      </AnimatePresence>
     </div>
   );
 }
