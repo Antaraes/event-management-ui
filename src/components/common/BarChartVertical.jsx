@@ -14,8 +14,8 @@ function BarChartVertical({ barDataProps }) {
     <>
       {barData.length > 0 && (
         <Chart
-          width={"500px"}
-          height={"300px"}
+          width={"100%"}
+          height={"450px"}
           className="text-primary"
           chartType="Bar"
           loader={<div>Loading Chart</div>}

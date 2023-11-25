@@ -13,7 +13,7 @@ const LineChart = ({ lineData }) => {
     <>
       {lineChartData.length > 0 && (
         <Chart
-          width={"500px"}
+          width={"100%"}
           height={"300px"}
           chartType="LineChart"
           loader={<div>Loading Chart</div>}
