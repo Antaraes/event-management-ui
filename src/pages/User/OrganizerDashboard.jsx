@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import PieChart from "../../components/common/PieChart";
 import BarChartVertical from "../../components/common/BarChartVertical";
@@ -9,18 +9,46 @@ import {
   getOrganizerDashboardBarChartData,
   getOrganizerDashboardOverviewData,
 } from "../../api/index";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import EventsByOrganizer from "../../components/Organizer/EventsByOrganizer";
+
 const OrganizerDashboard = () => {
+  const location = useLocation();
   const { organizerId } = useParams();
-  const { data: chartData } = useFetchData(
-    ["organizer-dashboard-bardata", organizerId],
-    () => getOrganizerDashboardBarChartData(organizerId)
+  const [queryParams, setQueryParams] = useState("");
+  const [queryKey, setQueryKey] = useState([
+    "organizer-dashboard-bardata",
+    organizerId,
+  ]);
+
+  const { data: chartData } = useFetchData(queryKey, () =>
+    getOrganizerDashboardBarChartData(organizerId, queryParams)
   );
 
   const { data: overviewData } = useFetchData(
     ["organizer-dashboard-overview", organizerId],
     () => getOrganizerDashboardOverviewData(organizerId)
   );
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const eventValue = searchParams.get("event");
+
+    if (eventValue !== null) {
+      setQueryParams(`event=${eventValue}`);
+
+      if (queryKey.length < 3) {
+        setQueryKey((prevQueryKey) => [...prevQueryKey, eventValue]);
+      } else {
+        setQueryKey((prevQueryKey) => [
+          ...prevQueryKey.slice(0, 2),
+          eventValue,
+        ]);
+      }
+
+      window.scrollTo(0, 0);
+    }
+  }, [location.search]);
+
   const pieChartData = [
     ["Color", "Tickets"],
     ["Kpay", 20],
@@ -72,6 +100,11 @@ const OrganizerDashboard = () => {
               {chartData && (
                 <LineChart lineData={chartData.totalTicketSaleByEvent} />
               )}
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {[...Array(6)].map((_, index) => (
+                <EventsByOrganizer key={index} index={index} />
+              ))}
             </div>
           </div>
         </div>

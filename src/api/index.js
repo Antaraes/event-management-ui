@@ -87,7 +87,7 @@ export const deactivateAccount = (accountId, data) =>
   API.put(`/admin/deactivate/${accountId}`, data);
 
 //Organizer Dashboard
-export const getOrganizerDashboardBarChartData = (organizerId) =>
-  API.get(`/organizer-dashboard/barchart/${organizerId}`);
+export const getOrganizerDashboardBarChartData = (organizerId, queryParams) =>
+  API.get(`/organizer-dashboard/barchart/${organizerId}?${queryParams}`);
 export const getOrganizerDashboardOverviewData = (organizerId) =>
   API.get(`/organizer-dashboard/overview-data/${organizerId}`);

@@ -3,7 +3,6 @@ import Chart from "react-google-charts";
 
 function PieChart({ pieChartData }) {
   const [pieData, setPieData] = useState([]);
-  console.log(pieChartData);
   useEffect(() => {
     if (pieChartData.length > 0) {
       setPieData(pieChartData);
