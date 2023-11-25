@@ -17,24 +17,30 @@ const OrganizerDashboard = () => {
   const location = useLocation();
   const { organizerId } = useParams();
   const [queryParams, setQueryParams] = useState("");
-  const [queryKey, setQueryKey] = useState([
+
+  //init query keys
+  const [barDataQueryKey, setBarDataQueryKey] = useState([
     "organizer-dashboard-bardata",
     organizerId,
   ]);
+  const [overviewDataQueryKey, setOverviewDataQueryKey] = useState([
+    "organizer-dashboard-overview",
+    organizerId,
+  ]);
 
-  const { data: chartData } = useFetchData(queryKey, () =>
+  //fetch datas
+  const { data: chartData } = useFetchData(barDataQueryKey, () =>
     getOrganizerDashboardBarChartData(organizerId, queryParams)
   );
-
   const { data: allEventsByOrganizer } = useFetchData(
     ["event", organizerId],
     () => getEventsByOrganizerId(organizerId)
   );
 
-  const { data: overviewData } = useFetchData(
-    ["organizer-dashboard-overview", organizerId],
-    () => getOrganizerDashboardOverviewData(organizerId)
+  const { data: overviewData } = useFetchData(overviewDataQueryKey, () =>
+    getOrganizerDashboardOverviewData(organizerId, queryParams)
   );
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const eventValue = searchParams.get("event");
@@ -42,10 +48,22 @@ const OrganizerDashboard = () => {
     if (eventValue !== null) {
       setQueryParams(`event=${eventValue}`);
 
-      if (queryKey.length < 3) {
-        setQueryKey((prevQueryKey) => [...prevQueryKey, eventValue]);
+      if (barDataQueryKey.length < 3) {
+        setBarDataQueryKey((prevQueryKey) => [...prevQueryKey, eventValue]);
       } else {
-        setQueryKey((prevQueryKey) => [
+        setBarDataQueryKey((prevQueryKey) => [
+          ...prevQueryKey.slice(0, 2),
+          eventValue,
+        ]);
+      }
+
+      if (overviewDataQueryKey.length < 3) {
+        setOverviewDataQueryKey((prevQueryKey) => [
+          ...prevQueryKey,
+          eventValue,
+        ]);
+      } else {
+        setOverviewDataQueryKey((prevQueryKey) => [
           ...prevQueryKey.slice(0, 2),
           eventValue,
         ]);
@@ -55,27 +73,32 @@ const OrganizerDashboard = () => {
     }
   }, [location.search]);
 
-  const pieChartData = [
-    ["Color", "Tickets"],
-    ["Kpay", 20],
-    ["Wave", 15],
-    ["A+", 3],
-    ["AYA Pay", 5],
-  ];
+  // const pieChartData = [
+  //   ["Color", "Tickets"],
+  //   ["Kpay", 20],
+  //   ["Wave", 15],
+  //   ["A+", 3],
+  //   ["AYA Pay", 5],
+  // ];
 
-  const lineData = [
-    ["Week", "Sales", "Expenses"],
-    ["week1", 1000, 400],
-    ["week2", 1170, 460],
-    ["week3", 660, 1120],
-    ["week4", 1030, 540],
-  ];
+  // const lineData = [
+  //   ["Week", "Sales", "Expenses"],
+  //   ["week1", 1000, 400],
+  //   ["week2", 1170, 460],
+  //   ["week3", 660, 1120],
+  //   ["week4", 1030, 540],
+  // ];
 
   return (
     <>
       <div className="w-full overflow-hidden">
         <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-20 mx-auto pt-16 mb-3">
-          <h1 className="text-3xl mb-4 md:mb-0">Organizer Dashboard</h1>
+          <h1 className="text-3xl mb-4 md:mb-0">
+            Organizer Dashboard{" "}
+            {allEventsByOrganizer &&
+              queryParams &&
+              `(${allEventsByOrganizer[0].name})`}
+          </h1>
           <Link to="/create-event">
             <span className="px-3 py-2 rounded bg-green-400 font-semibold">
               Create event
@@ -84,7 +107,9 @@ const OrganizerDashboard = () => {
         </div>
         <div className="bg-white rounded-2xl text-primary grid grid-cols-1 md:grid-cols-2 p-5 md:p-8 mx-auto w-[90%] md:w-[85%] border-2 border-gray-900 min-h-[90vh] max-h-fit mb-5">
           <div className="text-black h-fit col-span-2 md:w-full">
-            {overviewData && <OverviewBlock overviewData={overviewData} />}
+            {overviewData && (
+              <OverviewBlock overviewData={overviewData} key={overviewData} />
+            )}
           </div>
           <div className="flex flex-col mb-4 w-full col-span-2 ">
             <div className="block h-fit w-full md:pr-4 mb-4 md:mb-0">
