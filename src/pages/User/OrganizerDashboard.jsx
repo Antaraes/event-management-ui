@@ -41,11 +41,16 @@ const OrganizerDashboard = () => {
     <>
       <div className="flex justify-between items-center px-20 mx-auto pt-16 mb-3">
         <h1 className="text-3xl">Organizer Dashboard</h1>
-        <Link to='/create-event'>
-          <span className="px-3 py-2 rounded bg-green-400 font-semibold">Create event</span>
+        <Link to="/create-event">
+          <span className="px-3 py-2 rounded bg-green-400 font-semibold">
+            Create event
+          </span>
         </Link>
       </div>
       <div className="bg-white rounded-2xl text-primary  grid grid-cols-2 p-8 mx-auto w-[85%] border-2 border-gray-900 min-h-[90vh] max-h-fit mb-5">
+        <div className="text-black h-fit col-span-2">
+          {overviewData && <OverviewBlock overviewData={overviewData} />}
+        </div>
         <div>
           <h2 className="text-xl">Total Tickets Sell - Bar Chart</h2>
           {chartData && (
@@ -63,10 +68,6 @@ const OrganizerDashboard = () => {
           {chartData && (
             <LineChart lineData={chartData.totalTicketSaleByEvent} />
           )}
-        </div>
-        <div className="text-black  h-fit">
-          <h2 className="text-xl">Overview</h2>
-          {overviewData && <OverviewBlock overviewData={overviewData} />}
         </div>
       </div>
     </>
