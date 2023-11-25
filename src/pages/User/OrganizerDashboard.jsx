@@ -101,7 +101,10 @@ const OrganizerDashboard = () => {
                 <LineChart lineData={chartData.totalTicketSaleByEvent} />
               )}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-3">
+              <h1 className=" sm:col-span-2  lg:col-span-3 p-3 mt3 mb-2 font-medium text-xl">
+                Your Events
+              </h1>
               {[...Array(6)].map((_, index) => (
                 <EventsByOrganizer key={index} index={index} />
               ))}
