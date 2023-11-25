@@ -13,7 +13,7 @@ const NavButton = (props) => {
     props.active && props.active(props.href);
   };
     
-  const handleDrawer = (e)=>{
+  const handleDrawer = (e) => {
     dispatch(setDrawer())
   }
 
