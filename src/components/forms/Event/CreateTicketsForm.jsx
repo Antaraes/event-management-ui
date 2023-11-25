@@ -38,10 +38,6 @@ const CreateTicketsForm = () => {
     });
   }
 
-  if(disabledRows.length > 0){
-    console.log('dis',disabledRows);
-  }
-
   const handleAddTicketType = () => {
     const newFormElementArray = formElementArray.map((element) => ({
       id: element.id,
@@ -71,10 +67,6 @@ const CreateTicketsForm = () => {
     updatedDisabledRows[index] = !updatedDisabledRows[index];
     setDisabledRows(updatedDisabledRows);
   };
-
-  if(tableData.length > 0){
-    console.log('index', [...tableData][0][0].config.value);
-  }
 
   return (
     <div className="mt-[20px] flex flex-col rounded-lg bg-white/10">
