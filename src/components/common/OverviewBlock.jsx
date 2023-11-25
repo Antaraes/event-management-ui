@@ -3,8 +3,8 @@ import React from "react";
 const OverviewBlock = ({ overviewData }) => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 h-fit mt-4 mb-24 ">
-        <div className="bg-gradient-to-r from-green-300 to-green-400 rounded-lg  h-32 p-3 w-full md:w-64 flex flex-wrap justify-between items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 h-fit mt-4 mb-24">
+        <div className="bg-gradient-to-r from-green-300 to-green-400 rounded-lg  h-32 p-3 w-[95%] flex flex-wrap justify-between items-center">
           <div className="w-full flex justify-between items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ const OverviewBlock = ({ overviewData }) => {
             {overviewData.totalTicketsSold == 1 ? "Ticket" : "Tickets"} Sold
           </span>
         </div>
-        <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-lg  h-32 p-3  md:w-64  flex flex-wrap justify-between items-center">
+        <div className="bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-lg  h-32 p-3 w-[95%]  flex flex-wrap justify-between items-center">
           <div className="w-full flex justify-between items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const OverviewBlock = ({ overviewData }) => {
             Received
           </span>
         </div>
-        <div className="bg-gradient-to-r from-pink-300 to-pink-300 rounded-lg justify-around h-32 p-3 w-64   flex flex-col ">
+        <div className="bg-gradient-to-r from-pink-300 to-pink-300 rounded-lg justify-around h-32 p-3 w-[95%]  flex flex-col ">
           <div className="w-full flex justify-between items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ const OverviewBlock = ({ overviewData }) => {
             Avaliable
           </span>
         </div>
-        <div className="bg-blue-400 rounded-lg justify-around h-32 p-3 w-64   flex flex-col ">
+        <div className="bg-blue-400 rounded-lg justify-around h-32 p-3 w-[95%] flex flex-col ">
           <div className="w-full flex justify-between items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"

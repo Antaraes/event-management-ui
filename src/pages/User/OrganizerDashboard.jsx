@@ -39,35 +39,41 @@ const OrganizerDashboard = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center px-20 mx-auto pt-16 mb-3">
-        <h1 className="text-3xl">Organizer Dashboard</h1>
-        <Link to="/create-event">
-          <span className="px-3 py-2 rounded bg-green-400 font-semibold">
-            Create event
-          </span>
-        </Link>
-      </div>
-      <div className="bg-white rounded-2xl text-primary  grid grid-cols-2 p-8 mx-auto w-[85%] border-2 border-gray-900 min-h-[90vh] max-h-fit mb-5">
-        <div className="text-black h-fit col-span-2">
-          {overviewData && <OverviewBlock overviewData={overviewData} />}
+      <div className="w-full overflow-hidden">
+        <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-20 mx-auto pt-16 mb-3">
+          <h1 className="text-3xl mb-4 md:mb-0">Organizer Dashboard</h1>
+          <Link to="/create-event">
+            <span className="px-3 py-2 rounded bg-green-400 font-semibold">
+              Create event
+            </span>
+          </Link>
         </div>
-        <div>
-          <h2 className="text-xl">Total Tickets Sell - Bar Chart</h2>
-          {chartData && (
-            <BarChartVertical barDataProps={chartData.totalTicketSaleByType} />
-          )}
-        </div>
-        <div className="text-black p-3 h-fit">
-          <h2 className="text-xl">Pie Chart Example</h2>
-          {chartData && (
-            <PieChart pieChartData={chartData.toalTicketByPayment} />
-          )}
-        </div>
-        <div className="text-black  h-fit">
-          <h2 className="text-xl">Line Chart</h2>
-          {chartData && (
-            <LineChart lineData={chartData.totalTicketSaleByEvent} />
-          )}
+        <div className="bg-white rounded-2xl text-primary grid grid-cols-1 md:grid-cols-2 p-5 md:p-8 mx-auto w-[90%] md:w-[85%] border-2 border-gray-900 min-h-[90vh] max-h-fit mb-5">
+          <div className="text-black h-fit col-span-2 md:w-full">
+            {overviewData && <OverviewBlock overviewData={overviewData} />}
+          </div>
+          <div className="flex flex-col mb-4 w-full col-span-2 ">
+            <div className="block h-fit w-full md:pr-4 mb-4 md:mb-0">
+              <h2 className="text-xl">Total Tickets Sell - Bar Chart</h2>
+              {chartData && (
+                <BarChartVertical
+                  barDataProps={chartData.totalTicketSaleByType}
+                />
+              )}
+            </div>
+            <div className="text-black p-3 w-full h-fit  md:pl-4">
+              <h2 className="text-xl">Popular Payment</h2>
+              {chartData && (
+                <PieChart pieChartData={chartData.toalTicketByPayment} />
+              )}
+            </div>
+            <div className="text-black w-full h-fit">
+              <h2 className="text-xl">Line Chart</h2>
+              {chartData && (
+                <LineChart lineData={chartData.totalTicketSaleByEvent} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </>
