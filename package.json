@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.0",
+    "@tanstack/react-query-devtools": "^5.8.7",
     "axios": "^1.6.2",
     "chart.js": "^4.4.0",
     "class-variance-authority": "^0.7.0",
@@ -40,7 +41,8 @@
     "swiper": "^11.0.4",
     "tailwind-datepicker-react": "^1.4.3",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",

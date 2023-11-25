@@ -12,7 +12,7 @@ const OrgNameAndEvent = () => {
   ]
 
   return (
-    <div className="mt-10 px-16 text-white">
+    <div className="py-12 px-16 text-white">
       <div className="flex items-center justify-evenly h-[300px]">
         <div className="flex-1 flex justify-center items-center">
         <img

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const EventPreview = ({event}) => {
   return (
     <Link to='event/detail/1'>
-      <div className="relative flex justify-end bg-black">
+      <div className="relative flex justify-end">
         <img
           className="w-[65vw] h-[450px] rounded-lg"
           src={ event.img }

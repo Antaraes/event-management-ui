@@ -12,7 +12,7 @@ export default withMT({
   theme: {
     extend: {
       colors: {
-        primary: "#000000",
+        primary: "#000",
         secondary: "#1E95C8",
         sidebar: "#002C32",
         bluemark: "#1C78E4",

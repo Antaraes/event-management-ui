@@ -46,7 +46,7 @@ function OrganizerProfile() {
 
   return (
     <>
-      <div className="h-[92vh] w-[80%] mx-auto mt-10 border-2 border-gray-900 p-10 rounded-lg shadow-sm shadow-slate-800">
+      <div className="h-[92vh] w-[80%] mx-auto pt-14 border-2 border-gray-900 p-10 rounded-lg shadow-sm shadow-slate-800">
         <div className="flex gap-10 w-full h-auto justify-between">
           <div className="flex gap-10  justify-around bg-white  p-6 text-primary w-[40%] rounded-lg">
             <img
