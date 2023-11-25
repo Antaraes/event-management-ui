@@ -8,6 +8,7 @@ import useFetchData from "../../hooks/useFetchData";
 import {
   getOrganizerDashboardBarChartData,
   getOrganizerDashboardOverviewData,
+  getEventsByOrganizerId,
 } from "../../api/index";
 import { Link, useLocation, useParams } from "react-router-dom";
 import EventsByOrganizer from "../../components/Organizer/EventsByOrganizer";
@@ -23,6 +24,11 @@ const OrganizerDashboard = () => {
 
   const { data: chartData } = useFetchData(queryKey, () =>
     getOrganizerDashboardBarChartData(organizerId, queryParams)
+  );
+
+  const { data: allEventsByOrganizer } = useFetchData(
+    ["event", organizerId],
+    () => getEventsByOrganizerId(organizerId)
   );
 
   const { data: overviewData } = useFetchData(
@@ -105,9 +111,10 @@ const OrganizerDashboard = () => {
               <h1 className=" sm:col-span-2  lg:col-span-3 p-3 mt3 mb-2 font-medium text-xl">
                 Your Events
               </h1>
-              {[...Array(6)].map((_, index) => (
-                <EventsByOrganizer key={index} index={index} />
-              ))}
+              {allEventsByOrganizer &&
+                allEventsByOrganizer.map((event) => (
+                  <EventsByOrganizer key={event._id} event={event} />
+                ))}
             </div>
           </div>
         </div>
