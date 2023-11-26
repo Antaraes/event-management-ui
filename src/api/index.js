@@ -90,5 +90,7 @@ export const deactivateAccount = (accountId, data) =>
 //Organizer Dashboard
 export const getOrganizerDashboardBarChartData = (organizerId, queryParams) =>
   API.get(`/organizer-dashboard/barchart/${organizerId}?${queryParams}`);
-export const getOrganizerDashboardOverviewData = (organizerId) =>
-  API.get(`/organizer-dashboard/overview-data/${organizerId}`);
+export const getOrganizerDashboardOverviewData = (organizerId, queryParams) =>
+  API.get(`/organizer-dashboard/overview-data/${organizerId}?${queryParams}`);
+export const getEventsByOrganizerId = (organizerId) =>
+  API.get(`/event/events-by-organizer/${organizerId}`);
