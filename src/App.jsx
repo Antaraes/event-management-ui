@@ -26,6 +26,8 @@ import { Toaster } from "react-hot-toast";
 import CreateEvent from "./pages/User/CreateEvent";
 import BuyTicket from "./pages/User/BuyTicket";
 import PageNotFound from "./pages/PageNotFound";
+import OrganizerEventList from "./pages/User/OrganizerEventList";
+import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -79,6 +81,14 @@ function App() {
             {
               path: "/organizer/subscriptions",
               element: <Subscription />,
+            },
+            {
+              path: "/organizer/eventList/:organizerId",
+              element: <OrganizerEventList />,
+            },
+            {
+              path: "/organizer/eventList/:organizerId/boostPayment",
+              element: <OrganizerBoostPayment />,
             },
           ],
         },

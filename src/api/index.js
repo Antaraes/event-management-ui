@@ -38,6 +38,7 @@ export const getEventById = (eventId) => API.get(`/event/${eventId}`);
 export const searchEvents = (query) => API.get(`/event/search${query}`);
 export const sortEvents = (query) => API.get(`/event/sort${query}`);
 export const sortTrending = (query) => API.get(`/event/boots${query}`);
+export const getEventByOrganizerId = (OrganizerId) => API.get(`/event/events-by-organizer/${OrganizerId}`);
 
 export const createEvent = (data) => API.post(`/event/create`, data);
 export const boostEvent = (eventId) => API.post(`/event/boots/${eventId}`);
@@ -87,7 +88,7 @@ export const deactivateAccount = (accountId, data) =>
   API.put(`/admin/deactivate/${accountId}`, data);
 
 //Organizer Dashboard
-export const getOrganizerDashboardBarChartData = (organizerId) =>
-  API.get(`/organizer-dashboard/barchart/${organizerId}`);
+export const getOrganizerDashboardBarChartData = (organizerId, queryParams) =>
+  API.get(`/organizer-dashboard/barchart/${organizerId}?${queryParams}`);
 export const getOrganizerDashboardOverviewData = (organizerId) =>
   API.get(`/organizer-dashboard/overview-data/${organizerId}`);

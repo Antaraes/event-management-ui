@@ -14,13 +14,13 @@ const CreateTicketsForm = () => {
       },
       quantity: {
         value: "",
-        type: "text",
+        type: "number",
         required: true,
         placeholder: "Quantity",
       },
       ticketPerPrice: {
         value: "",
-        type: "text",
+        type: "number",
         required: true,
         placeholder: "Ticket Per Price",
       },
@@ -29,6 +29,7 @@ const CreateTicketsForm = () => {
 
   const [tableData, setTableData] = useState([]);
   const [disabledRows, setDisabledRows] = useState([]);
+  const [allowEdit, setAllowEdit] = useState(false);
 
   const formElementArray = [];
   for (let key in formData.form) {
@@ -39,21 +40,27 @@ const CreateTicketsForm = () => {
   }
 
   const handleAddTicketType = () => {
-    const newFormElementArray = formElementArray.map((element) => ({
-      id: element.id,
-      config: { ...element.config },
-    }));
+    const isEmpty = formElementArray.some(
+      (element) => element.config.value === ""
+    );
 
-    setTableData([...tableData, newFormElementArray]);
-
-    const newFormData = { ...formData.form };
-    for (let key in newFormData) {
-      newFormData[key].value = "";
+    if (!isEmpty) {
+      const newFormElementArray = formElementArray.map((element) => ({
+        id: element.id,
+        config: { ...element.config },
+      }));
+      setTableData([...tableData, newFormElementArray]);
+      const newFormData = { ...formData.form };
+      for (let key in newFormData) {
+        newFormData[key].value = "";
+      }
+      setFormData({
+        form: newFormData,
+      });
+      setDisabledRows([...disabledRows, false]);
+    } else {
+      alert("Please fill in all the textboxes before adding a new row.");
     }
-    setFormData({
-      form: newFormData,
-    });
-    setDisabledRows([...disabledRows, false]);
   };
 
   const handleDeleteRow = (index) => {
@@ -66,6 +73,30 @@ const CreateTicketsForm = () => {
     const updatedDisabledRows = [...disabledRows];
     updatedDisabledRows[index] = !updatedDisabledRows[index];
     setDisabledRows(updatedDisabledRows);
+  };
+
+  const handleAllCheckboxChange = (e) => {
+    setAllowEdit(!allowEdit);
+  };
+
+  // const handleInputChange = (e, index) => {
+  //   const updatedTableData = [...tableData];
+  //   updatedTableData[index][e.target.name] = e.target.value;
+  //   setTableData(updatedTableData);
+  // };
+
+  const handleShow = () => {
+    const insert = [...tableData];
+    const formattedData = [];
+    for (let key in tableData) {
+      console.log(tableData[key], key);
+      formattedData.push({
+        ticketType: tableData[key][0].config.value,
+        quantity: tableData[key][1].config.value,
+        ticketPerPrice: tableData[key][2].config.value,
+      });
+    }
+    console.log("formatedData: ", formattedData, "tableData", tableData);
   };
 
   return (
@@ -105,6 +136,17 @@ const CreateTicketsForm = () => {
           </button>
         </div>
       </div>
+      <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
+        <div>
+          <button onClick={handleShow} className="p-[10px] border rounded-md">
+            Show
+          </button>
+        </div>
+        <div className="flex flex-col ml-[20px] px-[50px] border">
+          <label>Edit All</label>
+          <Checkbox onChange={handleAllCheckboxChange} />
+        </div>
+      </div>
       <div className="my-[20px] h-[300px] w-[1300px] mx-[10px]">
         <table className="table-fixed w-full">
           {tableData.length > 0 ? (
@@ -130,7 +172,7 @@ const CreateTicketsForm = () => {
                     placeholder={form[0].config.placeholder}
                     required={form[0].config.required}
                     style="w-full bg-primary/5 text-white z-50"
-                    disabled={!disabledRows[index]}
+                    disabled={!allowEdit && !disabledRows[index]}
                     onChange={(e) => {
                       const updatedTableData = [...tableData];
                       updatedTableData[index][0].config.value = e.target.value;
@@ -147,7 +189,7 @@ const CreateTicketsForm = () => {
                     placeholder={form[1].config.placeholder}
                     required={form[1].config.required}
                     style="w-full bg-primary/5 text-white z-50"
-                    disabled={!disabledRows[index]}
+                    disabled={!allowEdit && !disabledRows[index]}
                     onChange={(e) => {
                       const updatedTableData = [...tableData];
                       updatedTableData[index][1].config.value = e.target.value;
@@ -164,7 +206,7 @@ const CreateTicketsForm = () => {
                     placeholder={form[2].config.placeholder}
                     required={form[2].config.required}
                     style="w-full bg-primary/5 text-white z-50"
-                    disabled={!disabledRows[index]}
+                    disabled={!allowEdit && !disabledRows[index]}
                     onChange={(e) => {
                       const updatedTableData = [...tableData];
                       updatedTableData[index][2].config.value = e.target.value;
@@ -175,7 +217,7 @@ const CreateTicketsForm = () => {
                 <td className="border px-4 py-2 flex items-center justify-center">
                   <Checkbox
                     checked={disabledRows[index]}
-                    onChange={(e) => handleCheckboxChange(e,index)}
+                    onChange={(e) => handleCheckboxChange(e, index)}
                   />
                 </td>
                 <td class="border px-4 py-2 text-white text-center">
