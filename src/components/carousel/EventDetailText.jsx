@@ -1,8 +1,18 @@
 import { Link } from "react-router-dom";
 
-const EventDetailText = () => {
+const EventDetailText = ({ eventDetail }) => {
+  const formatDate = (date) => {
+    const eventDate = new Date(date);
+    const day = eventDate.getDate();
+    const month = eventDate.toLocaleString("en-US", { month: "long" });
+    const year = eventDate.getFullYear();
+    const formattedDate = `${day}-${month}-${year} ${
+      eventDate.toDateString().split(" ")[0]
+    }`;
+    return formattedDate;
+  };
   return (
-    <div className="text-white py-0">
+    <div className="text-white py-0 w-full">
       <h1 className="text-3xl mt-5">Event Detail</h1>
       <div className="flex justify-between items-center text-lg mt-7">
         <div className="flex justify-evenly">
@@ -14,63 +24,46 @@ const EventDetailText = () => {
             Open
           </div>
         </div>
-        <Link to="/create-ticket">
-          <button className="bg-purchase py-2 px-6 rounded-xl ml-3 hidden md:block lg:block xl:block 2xl:block hover:bg-amber-800">go to purchase</button>
-          <button className="bg-purchase py-2 px-6 rounded-3xl ml-3 md:hidden lg:hidden xl:hidden 2xl:hidden hover:bg-amber-800">purchase</button>
+
+        <Link
+          to="/create-ticket"
+          className="bg-purchase py-2 px-6 rounded-xl ml-3 hidden md:block lg:block xl:block 2xl:block hover:bg-amber-800"
+        >
+          go to purchase
         </Link>
       </div>
-      <div className="mt-7">
-        <p className="text-lg">
-          Paragraphs are the building blocks of papers. Many students define
-          paragraphs in terms of length: a paragraph is a group of at least five
-          sentences, a paragraph is half a page long, etc. In reality, though,
-          the unity and coherence of ideas among sentences is what constitutes a
-          paragraph. A paragraph is defined as “a group of sentences or a single
-          sentence that forms a unit” (Lunsford and Connors 116). Length and
-          appearance do not determine whether a section in a paper is a
-          paragraph. For instance, in some styles of writing, particularly
-          journalistic styles, a paragraph can be just one sentence long.
-          Ultimately, a paragraph is a sentence or group of sentences that
-          support one main idea. In this handout, we will refer to this as the
-          “controlling idea,” because it controls what happens in the rest of
-          the paragraph. Paragraphs are the building blocks of papers. Many
-          students define paragraphs in terms of length: a paragraph is a group
-          of at least five sentences, a paragraph is half a page long, etc. In
-          reality, though, the unity and coherence of ideas among sentences is
-          what constitutes a paragraph. A paragraph is defined as “a group of
-          sentences or a single sentence that forms a unit” (Lunsford and
-          Connors 116). Length and appearance do not determine whether a section
-          in a paper is a paragraph. For instance, in some styles of writing,
-          particularly journalistic styles, a paragraph can be just one sentence
-          long. Ultimately, a paragraph is a sentence or group of sentences that
-          support one main idea. In this handout, we will refer to this as the
-          “controlling idea,” because it controls what happens in the rest of
-          the paragraph. Paragraphs are the building blocks of papers. Many
-          students define paragraphs in terms of length: a paragraph is a group
-          of at least five sentences, a paragraph is half a page long, etc. In
-          reality, though, the unity and coherence of ideas among sentences is
-          what constitutes a paragraph. A paragraph is defined as “a group of
-          sentences or a single sentence that forms a unit” (Lunsford and
-          Connors 116). Length and appearance do not determine whether a section
-          in a paper is a paragraph. For instance, in some styles of writing,
-          particularly journalistic styles, a paragraph can be just one sentence
-          long. Ultimately, a paragraph is a sentence or group of sentences that
-          support one main idea. In this handout, we will refer to this as the
-          “controlling idea,” because it controls what happens in the rest of
-          the paragraph. Paragraphs are the building blocks of papers. Many
-          students define paragraphs in terms of length: a paragraph is a group
-          of at least five sentences, a paragraph is half a page long, etc. In
-          reality, though, the unity and coherence of ideas among sentences is
-          what constitutes a paragraph. A paragraph is defined as “a group of
-          sentences or a single sentence that forms a unit” (Lunsford and
-          Connors 116). Length and appearance do not determine whether a section
-          in a paper is a paragraph. For instance, in some styles of writing,
-          particularly journalistic styles, a paragraph can be just one sentence
-          long. Ultimately, a paragraph is a sentence or group of sentences that
-          support one main idea. In this handout, we will refer to this as the
-          “controlling idea,” because it controls what happens in the rest of
-          the paragraph.
-        </p>
+      <div className="mt-7 flex flex-col gap-8">
+        <h2 className="text-3xl border-b border-white w-fit font-semibold">
+          {eventDetail.name}
+        </h2>
+        <div className="flex flex-col gap-4">
+          <span>
+            Event Start Date <i className="fa-solid fa-calendar-days"></i> :{" "}
+            {formatDate(eventDetail.eventStartDate)}
+          </span>
+
+          <span>
+            Event End Date <i className="fa-solid fa-calendar-days"></i> :{" "}
+            {formatDate(eventDetail.eventEndDate)}
+          </span>
+
+          <span>
+            Location <i className="fa-solid fa-location-dot"></i> :{" "}
+            {eventDetail.location}
+          </span>
+
+          <span>
+            Contact <i className="fa-solid fa-address-card"></i> :{" "}
+            {eventDetail.contact}
+          </span>
+
+          <span className="text-2xl">
+            Tickets can be purchase starting from (
+            {formatDate(eventDetail.ticketOpenDate)}) to (
+            {formatDate(eventDetail.ticketCloseDate)})
+          </span>
+        </div>
+        <p className="text-lg">{eventDetail.description}</p>
       </div>
     </div>
   );
