@@ -17,31 +17,32 @@ const useRegister = () => {
     contact: "",
     accountLevel: 3,
     bio: "",
+    payment: [],
   });
   // Function to handle payment details change
   const handlePaymentDetailsChange = (name, field, value) => {
-    // setFormData((prevData) => {
-    //   const existingPayment = prevData.payment.find((item) => item.name === name);
-    //   if (existingPayment) {
-    //     return {
-    //       ...prevData,
-    //       payment: prevData.payment.map((item) =>
-    //         item.name === name ? { ...item, [field]: value } : item
-    //       ),
-    //     };
-    //   } else {
-    //     return {
-    //       ...prevData,
-    //       payment: [
-    //         ...prevData.payment,
-    //         {
-    //           name: name,
-    //           [field]: value,
-    //         },
-    //       ],
-    //     };
-    //   }
-    // });
+    setFormData((prevData) => {
+      const existingPayment = prevData.payment.find((item) => item.name === name);
+      if (existingPayment) {
+        return {
+          ...prevData,
+          payment: prevData.payment.map((item) =>
+            item.name === name ? { ...item, [field]: value } : item
+          ),
+        };
+      } else {
+        return {
+          ...prevData,
+          payment: [
+            ...prevData.payment,
+            {
+              name: name,
+              [field]: value,
+            },
+          ],
+        };
+      }
+    });
   };
 
   const onChange = (field, event) => {
