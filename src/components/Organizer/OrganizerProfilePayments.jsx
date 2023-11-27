@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import AlertModal from "../common/AlertModal";
+import ConfirmAlert from "../common/ConfirmAlert";
 
 const OrganizerProfilePayments = ({ payment }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -80,6 +81,14 @@ const OrganizerProfilePayments = ({ payment }) => {
     );
   };
 
+  const handleConfirm = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsConfirmModalOpen(false);
+  };
+
   return (
     <div className="h-20 rounded-lg border-2 border-white m-2 p-2 flex flex-col gap-2  border-opacity-40 ">
       <h3 className="text-lg border-b border-white  border-opacity-40  w-fit">
@@ -91,7 +100,19 @@ const OrganizerProfilePayments = ({ payment }) => {
           {renderContent()}
         </div>
       </div>
-      {isConfirmModalOpen && <AlertModal isModal={isConfirmModalOpen} />}
+      {isConfirmModalOpen && (
+        <AlertModal
+          isModal={setIsConfirmModalOpen}
+          children={
+            <ConfirmAlert
+              handleConfirm={handleConfirm}
+              handleCancel={handleCancel}
+              titleText={`Do You Want To Update This ${payment.name} ?`}
+              confirmMessage={"Update"}
+            />
+          }
+        />
+      )}
     </div>
   );
 };
