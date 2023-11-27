@@ -18,11 +18,11 @@ function OrganizerProfile() {
   } = useFetchData(["organizer", organizerId], () =>
     getOrganizerProfile(organizerId)
   );
-  const { data: organizerPayment, isLoading: isOrganizerPaymentLoading } =
-    useFetchData(["organizer-payment", organizerId], () =>
-      getAllPaymentFromOrganizer(organizerId)
-    );
-
+  const { isLoading: isOrganizerPaymentLoading } = useFetchData(
+    ["organizer-payment", organizerId],
+    () => getAllPaymentFromOrganizer(organizerId)
+  );
+  const organizerPayment = [{ _id: 1, name: "kpay", phone: "09" }];
   const [organizerData, setOrganizerData] = useState(null);
   const [shouldUpdateBtnAppear, setShouldUpdateBtnAppear] = useState(false);
 
@@ -57,7 +57,7 @@ function OrganizerProfile() {
 
   return (
     <>
-      <div className=" min-h-full sm:min-h-[93vh] max-h-fit w-full sm:w-[80%] md:w-[90%] mb-2 mx-auto pt-14 border-2 border-gray-900 p-6 sm:p-10 rounded-lg shadow-sm shadow-slate-800">
+      <div className="bg-gray-800 bg-opacity-60 min-h-full sm:min-h-[93vh] max-h-fit w-full sm:w-[80%] md:w-[90%] mb-2 mx-auto pt-14 border-2 border-gray-900 p-6 sm:p-10 rounded-lg shadow-sm shadow-slate-800">
         <div className="flex mt-3 flex-col sm:flex-row gap-6 w-full h-auto  max-h-fit  justify-between">
           <div className="flex gap-10 justify-around bg-white  p-6 text-primary w-full md:w-[40%] rounded-lg">
             <img
