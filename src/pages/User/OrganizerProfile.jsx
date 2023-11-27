@@ -11,18 +11,17 @@ import OrganizerProfilePayments from "../../components/Organizer/OrganizerProfil
 function OrganizerProfile() {
   const navigate = useNavigate();
   const { organizerId } = useParams();
+  const { data: organizerDetail, isLoading: isOrganizerDetailLoading } =
+    useFetchData(["organizer", organizerId], () =>
+      getOrganizerProfile(organizerId)
+    );
   const {
-    data: organizerDetail,
-
-    isLoading: isOrganizerDetailLoading,
-  } = useFetchData(["organizer", organizerId], () =>
-    getOrganizerProfile(organizerId)
+    data: organizerPayment,
+    isLoading: isOrganizerPaymentLoading,
+    refetch: refetchOrganizerPayment,
+  } = useFetchData(["organizer-payment", organizerId], () =>
+    getAllPaymentFromOrganizer(organizerId)
   );
-  const { isLoading: isOrganizerPaymentLoading } = useFetchData(
-    ["organizer-payment", organizerId],
-    () => getAllPaymentFromOrganizer(organizerId)
-  );
-  const organizerPayment = [{ _id: 1, name: "kpay", phone: "09" }];
   const [organizerData, setOrganizerData] = useState(null);
   const [shouldUpdateBtnAppear, setShouldUpdateBtnAppear] = useState(false);
 
@@ -211,6 +210,7 @@ function OrganizerProfile() {
                   <OrganizerProfilePayments
                     key={payment._id}
                     payment={payment}
+                    refetchOrganizerPayment={refetchOrganizerPayment}
                   />
                 ))}
 
