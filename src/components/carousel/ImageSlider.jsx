@@ -12,7 +12,7 @@ import '../../assets/css/event-detail-caursel.css';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-export default function ImageSlider() {
+export default function ImageSlider(props) {
   return (
     <>
       <Swiper
@@ -27,17 +27,12 @@ export default function ImageSlider() {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="mySwiper"
-      >
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide><img src="https://live.staticflickr.com/8115/8675071784_b7a0544ab5_h.jpg" alt="" /></SwiperSlide>
+        className="w-80 md:w-[600px] lg:w-[800px] xl:w-[900px]  2xl:w-[900px] flex items-center justify-center"
+      >{
+        props.images.map((image,index)=>(
+        <SwiperSlide key={index}><img src={image.url} alt="" /></SwiperSlide>
+        ))
+      }
       </Swiper>
     </>
   );
