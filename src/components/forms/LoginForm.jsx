@@ -11,7 +11,7 @@ const LoginForm = ({}) => {
       type: "email",
       value: email,
       onChange: (event) => onChange("email", event),
-      required: false,
+      required: true,
     },
     {
       labelText: "Password ",
@@ -19,7 +19,7 @@ const LoginForm = ({}) => {
       type: "password",
       onChange: (event) => onChange("password", event),
       value: password,
-      required: false,
+      required: true,
     },
   ];
   return <Form config={config} btnText="Login" onChange={onChange} onSubmit={onSubmit} />;
