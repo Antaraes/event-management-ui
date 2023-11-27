@@ -1,6 +1,12 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router";
+import * as api from "../api/index";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/auth/authSlice";
 export default function useLogin() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -11,10 +17,13 @@ export default function useLogin() {
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    login({ email, password })
-      .unwrap()
-      .then(() => {
+    api
+      .organizerLogin({ email: "minbhonethantajm@gmail.com", password: "min@22323r20v" })
+      .then((res) => {
+        console.log(res.data.user);
+        dispatch(setUser(res.data.user));
         toast.success("Login Sucessfully");
+        navigate("/");
       })
       .catch(() => {
         toast.error("Failed to login account");
