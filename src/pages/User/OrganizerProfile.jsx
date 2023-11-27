@@ -7,6 +7,7 @@ import {
   getAllPaymentFromOrganizer,
 } from "../../api/index";
 import toast from "react-hot-toast";
+import OrganizerProfilePayments from "../../components/Organizer/OrganizerProfilePayments";
 function OrganizerProfile() {
   const navigate = useNavigate();
   const { organizerId } = useParams();
@@ -17,11 +18,11 @@ function OrganizerProfile() {
   } = useFetchData(["organizer", organizerId], () =>
     getOrganizerProfile(organizerId)
   );
-  const { data: organizerPayment, error } = useFetchData(
-    ["organizer-payment", organizerId],
-    () => getAllPaymentFromOrganizer(organizerId)
-  );
-  console.log(organizerPayment, error);
+  const { data: organizerPayment, isLoading: isOrganizerPaymentLoading } =
+    useFetchData(["organizer-payment", organizerId], () =>
+      getAllPaymentFromOrganizer(organizerId)
+    );
+
   const [organizerData, setOrganizerData] = useState(null);
   const [shouldUpdateBtnAppear, setShouldUpdateBtnAppear] = useState(false);
 
@@ -202,16 +203,19 @@ function OrganizerProfile() {
             )}
             {isOrganizerDetailLoading && "Loading...."}
           </div>
-          <div className="w-full sm:w-[50%] flex flex-col gap-4 mt-3">
+          <div className="w-full sm:w-[50%] flex flex-col gap-4 mt-3  ">
             <span>Your Payments :</span>
-            {organizerData && (
-              <textarea
-                value={organizerData.contact}
-                onChange={(e) => handleInputChange("contact", e)}
-                className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3"
-              />
-            )}
-            {isOrganizerDetailLoading && "Loading...."}
+            <div className="border-2 border-gray-900 h-[240px]  rounded-lg w-full p-3 overflow-auto grid grid-cols-1 lg:grid-cols-2">
+              {organizerPayment &&
+                organizerPayment.map((payment) => (
+                  <OrganizerProfilePayments
+                    key={payment._id}
+                    payment={payment}
+                  />
+                ))}
+
+              {isOrganizerPaymentLoading && "Loading...."}
+            </div>
           </div>
         </div>
 
