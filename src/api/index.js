@@ -35,7 +35,7 @@ export const updateOrganizerPayment = (paymentId, paymentData) =>
   API.put(`/organizer-payment/update/${paymentId}`, paymentData);
 
 //Event
-export const getEvents = (query) => API.get(`/event${query}`);
+export const getEvents = (query) => API.get(`/event/${query}`);
 export const getEventById = (eventId) => API.get(`/event/${eventId}`);
 export const searchEvents = (query) => API.get(`/event/search${query}`);
 export const sortEvents = (query) => API.get(`/event/sort${query}`);

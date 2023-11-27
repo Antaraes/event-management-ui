@@ -6,17 +6,39 @@ import Filter from '../../components/Filter/Filter'
 import { setUpcoming } from '../../redux/Filter/eventSlice'
 import useFetchData from '../../hooks/useFetchData'
 import { getEvents } from '../../api'
+import axios from 'axios';
 
 export default function Event() {
 
+  
   const queryKey = ["events"]
-
+  
   const [query, setQuery] = useState('?page=1&pageSize=6&name=&eventStartDate=&eventEndDate=&isUpcoming=&location=&organizerId=&sortBy=');
+  
+  // const {
+  //   data: events,
+  //   isLoading: eventsLoading
+  // } = useFetchData(queryKey, () => getEvents(query));
+  
+  // console.log(events);
+  const [events, setEvents] = useState([]);
 
-  const {
-    data: events,
-    isLoading: eventsLoading
-  } = useFetchData(queryKey, () => getEvents(query));
+  const fetchEvents = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/v1/event${query}`);
+      setEvents(response.data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [events]);
 
   const [page, setPage] = useState(1)
   const [name, setName] = useState('')
@@ -25,43 +47,31 @@ export default function Event() {
     endDate: null
   });
   const [isUpcoming, setIsUpcoming] = useState(false);
+  const [isTrending, setIsTrending] = useState(true);
   const [location, setLocation] = useState('');
-  const [sortBy, setSortBy] = useState('trending');
 
-  // const events = [
-  //   { id:1, name: "Event-1" },
-  //   { id:2, name: "Event-2" },
-  //   { id:3, name: "Event-3" },
-  //   { id:4, name: "Event-4" },
-  //   { id:5, name: "Event-5" },
-  //   { id:6, name: "Event-6" }
-  // ]
+  useEffect(() => {
+  const formattedStartDate = eventDate.startDate ? eventDate.startDate.toISOString() : '';
+  const formattedEndDate = eventDate.endDate ? eventDate.endDate.toISOString() : '';
+
+  const updatedQuery = `?page=${page}&pageSize=6&name=${name}&eventStartDate=${formattedStartDate}&eventEndDate=${formattedEndDate}&isUpcoming=${isUpcoming}&location=${location}&sortBy=${isTrending ? 'trending' : ''}`;
+  setQuery(updatedQuery);
+}, [page, name, eventDate, isUpcoming, location, isTrending]);
 
   return (
-    <div className='px-16 py-12'>
+    <div className='px-2 lg:px-10 py-12'>
       <Filter setName={(value) => setName(value)} options={
         {
           inputs: [
             { label: "Title", type: "text", value: name, action: (value) => setName(value)},
             { label: "Event Date", type: "dateRangePicker" , value: eventDate, action: (value) => setEventDate(value)},
-            { label: "Upcoming", type: "checkbox", value: isUpcoming, action: (value) => setIsUpcoming(value)},
-            { label: "Trending", type: "checkbox", value: sortBy, action: (value) => setSortBy(value)}, 
+            { label: "Upcoming", type: "checkbox", value: isUpcoming, action: () => setIsUpcoming(!isUpcoming)},
+            { label: "Sort by Trending", type: "checkbox", value: isTrending, action: () => setIsTrending(!isTrending)}, 
             { label: "Location", type: "text", value: location, action: (value) => setLocation(value)}, 
-            // { label: "sortBy", type: "select", value: sortBy, action: (value) => setSortBy(value)}, 
-          ],
-          data: [
-            {
-              value: eventDate.startDate !== null && `${eventDate.startDate} - ${eventDate.endDate}`, remove: () => setEventDate({
-                startDate: null,
-                endDate: null
-            }) },
-            { value: location && location.toUpperCase(), remove: () => setLocation('')},
-            { value: isUpcoming && 'Upcoming', remove: () => setUpcoming('false') },
-            // { value: sortBy && sortBy.toUpperCase(), remove: ()=> setSortBy('')}
           ]
         }
       } />
-      <CardList data={events} link={'/event/detail/'} />
+      <CardList page={page} setPage={(value) => setPage(value)} fetchData={fetchEvents} data={events} link={'/event/detail/'} />
     </div>
   )
 }

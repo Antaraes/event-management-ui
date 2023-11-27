@@ -15,7 +15,7 @@ export default function Filter({ setName,options }) {
 
     return (
         <section className='w-full mx-auto flex flex-col items-center'>
-            <div className='w-full flex justify-evenly items-center relative mt-5'>
+            <div className='w-full lg:flex justify-evenly items-center relative mt-5'>
                 {
                     options.inputs.map((op, index) => (
                         <div key={index} className='text-white text-start p-1 px-2'>
