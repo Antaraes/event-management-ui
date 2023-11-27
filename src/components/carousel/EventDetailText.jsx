@@ -3,16 +3,20 @@ import { Link } from "react-router-dom";
 const EventDetailText = () => {
   return (
     <div className="text-white py-0">
-      <h1 className="text-3xl">Event Detail</h1>
+      <h1 className="text-3xl mt-5">Event Detail</h1>
       <div className="flex justify-between items-center text-lg mt-7">
         <div className="flex justify-evenly">
           <div className="bg-secondary py-2 px-6 rounded-3xl">Trending</div>
-          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3">
+          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3 hidden md:block lg:block xl:block 2xl:block">
             Open Now
+          </div>
+          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3 md:hidden lg:hidden xl:hidden 2xl:hidden">
+            Open
           </div>
         </div>
         <Link to="/create-ticket">
-          <button className="bg-purchase py-2 px-6 rounded-xl">go to purchase</button>
+          <button className="bg-purchase py-2 px-6 rounded-xl ml-3 hidden md:block lg:block xl:block 2xl:block hover:bg-amber-800">go to purchase</button>
+          <button className="bg-purchase py-2 px-6 rounded-3xl ml-3 md:hidden lg:hidden xl:hidden 2xl:hidden hover:bg-amber-800">purchase</button>
         </Link>
       </div>
       <div className="mt-7">

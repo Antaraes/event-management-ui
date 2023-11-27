@@ -31,6 +31,8 @@ export const manageOrganizerEmail = (organizerId, organizerEmail) =>
 //Organizer Payment
 export const getAllPaymentFromOrganizer = (organizerId) =>
   API.get(`/organizer-payment/all/${organizerId}`);
+export const updateOrganizerPayment = (paymentId, paymentData) =>
+  API.put(`/organizer-payment/update/${paymentId}`, paymentData);
 
 //Event
 export const getEvents = (query) => API.get(`/event${query}`);

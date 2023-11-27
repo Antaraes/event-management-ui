@@ -1,10 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import AlertModal from "../common/AlertModal";
+import ConfirmAlert from "../common/ConfirmAlert";
+import { useEffect } from "react";
+import { updateOrganizerPayment } from "../../api/index";
+import toast from "react-hot-toast";
 
-const OrganizerProfilePayments = ({ payment }) => {
+const OrganizerProfilePayments = ({ payment, refetchOrganizerPayment }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [formData, setFormData] = useState(null);
+
+  const handleCancelEditing = () => {
+    setIsEditing(false);
+    setFormData(payment);
+  };
 
   const renderContent = () => {
     if (isEditing) {
@@ -33,7 +43,7 @@ const OrganizerProfilePayments = ({ payment }) => {
             strokeWidth="1.5"
             stroke="currentColor"
             className="w-5 h-5 text-red-500 hover:bg-red-500 hover:text-white hover:w-full rounded-full transition-all duration-200"
-            onClick={() => setIsEditing(false)}
+            onClick={handleCancelEditing}
           >
             <path
               strokeLinecap="round"
@@ -62,7 +72,7 @@ const OrganizerProfilePayments = ({ payment }) => {
           />
         </svg>
 
-        <svg
+        {/* <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -75,23 +85,82 @@ const OrganizerProfilePayments = ({ payment }) => {
             strokeLinejoin="round"
             d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
           />
-        </svg>
+        </svg> */}
       </>
     );
   };
 
+  const handleConfirm = () => {
+    updateOrganizerPayment(formData._id, formData)
+      .then(() => {
+        setIsConfirmModalOpen(false);
+        setIsEditing(false);
+        refetchOrganizerPayment();
+        toast.success("Updated Successfully");
+      })
+      .catch((error) => {
+        toast.error(`Something went Wrong`);
+      });
+  };
+
+  const handleCancel = () => {
+    setIsConfirmModalOpen(false);
+  };
+
+  const handleInputChange = (name, e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: e.target.value,
+    }));
+  };
+
+  useEffect(() => {
+    if (payment) {
+      setFormData(payment);
+    }
+  }, [payment]);
+
   return (
     <div className="h-20 rounded-lg border-2 border-white m-2 p-2 flex flex-col gap-2  border-opacity-40 ">
-      <h3 className="text-lg border-b border-white  border-opacity-40  w-fit">
-        {payment.name}
-      </h3>
+      {isEditing ? (
+        <input
+          className="bg-transparent w-[60%] focus:outline-none border-b border-white border-opacity-25 focus:border-opacity-100"
+          value={formData.name}
+          onChange={(e) => handleInputChange("name", e)}
+          autoFocus
+        />
+      ) : (
+        <span className="text-lg">{payment.name}</span>
+      )}
+
       <div className="flex justify-between items-center">
-        <span className="text-base">{payment.phone}</span>
+        {isEditing ? (
+          <input
+            className="bg-transparent w-[60%] focus:outline-none border-b border-white border-opacity-25 focus:border-opacity-100"
+            value={formData.phone}
+            onChange={(e) => handleInputChange("phone", e)}
+          />
+        ) : (
+          <span className="text-base">{payment.phone}</span>
+        )}
+
         <div className="flex justify-between gap-3 items-center">
           {renderContent()}
         </div>
       </div>
-      {isConfirmModalOpen && <AlertModal isModal={isConfirmModalOpen} />}
+      {isConfirmModalOpen && (
+        <AlertModal
+          isModal={setIsConfirmModalOpen}
+          children={
+            <ConfirmAlert
+              handleConfirm={handleConfirm}
+              handleCancel={handleCancel}
+              titleText={`Do You Want To Update This ${payment.name} ?`}
+              confirmMessage={"Update"}
+            />
+          }
+        />
+      )}
     </div>
   );
 };

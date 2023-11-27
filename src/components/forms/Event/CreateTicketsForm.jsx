@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
+import axios from "../../../api/axios";
 
 const CreateTicketsForm = () => {
   const [formData, setFormData] = useState({
@@ -136,17 +137,17 @@ const CreateTicketsForm = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
+     {tableData.length > 0 ? <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
         <div>
           <button onClick={handleShow} className="p-[10px] border rounded-md">
             Show
           </button>
         </div>
-        <div className="flex flex-col ml-[20px] px-[50px] border">
+        <div className="flex flex-col ml-[20px] px-[50px] py-[10px] border">
           <label>Edit All</label>
           <Checkbox onChange={handleAllCheckboxChange} />
         </div>
-      </div>
+      </div> : null}
       <div className="my-[20px] h-[300px] w-[1300px] mx-[10px]">
         <table className="table-fixed w-full">
           {tableData.length > 0 ? (
