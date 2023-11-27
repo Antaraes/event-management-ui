@@ -3,7 +3,6 @@ import Chart from "react-google-charts";
 
 function PieChart({ pieChartData }) {
   const [pieData, setPieData] = useState([]);
-  console.log(pieChartData);
   useEffect(() => {
     if (pieChartData.length > 0) {
       setPieData(pieChartData);
@@ -14,7 +13,7 @@ function PieChart({ pieChartData }) {
     <>
       {pieData.length > 0 && (
         <Chart
-          width={"500px"}
+          width={"100%"}
           height={"300px"}
           chartType="PieChart"
           loader={<div>Loading Chart</div>}
