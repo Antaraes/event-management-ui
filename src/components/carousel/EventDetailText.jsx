@@ -14,28 +14,33 @@ const EventDetailText = ({ eventDetail }) => {
   return (
     <div className="text-white py-0 w-full">
       <h1 className="text-3xl mt-5">Event Detail</h1>
+
       <div className="flex justify-between items-center text-lg mt-7">
         <div className="flex justify-evenly">
           <div className="bg-secondary py-2 px-6 rounded-3xl">Trending</div>
-          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3 hidden md:block lg:block xl:block 2xl:block">
+
+          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3 hidden md:block">
             Open Now
           </div>
-          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3 md:hidden lg:hidden xl:hidden 2xl:hidden">
+
+          <div className="bg-secondary py-2 px-6 rounded-3xl ml-3 md:hidden">
             Open
           </div>
         </div>
 
         <Link
           to="/create-ticket"
-          className="bg-purchase py-2 px-6 rounded-xl ml-3 hidden md:block lg:block xl:block 2xl:block hover:bg-amber-800"
+          className="bg-purchase py-2 px-6 rounded-xl ml-3 md:ml-0 hover:bg-amber-800"
         >
           go to purchase
         </Link>
       </div>
-      <div className="mt-7 flex flex-col gap-8">
-        <h2 className="text-3xl border-b border-white w-fit font-semibold">
+
+      <div className="mt-7 flex flex-col gap-8 justify-center p-4 md:p-0 items-center md:items-start">
+        <h2 className="text-3xl border-b border-white w-fit  font-semibold">
           {eventDetail.name}
         </h2>
+
         <div className="flex flex-col gap-4">
           <span>
             Event Start Date <i className="fa-solid fa-calendar-days"></i> :{" "}
@@ -58,11 +63,12 @@ const EventDetailText = ({ eventDetail }) => {
           </span>
 
           <span className="text-2xl">
-            Tickets can be purchase starting from (
+            Tickets can be purchased starting from (
             {formatDate(eventDetail.ticketOpenDate)}) to (
             {formatDate(eventDetail.ticketCloseDate)})
           </span>
         </div>
+
         <p className="text-lg">{eventDetail.description}</p>
       </div>
     </div>
