@@ -32,13 +32,18 @@ export const manageOrganizerPhone = (organizerId, organizerPhone) =>
 export const manageOrganizerEmail = (organizerId, organizerEmail) =>
   API.patch(`/organizer/update_email/${organizerId}/${organizerEmail}`);
 
+//Organizer Payment
+export const getAllPaymentFromOrganizer = (organizerId) =>
+  API.get(`/organizer-payment/all/${organizerId}`);
+
 //Event
 export const getEvents = () => API.get("/event/");
 export const getEventById = (eventId) => API.get(`/event/${eventId}`);
 export const searchEvents = (query) => API.get(`/event/search${query}`);
 export const sortEvents = (query) => API.get(`/event/sort${query}`);
 export const sortTrending = (query) => API.get(`/event/boots${query}`);
-export const getEventByOrganizerId = (OrganizerId) => API.get(`/event/events-by-organizer/${OrganizerId}`);
+export const getEventByOrganizerId = (OrganizerId) =>
+  API.get(`/event/events-by-organizer/${OrganizerId}`);
 
 export const createEvent = (data) => API.post(`/event/create`, data);
 export const boostEvent = (eventId) => API.post(`/event/boots/${eventId}`);
