@@ -22,7 +22,7 @@ export default function CardList({ data,link }) {
       <section className="grid grid-cols-3 justify-center">
         {
           data.map((d,index) => {
-            return (<Card data={d} link={`${link + d.id}`} key={index}/>)
+            return (<Card data={d} link={`${link + d._id}`} key={index}/>)
           })
         }
       </section>

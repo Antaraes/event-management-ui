@@ -44,3 +44,8 @@ body {
 .EZDrawer__overlay {
     background: transparent !important;
 }
+
+/* Date Range Picker */
+.rdrStaticRangeLabel {
+    @apply text-gray-800 hover:text-blue-gray-500
+}
