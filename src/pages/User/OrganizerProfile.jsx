@@ -1,22 +1,34 @@
 import React, { useEffect, useState } from "react";
 import useFetchData from "../../hooks/useFetchData";
-import { getOrganizerProfile } from "../../api/index";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { updateOrganizerProfile } from "../../api/index";
+import {
+  getOrganizerProfile,
+  updateOrganizerProfile,
+  getAllPaymentFromOrganizer,
+} from "../../api/index";
 import toast from "react-hot-toast";
+import OrganizerProfilePayments from "../../components/Organizer/OrganizerProfilePayments";
 function OrganizerProfile() {
   const navigate = useNavigate();
   const { organizerId } = useParams();
-  const { data, error, isLoading } = useFetchData(
-    ["organizer", organizerId],
-    () => getOrganizerProfile(organizerId)
+  const {
+    data: organizerDetail,
+
+    isLoading: isOrganizerDetailLoading,
+  } = useFetchData(["organizer", organizerId], () =>
+    getOrganizerProfile(organizerId)
   );
+  const { data: organizerPayment, isLoading: isOrganizerPaymentLoading } =
+    useFetchData(["organizer-payment", organizerId], () =>
+      getAllPaymentFromOrganizer(organizerId)
+    );
+
   const [organizerData, setOrganizerData] = useState(null);
   const [shouldUpdateBtnAppear, setShouldUpdateBtnAppear] = useState(false);
 
   useEffect(() => {
-    if (data) setOrganizerData(data);
-  }, [data]);
+    if (organizerDetail) setOrganizerData(organizerDetail);
+  }, [organizerDetail]);
 
   const handleInputChange = (name, e) => {
     setOrganizerData((prevData) => ({
@@ -45,7 +57,7 @@ function OrganizerProfile() {
 
   return (
     <>
-      <div className="min-h-full sm:min-h-[93vh] max-h-fit w-full sm:w-[80%] md:w-[90%] mb-2 mx-auto pt-14 border-2 border-gray-900 p-6 sm:p-10 rounded-lg shadow-sm shadow-slate-800">
+      <div className=" min-h-full sm:min-h-[93vh] max-h-fit w-full sm:w-[80%] md:w-[90%] mb-2 mx-auto pt-14 border-2 border-gray-900 p-6 sm:p-10 rounded-lg shadow-sm shadow-slate-800">
         <div className="flex mt-3 flex-col sm:flex-row gap-6 w-full h-auto  max-h-fit  justify-between">
           <div className="flex gap-10 justify-around bg-white  p-6 text-primary w-full md:w-[40%] rounded-lg">
             <img
@@ -54,13 +66,14 @@ function OrganizerProfile() {
             />
             <div className="flex flex-col justify-around gap-4">
               <span>
-                {organizerData && data.name}
-                {isLoading && "Loading..."}
+                {organizerData && organizerDetail.name}
+                {isOrganizerDetailLoading && "Loading..."}
               </span>
               <div className="flex gap-1 flex-col justify-end">
                 <span>
-                  Account Level : {organizerData && data.accountLevel}
-                  {isLoading && "Loading..."}
+                  Account Level :{" "}
+                  {organizerData && organizerDetail.accountLevel}
+                  {isOrganizerDetailLoading && "Loading..."}
                 </span>
                 <Link
                   to={"/organizer/subscriptions"}
@@ -84,7 +97,7 @@ function OrganizerProfile() {
                       className="w-[100%]  bg-transparent focus:outline-none border-b border-white"
                     />
                   )}
-                  {isLoading && "Loading....."}
+                  {isOrganizerDetailLoading && "Loading....."}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -113,7 +126,7 @@ function OrganizerProfile() {
                       className="w-[100%] cursor-not-allowed bg-transparent focus:outline-none border-b border-white"
                     />
                   )}
-                  {isLoading && "Loading....."}
+                  {isOrganizerDetailLoading && "Loading....."}
                 </div>
               </div>
             </div>
@@ -129,7 +142,7 @@ function OrganizerProfile() {
                       className="w-[100%]  bg-transparent focus:outline-none border-b border-white"
                     />
                   )}
-                  {isLoading && "Loading....."}
+                  {isOrganizerDetailLoading && "Loading....."}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -157,7 +170,7 @@ function OrganizerProfile() {
                       className="w-[100%]  bg-transparent focus:outline-none border-b border-white"
                     />
                   )}
-                  {isLoading && "Loading....."}
+                  {isOrganizerDetailLoading && "Loading....."}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -180,17 +193,6 @@ function OrganizerProfile() {
 
         <div className="mt-6 sm:mt-0 h-auto sm:h-[280px] flex flex-col sm:flex-row gap-6 ">
           <div className="w-full sm:w-[50%] flex flex-col gap-4 mt-3">
-            <span>Bio :</span>
-            {organizerData && (
-              <textarea
-                value={organizerData.bio}
-                onChange={(e) => handleInputChange("bio", e)}
-                className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3"
-              />
-            )}
-            {isLoading && "Loading...."}
-          </div>
-          <div className="w-full sm:w-[50%] flex flex-col gap-4 mt-3">
             <span>Contact :</span>
             {organizerData && (
               <textarea
@@ -199,7 +201,21 @@ function OrganizerProfile() {
                 className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3"
               />
             )}
-            {isLoading && "Loading...."}
+            {isOrganizerDetailLoading && "Loading...."}
+          </div>
+          <div className="w-full sm:w-[50%] flex flex-col gap-4 mt-3  ">
+            <span>Your Payments :</span>
+            <div className="border-2 border-gray-900 h-[240px]  rounded-lg w-full p-3 overflow-auto grid grid-cols-1 lg:grid-cols-2">
+              {organizerPayment &&
+                organizerPayment.map((payment) => (
+                  <OrganizerProfilePayments
+                    key={payment._id}
+                    payment={payment}
+                  />
+                ))}
+
+              {isOrganizerPaymentLoading && "Loading...."}
+            </div>
           </div>
         </div>
 
@@ -213,7 +229,7 @@ function OrganizerProfile() {
                 className="w-full h-[240px] rounded-lg bg-transparent border-2 border-gray-900 focus:outline-none p-3"
               />
             )}
-            {isLoading && "Loading...."}
+            {isOrganizerDetailLoading && "Loading...."}
           </div>
         </div>
         <div className="flex justify-end p-3">
