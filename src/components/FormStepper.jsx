@@ -22,6 +22,7 @@ const stepperReducer = (state, action) => {
 
 export function FormStepper() {
   const [isModal, setIsModal] = useState(false);
+  const [eventDataFromChildren, setEventDataFromChildren] = useState(null);
   const initialState = {
     activeStep: 0,
     isLastStep: false,
@@ -45,7 +46,7 @@ export function FormStepper() {
   };
 
   return (
-    <div className="w-full py-10 px-8">
+    <div className="w-full py-[80px] px-8">
       <Stepper
         lineClassName="bg-black/50"
         activeStep={state.activeStep}
@@ -62,6 +63,8 @@ export function FormStepper() {
         {state.activeStep === 1 && <CreateTicketsForm />}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
+
+      <p>event:data{eventDataFromChildren}</p>
 
       <div className="mt-16 flex justify-between">
         <Button onClick={handlePrev} disabled={state.isFirstStep}>

@@ -89,6 +89,10 @@ function App() {
               path: "/organizer/eventList/:organizerId/boostPayment",
               element: <OrganizerBoostPayment />,
             },
+            {
+              path: "/organizer/eventList/:organizerId/detail",
+              element: <EventDetail />,
+            },
           ],
         },
         {
