@@ -64,8 +64,6 @@ export function FormStepper() {
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
-      <p>event:data{eventDataFromChildren}</p>
-
       <div className="mt-16 flex justify-between">
         <Button onClick={handlePrev} disabled={state.isFirstStep}>
           Prev
