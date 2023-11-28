@@ -82,10 +82,10 @@ const OrganizerDashboard = () => {
 
   return (
     <>
-      <div className="w-full overflow-hidden">
-        <div className="flex flex-col md:flex-row justify-between items-center px-5 md:px-20 mx-auto pt-16 mb-3">
-          <h1 className="text-3xl mb-4 md:mb-0">
-            Organizer Dashboard{" "}
+      <div className="w-full overflow-hidden flex flex-col items-center">
+        <div className="flex w-full flex-col md:flex-row justify-between items-center px-5 md:px-20 mx-auto pt-16 mb-3">
+          <h1 className="text-2xl text-center md:text-3xl mb-4 md:mb-0">
+            Organizer Dashboard
             {allEventsByOrganizer &&
               queryParams &&
               allEventsByOrganizer.map((event) =>
@@ -121,8 +121,7 @@ const OrganizerDashboard = () => {
               </svg>
 
               <span className=" hidden sm:block">
-                {" "}
-                Back to overall dashboard{" "}
+                Back to overall dashboard
               </span>
             </span>
           )}
@@ -153,16 +152,16 @@ const OrganizerDashboard = () => {
                 <LineChart lineData={chartData.totalTicketSaleByEvent} />
               )}
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-3">
-              <h1 className=" sm:col-span-2  lg:col-span-3 p-3 mt3 mb-2 font-medium text-xl">
-                Your Events
-              </h1>
-              {allEventsByOrganizer &&
-                allEventsByOrganizer.map((event) => (
-                  <EventsByOrganizer key={event._id} event={event} />
-                ))}
-            </div>
           </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-3 mx-auto w-[85%] text-black">
+          <h1 className=" sm:col-span-2  lg:col-span-3 p-3 mt3 mb-2 font-medium text-2xl text-white">
+            Your Events
+          </h1>
+          {allEventsByOrganizer &&
+            allEventsByOrganizer.map((event) => (
+              <EventsByOrganizer key={event._id} event={event} />
+            ))}
         </div>
       </div>
     </>

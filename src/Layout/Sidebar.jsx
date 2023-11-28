@@ -24,7 +24,7 @@ const Sidebar = () => {
         backgroundColor: "#002C32",
         marginTop: "40px",
         borderTopLeftRadius: "20px",
-        width: "300px",
+        width: "310px",
         position: "relative",
         overflow: "hidden",
         position: "left",

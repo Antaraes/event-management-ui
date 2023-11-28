@@ -6,6 +6,9 @@ import CreatePaymentForm from "./forms/Event/CreatePaymentForm";
 import CreateTicketsForm from "./forms/Event/CreateTicketsForm";
 import AlertModal from "./common/AlertModal";
 import { AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
+import axios from "../api/axios";
+import { useParams } from "react-router-dom";
 
 const NEXT_STEP = "NEXT_STEP";
 const PREV_STEP = "PREV_STEP";
@@ -22,20 +25,38 @@ const stepperReducer = (state, action) => {
 
 export function FormStepper() {
   const [isModal, setIsModal] = useState(false);
-  const [eventDataFromChildren, setEventDataFromChildren] = useState(null);
   const initialState = {
     activeStep: 0,
     isLastStep: false,
     isFirstStep: true,
   };
-
   const [state, dispatch] = useReducer(stepperReducer, initialState);
-
-  const handleNext = () => {
+  const { organizerId } = useParams();
+  const event = useSelector((state) => state.global.eventData);
+  const ticketData = useSelector((state) => state.global.ticketData);
+  console.log("id", organizerId);
+  const handleNext = async () => {
     if (state.activeStep < 2) {
       dispatch({ type: NEXT_STEP });
     } else {
-      setIsModal(true);
+      const apiEndpoint = "/event/create";
+      const payload = {
+        event: {
+          ...event.event,
+          organizer: organizerId,
+          trendingLevel: 0,
+        },
+
+        tickets: ticketData,
+      };
+
+      try {
+        const response = await axios.post(apiEndpoint, payload);
+        console.log("Axios Response:", response.data);
+        //setIsModal(true);
+      } catch (error) {
+        console.error("Axios Error:", error);
+      }
     }
   };
 
@@ -44,6 +65,9 @@ export function FormStepper() {
       dispatch({ type: PREV_STEP });
     }
   };
+
+  // console.log("Event Data from Redux:", eventData);
+  console.log("Event Data from Redux:", ticketData);
 
   return (
     <div className="w-full py-[80px] px-8">
@@ -64,18 +88,18 @@ export function FormStepper() {
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
-      <p>event:data{eventDataFromChildren}</p>
-
       <div className="mt-16 flex justify-between">
         <Button onClick={handlePrev} disabled={state.isFirstStep}>
           Prev
         </Button>
         <Button onClick={handleNext} disabled={state.isLastStep}>
-          {state.activeStep === 2 ? "Submit" : "Next"}
+          {state.activeStep === 1 ? "Submit" : "Next"}
         </Button>
       </div>
       <AnimatePresence>
-        {isModal && <AlertModal isModal={setIsModal} children={<OtpComponent />} />}
+        {isModal && (
+          <AlertModal isModal={setIsModal} children={<OtpComponent />} />
+        )}
       </AnimatePresence>
     </div>
   );

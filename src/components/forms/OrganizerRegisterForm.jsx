@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import useRegister from "../../hooks/useRegister";
-import Form from "./Form";
+import { Checkbox } from "@material-tailwind/react";
+import Input from "./Input";
+import Select from "./Select";
+import ABAPay from "/payment/ABAPay.jpg";
+import Kpay from "/payment/kpay.png";
+import master from "/payment/master.png";
+import visa from "/payment/visa.png";
+import wave from "/payment/wave.png";
+import Spinner from "../common/Spinner";
+
 const OrganizerRegisterForm = () => {
   const {
     name,
@@ -11,10 +20,50 @@ const OrganizerRegisterForm = () => {
     contact,
     accountLevel,
     bio,
+
+    paymentDetails,
+    handlePaymentDetailsChange,
+    handlePayment,
     isLoading,
     onChange,
     onSubmit,
   } = useRegister();
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const items = [
+    {
+      id: 1,
+      name: "ABAPay",
+      img: ABAPay,
+    },
+    {
+      id: 2,
+      name: "KPay",
+      img: Kpay,
+    },
+    {
+      id: 3,
+      name: "Master Card",
+      img: master,
+    },
+    {
+      id: 4,
+      name: "Visa",
+      img: visa,
+    },
+    {
+      id: 5,
+      name: "Wave",
+      img: wave,
+    },
+  ];
+
+  const handleCheckboxChange = (itemId) => {
+    setCheckedItems((prevState) => ({
+      ...prevState,
+      [itemId]: !prevState[itemId],
+    }));
+  };
   const config = [
     {
       labelText: "Full Name",
@@ -102,13 +151,79 @@ const OrganizerRegisterForm = () => {
     },
   ];
   return (
-    <Form
-      config={config}
-      isLoading={isLoading}
-      btnText={"Sign Up"}
-      onChange={onChange}
-      onSubmit={onSubmit}
-    />
+    <form className="w-[80%] mx-auto  text-black " action="#" method="POST" onSubmit={onSubmit}>
+      <div className="flex justify-between  gap-10">
+        <div className="w-[70%]">
+          {config.map((item, index) => {
+            if (item.tag === "select") {
+              return (
+                <Select
+                  key={index}
+                  labelId={item.labelId}
+                  labelText={item.labelText}
+                  onChange={item.onChange} // Pass the onChange prop here
+                  value={item.value}
+                  required={item.required}
+                  options={item.options}
+                />
+              );
+            } else {
+              return (
+                <Input
+                  key={index}
+                  labelId={item.labelId}
+                  type={item.type}
+                  onChange={item.onChange} // Pass the onChange prop here
+                  value={item.value}
+                  required={item.required}
+                >
+                  {item.labelText}
+                </Input>
+              );
+            }
+          })}
+        </div>
+        <div className="bg-[#FEFEFA] p-10 overflow-y-scroll max-h-[500px] w-full rounded-lg">
+          <h1 className="text-2xl font-semibold mb-8">Payment System</h1>
+          {items.map((item) => (
+            <div key={item.id} className="mb-2">
+              <label className="flex items-center">
+                <Checkbox
+                  checked={checkedItems[item.id] || false}
+                  onChange={() => handleCheckboxChange(item.id)}
+                />
+
+                <img src={item.img} width={50} height={50} className="rounded ml-2" alt="" />
+                <span className="ml-3">{item.name}</span>
+              </label>
+              {checkedItems[item.id] && (
+                <div className="my-7 gap-5">
+                  <div>
+                    <label className="text-sm">Enter Card Number or Phone Number</label>
+                    <input
+                      type="text"
+                      onChange={(e) => {
+                        handlePaymentDetailsChange(item.name, "phone", e.target.value);
+                      }}
+                      placeholder={`Card No. <or> Ph No. for ${item.name}`}
+                      className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer tracking-wider"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="flex items-center justify-end ">
+        <button
+          type="submit"
+          className="flex px-5 py-2 mt-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
+        >
+          {isLoading ? <Spinner sm /> : "Sign Up"}
+        </button>
+      </div>
+    </form>
   );
 };
 

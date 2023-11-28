@@ -4,6 +4,9 @@ import useEventRegister from "../../../hooks/useEventRegister";
 import DatePicker from "../DatePicker";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setEventData } from "../../../redux/global/globalSlice";
+import { useParams } from "react-router-dom";
 
 const CreateEventForm = () => {
   const {
@@ -103,6 +106,7 @@ const CreateEventForm = () => {
       value: new Date(),
     },
   ]);
+  const dispatchRedux = useDispatch();
 
   const handleDatePickerChange = (selectedDate, labelId) => {
     const labelIdExists = date.some((item) => item.labelId === labelId);
@@ -139,10 +143,15 @@ const CreateEventForm = () => {
       ...formattedFile,
       ...formattedDate,
     };
-    return { event: eventData };
+    return { event : eventData };
   };
 
-  console.log(formattedData());
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const data = formattedData();
+    dispatchRedux(setEventData(data));
+  };
 
   return (
     <div className="mx-24 mt-8 p-10 border-2">
@@ -185,6 +194,7 @@ const CreateEventForm = () => {
             {item.labelText}
           </Input>
         ))}
+        <button onClick={(e) =>handleFormSubmit(e)}>Submit</button>
       </form>
     </div>
   );

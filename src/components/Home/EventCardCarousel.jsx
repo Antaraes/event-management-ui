@@ -12,7 +12,31 @@ import 'swiper/css/effect-coverflow';
 
 const EventCardCarousel = ({events}) => {
     return ( 
-        <Swiper
+      <>
+        <Swiper className="md:hidden"
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Pagination]}
+        slidesPerView={'1'}
+        navigation
+        pagination
+        autoplay
+        centeredSlides={true}
+        loop={true}
+        spaceBetween={60}
+        style={{
+          "--swiper-pagination-color": "#FFFFFF",
+          "--swiper-pagination-bullet-inactive-color": "#999999",
+          "--swiper-pagination-bullet-inactive-opacity": "1",
+          "--swiper-pagination-bullet-size": "10px",
+          "--swiper-pagination-bullet-horizontal-gap": "6px"
+        }}
+      >
+        {events.map((event, index) => {
+          return <SwiperSlide key={index} size={1}>
+            <EventCard key={index} event={event} />
+          </SwiperSlide>;
+        })}
+        </Swiper>
+        <Swiper className="hidden md:block"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Pagination]}
         slidesPerView={'2'}
         navigation
@@ -30,11 +54,12 @@ const EventCardCarousel = ({events}) => {
         }}
       >
         {events.map((event, index) => {
-          return <SwiperSlide key={index}>
+          return <SwiperSlide key={index} size={1}>
             <EventCard key={index} event={event} />
           </SwiperSlide>;
         })}
       </Swiper>
+      </>
      );
 }
  
