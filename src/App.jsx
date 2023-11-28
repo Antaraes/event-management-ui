@@ -85,7 +85,7 @@ function App() {
         },
 
         {
-          path: "/create-event",
+          path: "/create-event/:organizerId",
           element: <CreateEvent />,
         },
         {

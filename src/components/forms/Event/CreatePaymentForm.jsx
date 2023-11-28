@@ -3,62 +3,121 @@ import React from "react";
 import { useState } from "react";
 import ABAPay from "/payment/ABAPay.jpg";
 import Kpay from "/payment/kpay.png";
-import master from "/payment/master.png";
-import visa from "/payment/visa.png";
+import Master from "/payment/master.png";
+import VISA from "/payment/visa.png";
 import wave from "/payment/wave.png";
-const CreatePaymentForm = () => {
-  const [checkedItems, setCheckedItems] = useState({});
+import axios from "../../../api/axios";
+import { useEffect } from "react";
+import { useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { setPaymentType } from "../../../redux/global/globalSlice";
+import SelectOption from "@material-tailwind/react/components/Select/SelectOption";
 
-  const items = [
+const CreatePaymentForm = () => {
+  const { organizerId } = useParams();
+  const [checkedItems, setCheckedItems] = useState({});
+  const [items, setItems] = useState([]);
+  const paymentImages = [
     {
-      id: 1,
-      name: "ABAPay",
+      title: "ABAPay",
       img: ABAPay,
     },
     {
-      id: 2,
-      name: "KPay",
+      title: "KPay",
       img: Kpay,
     },
     {
-      id: 3,
-      name: "Master Card",
-      img: master,
+      title: "Master",
+      img: Master,
     },
     {
-      id: 4,
-      name: "Visa",
-      img: visa,
+      title: "VISA",
+      img: VISA,
     },
     {
-      id: 5,
-      name: "Wave",
+      title: "wave",
       img: wave,
     },
   ];
+  const [selectedPaymentType, setSelectedPaymentType] = useState([]);
 
+  const dispatchRedux = useDispatch();
+
+  useEffect(() => {
+    axios
+      .get(`organizer-payment/all/${organizerId}`)
+      .then((response) => {
+        setItems(response.data);
+        setCheckedItems(response.data._id);
+        return response.data;
+      })
+      .then((response) => 
+        setSelectedPaymentType(response)
+      )
+      .catch((error) => console.log(error.message));
+    items.map((item) => {
+      setSelectedPaymentType(item._id);
+    });
+  }, []);
+
+  useEffect(() => {
+    dispatchRedux(setPaymentType(checkedItems));
+  }, [checkedItems]);
+
+  console.log("useState", items);
+  console.log("sele", selectedPaymentType);
+  console.log(checkedItems);
+  
   const handleCheckboxChange = (itemId) => {
-    setCheckedItems((prevState) => ({
-      ...prevState,
-      [itemId]: !prevState[itemId],
-    }));
+    setCheckedItems((prevState) => {
+      const updatedCheckedItems = { ...prevState };
+      if (updatedCheckedItems[itemId]) {
+        delete updatedCheckedItems[itemId];
+      } else {
+        updatedCheckedItems[itemId] = true;
+      }  
+      return updatedCheckedItems;
+    });
   };
+  
+
   return (
     <>
       <div className=" mt-8 text-white p-12 w-full rounded-lg">
-        <h1 className="text-2xl mb-8">Please choose which Paymant System do you wanna use.</h1>
+        <h1 className="text-2xl mb-8">
+          Please choose which Paymant System do you wanna use.
+        </h1>
+
+        {/* <div className="text-primary mb-[20px]">
+          <select
+            name="payments"
+            id="payments"
+            onChange={(e) =>
+              setSelectedPaymentType({ paymentType: e.target.value })
+            }
+          >
+            {items.map((item) => (
+              <option value={item._id}>{item.name}</option>
+            ))}
+          </select>
+        </div> */}
+
         {items.map((item) => (
-          <div key={item.id} className="mb-10 ">
+          <div key={item._id} className="mb-10 ">
             <label className="flex items-center">
               <Checkbox
-                checked={checkedItems[item.id] || false}
-                onChange={() => handleCheckboxChange(item.id)}
-              />
+              onChange={() => handleCheckboxChange(item._id)}/>
 
-              <img src={item.img} width={50} height={50} className="rounded ml-2" alt="" />
+              <img
+                src={item.img}
+                width={50}
+                height={50}
+                className="rounded ml-2"
+                alt=""
+              />
               <span className="ml-3">{item.name}</span>
             </label>
-            {checkedItems[item.id] && (
+            {/* {checkedItems[item._id] && (
               <div className="my-7 grid grid-cols-2 gap-5">
                 <div>
                   <label>Enter Card Number or Phone Number</label>
@@ -77,7 +136,7 @@ const CreatePaymentForm = () => {
                   />
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         ))}
       </div>
