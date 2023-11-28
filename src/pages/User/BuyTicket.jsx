@@ -24,7 +24,7 @@ const BuyTicket = () => {
   return (
     <>
       <section>
-        <div className="mt-10">
+        <div className="">
           <img
             src={event.thumbnail}
             alt=""
@@ -125,7 +125,9 @@ const BuyTicket = () => {
         </div>
       </section>
       <AnimatePresence>
-        {isModal && <AlertModal isModal={setIsModal} children={<OtpComponent />} />}
+        {isModal && (
+          <AlertModal isModal={setIsModal} children={<OtpComponent />} />
+        )}
       </AnimatePresence>
     </>
   );
