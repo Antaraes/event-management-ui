@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
-import axios from "../../../api/axios";
+import { useDispatch } from "react-redux";
+import { setEventData, setTicketData } from "../../../redux/global/globalSlice";
 
 const CreateTicketsForm = () => {
   const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ const CreateTicketsForm = () => {
   const [tableData, setTableData] = useState([]);
   const [disabledRows, setDisabledRows] = useState([]);
   const [allowEdit, setAllowEdit] = useState(false);
+  const dispatchRedux = useDispatch();
 
   const formElementArray = [];
   for (let key in formData.form) {
@@ -80,13 +82,8 @@ const CreateTicketsForm = () => {
     setAllowEdit(!allowEdit);
   };
 
-  // const handleInputChange = (e, index) => {
-  //   const updatedTableData = [...tableData];
-  //   updatedTableData[index][e.target.name] = e.target.value;
-  //   setTableData(updatedTableData);
-  // };
-
-  const handleShow = () => {
+  const handleShow = (e) => {
+    e.preventDefault();
     const insert = [...tableData];
     const formattedData = [];
     for (let key in tableData) {
@@ -97,7 +94,7 @@ const CreateTicketsForm = () => {
         ticketPerPrice: tableData[key][2].config.value,
       });
     }
-    console.log("formatedData: ", formattedData, "tableData", tableData);
+    dispatchRedux(setTicketData(formattedData));
   };
 
   return (
