@@ -28,8 +28,8 @@ const EventDetailCarousel = () => {
   ]
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="w-[800px] h-[500px]">
+    <div className="h-full flex items-center justify-center">
+      <div className="">
         <ImageSlider images={images}/>
       </div>
     </div>
@@ -37,3 +37,4 @@ const EventDetailCarousel = () => {
 };
 
 export default EventDetailCarousel;
+ 

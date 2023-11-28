@@ -7,11 +7,10 @@ import { useDispatch } from "react-redux";
 import { setUserActive } from "../../redux/global/globalSlice";
 
 const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
-
   const dispatch = useDispatch();
 
   return (
-    <form className="space-y-6 text-black" action="#" method="POST" onSubmit={onSubmit}>
+    <form className="space-y-6 text-black w-full" action="#" method="POST" onSubmit={onSubmit}>
       {config.map((item, index) => {
         if (item.tag === "select") {
           return (
@@ -40,17 +39,16 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
           );
         }
       })}
-      <div className="flex items-center justify-center py-5">
-        <Link onClick={() => dispatch(setUserActive(true))} to='/organizer/dashboard/655db72a40abeabdf4678ec9'
+      <div className="flex items-center justify-center ">
+        <button
           type="submit"
           className="flex px-5 py-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
         >
           {isLoading ? <Spinner sm /> : btnText}
-        </Link>
+        </button>
       </div>
     </form>
   );
 };
-
 
 export default Form;

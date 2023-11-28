@@ -1,8 +1,4 @@
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
-});
+import API from "./interceptors";
 
 //Auth
 export const verification = (userId, token) =>
@@ -32,12 +28,21 @@ export const manageOrganizerPhone = (organizerId, organizerPhone) =>
 export const manageOrganizerEmail = (organizerId, organizerEmail) =>
   API.patch(`/organizer/update_email/${organizerId}/${organizerEmail}`);
 
+//Organizer Payment
+export const getAllPaymentFromOrganizer = (organizerId) =>
+  API.get(`/organizer-payment/all/${organizerId}`);
+export const updateOrganizerPayment = (paymentId, paymentData) =>
+  API.put(`/organizer-payment/update/${paymentId}`, paymentData);
+
 //Event
-export const getEvents = () => API.get("/event/");
-export const getEventById = (eventId) => API.get(`/event/${eventId}`);
+export const getEvents = (query) => API.get(`/event/${query}`);
+export const getEventById = (eventId) => API.get(`/event/find/${eventId}`);
+
 export const searchEvents = (query) => API.get(`/event/search${query}`);
 export const sortEvents = (query) => API.get(`/event/sort${query}`);
 export const sortTrending = (query) => API.get(`/event/boots${query}`);
+export const getEventByOrganizerId = (OrganizerId) =>
+  API.get(`/event/events-by-organizer/${OrganizerId}`);
 
 export const createEvent = (data) => API.post(`/event/create`, data);
 export const boostEvent = (eventId) => API.post(`/event/boots/${eventId}`);
@@ -87,7 +92,9 @@ export const deactivateAccount = (accountId, data) =>
   API.put(`/admin/deactivate/${accountId}`, data);
 
 //Organizer Dashboard
-export const getOrganizerDashboardBarChartData = (organizerId) =>
-  API.get(`/organizer-dashboard/barchart/${organizerId}`);
-export const getOrganizerDashboardOverviewData = (organizerId) =>
-  API.get(`/organizer-dashboard/overview-data/${organizerId}`);
+export const getOrganizerDashboardBarChartData = (organizerId, queryParams) =>
+  API.get(`/organizer-dashboard/barchart/${organizerId}?${queryParams}`);
+export const getOrganizerDashboardOverviewData = (organizerId, queryParams) =>
+  API.get(`/organizer-dashboard/overview-data/${organizerId}?${queryParams}`);
+export const getEventsByOrganizerId = (organizerId) =>
+  API.get(`/event/events-by-organizer/${organizerId}`);

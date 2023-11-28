@@ -11,8 +11,16 @@
 }
 
 body {
-    background: #000;
     overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+.black-gradient {
+    @apply bg-gradient-to-r from-[#111] to-[#333]
+}
+
+.bg-glass-transparent {
+    @apply bg-gradient-to-r from-[#fff2] to-[#fff3] backdrop-blur-[2px]
 }
 
 /* pagination style */
@@ -37,4 +45,7 @@ body {
     background: transparent !important;
 }
 
-
+/* Date Range Picker */
+.rdrStaticRangeLabel {
+    @apply text-gray-800 hover:text-blue-gray-500
+}

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  useLocation,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -27,8 +23,12 @@ import CreateEvent from "./pages/User/CreateEvent";
 import BuyTicket from "./pages/User/BuyTicket";
 import PageNotFound from "./pages/PageNotFound";
 import BecomeAnOrganizer from "./pages/User/BecomeAnOrganizer";
+import { useSelector } from "react-redux";
+import OrganizerEventList from "./pages/User/OrganizerEventList";
+import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 
 function App() {
+  const user = useSelector((state) => state.auth.user);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -60,7 +60,7 @@ function App() {
         },
 
         {
-          path: "/create-event",
+          path: "/create-event/:organizerId",
           element: <CreateEvent />,
         },
         {
@@ -81,6 +81,18 @@ function App() {
             {
               path: "/organizer/subscriptions",
               element: <Subscription />,
+            },
+            {
+              path: "/organizer/eventList/:organizerId",
+              element: <OrganizerEventList />,
+            },
+            {
+              path: "/organizer/eventList/:organizerId/boostPayment",
+              element: <OrganizerBoostPayment />,
+            },
+            {
+              path: "/organizer/eventList/:organizerId/detail",
+              element: <EventDetail />,
             },
           ],
         },

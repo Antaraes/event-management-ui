@@ -11,7 +11,9 @@ export default function CardList({ data,link }) {
   const startIndex = currentPage * itemsPerPage;
   const endPage = currentPage + itemsPerPage;
 
-  const currentData = data.slice(startIndex, endPage);
+  console.log("Data",data);
+
+  // const currentData = data.slice(startIndex, endPage);
 
   const handlePageChange = (selected) => {
     setCurrentPage(selected)
@@ -19,10 +21,10 @@ export default function CardList({ data,link }) {
 
   return (
     <section>
-      <section className="grid grid-cols-3 justify-center">
+      <section className="grid grid-cols-2 sm:grid-cols-3 justify-center">
         {
           data.map((d,index) => {
-            return (<Card data={d} link={`${link + d.id}`} key={index}/>)
+            return (<Card data={d} link={`${link + d._id}`} key={index}/>)
           })
         }
       </section>

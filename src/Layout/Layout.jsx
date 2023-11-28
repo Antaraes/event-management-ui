@@ -6,12 +6,10 @@ import Sidebar from "./Sidebar";
 
 const Layout = () => {
   return (
-    <div className="h-screen w-screen bg-primary">
+    <div className="h-screen w-screen">
       <Sidebar />
       <Navbar />
-      <div className="p-5">
-        <Outlet />
-      </div>
+      <Outlet />
       <Footer />
     </div>
   );
