@@ -23,7 +23,7 @@ export default function useLogin() {
         console.log(res.data.user);
         dispatch(setUser(res.data.user));
         toast.success("Login Sucessfully");
-        navigate("/");
+        navigate("/organizer/profile");
       })
       .catch(() => {
         toast.error("Failed to login account");

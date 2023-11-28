@@ -27,11 +27,12 @@ import { useSelector } from "react-redux";
 import OrganizerEventList from "./pages/User/OrganizerEventList";
 import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 import OrganizerInvoices from "./pages/User/OrganizerInvoices";
+import ProtectedRoute from "./helper/ProtectedRoute";
 
 function App() {
-  const user = useSelector((state) => state.auth.user);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-
+  console.log(user, isAuthenticated);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -41,7 +42,7 @@ function App() {
       path: "/user/login",
       element: <LoginPage />,
     },
-   
+
     {
       path: "/user/register",
       element: <RegisterPage />,
@@ -61,16 +62,17 @@ function App() {
         },
 
         {
-          path: "/create-event/:organizerId",
-          element: <CreateEvent />,
-        },
-        {
           path: "/create-ticket",
           element: <BuyTicket />,
         },
         {
           path: "/organizer",
+          // element: <ProtectedRoute />,
           children: [
+            {
+              path: "/organizer/create-event/:organizerId",
+              element: <CreateEvent />,
+            },
             {
               path: "/organizer/profile/:organizerId",
               element: <OrganizerProfile />,
@@ -119,8 +121,8 @@ function App() {
         },
         {
           path: "become-organizer",
-          element: <BecomeAnOrganizer/>
-        }
+          element: <BecomeAnOrganizer />,
+        },
       ],
     },
     {
