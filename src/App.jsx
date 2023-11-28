@@ -26,6 +26,7 @@ import BecomeAnOrganizer from "./pages/User/BecomeAnOrganizer";
 import { useSelector } from "react-redux";
 import OrganizerEventList from "./pages/User/OrganizerEventList";
 import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
+import OrganizerInvoices from "./pages/User/OrganizerInvoices";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -77,6 +78,10 @@ function App() {
             {
               path: "/organizer/dashboard/:organizerId",
               element: <OrganizerDashboard />,
+            },
+            {
+              path: "/organizer/invoices/:organizerId",
+              element: <OrganizerInvoices />,
             },
             {
               path: "/organizer/subscriptions",
