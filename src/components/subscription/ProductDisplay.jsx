@@ -10,22 +10,32 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => (
   <div className="flex items-center justify-center">
     <div
       className={` ${
-        recommend ? "h-[450px] w-[350px]" : "h-[400px] mt-2 w-[300px]"
+        recommend ? "lg:h-[450px] lg:w-[350px] h-[400px] mt-2 w-[300px]" : "h-[400px] mt-2 w-[300px]"
       } ${
-        title == "Platinum User"
+        title == "Platinum"
           ? "text-cyan-300 border-cyan-300"
-          : title == "Gold User"
+          : title == "Gold"
           ? "text-amber-400 border-amber-400"
           : "text-white border-white"
-      } bg-transparent rounded-[10px] shadow-[0px 1px 2px primary] border divide-y`}
+      } bg-transparent rounded-[10px] shadow-[0px 1px 2px primary] border-[3px] divide-y`}
     >
-      <div className={`pt-[15px] px-[25px] pb-[25px] h-[80%]`}>
+     
+      <div className={`pt-[15px] px-[25px] pb-[25px] h-[80%] relative overflow-hidden`}>
+      {
+            recommend && <p>
+              {title == "Gold" &&
+              <span className="py-1 p-5 -z-1 overflow-hidden absolute -rotate-[45deg] bg-yellow-400 text-black top-[18px] -left-6 text-xs">Recommend</span>
+          }{title == "Platinum" &&
+          <span className="py-1 p-5 -z-50 overflow-hidden absolute -rotate-[45deg] bg-cyan-900 text-white top-[18px] -left-6 text-xs">Recommend</span>
+      }
+            </p>
+          }
         <div className={`flex justify-center`}>
           <p
             className={` ${
-              title == "Platinum User"
+              title == "Platinum"
                 ? "text-cyan-300"
-                : title == "Gold User"
+                : title == "Gold"
                 ? "text-amber-400"
                 : "text-white"
             } text-center text-3xl leading-[28px] font-bold`}
@@ -35,19 +45,11 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => (
         </div>
         <div>
           <p
-            className={` text-center py-5 text-[19px] leading-[24px] font-bold`}
+            className={` text-center py-5 text-[15px] leading-[24px] font-bold`}
           >
             {price}
           </p>
-          {
-            recommend && <p className="flex justify-center items-center mb-3">
-              {title == "Gold User" &&
-              <span className="text-lg font-semibold border bg-amber-800 text-white py-2 px-5 rounded-3xl">Recommended</span>
-          }{title == "Platinum User" &&
-          <span className="text-lg font-semibold border bg-cyan-500 text-white py-2 px-5 rounded-3xl">Recommended</span>
-      }
-            </p>
-          }
+          
         </div>
 
         <div className=" ">
@@ -55,12 +57,12 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => (
             <li
               key={index}
               className={`${
-                title == "Platinum User"
+                title == "Platinum"
                   ? "text-cyan-400"
-                  : title == "Gold User"
+                  : title == "Gold"
                   ? "text-yellow-500"
                   : "text-white"
-              } text-[18px] leading-[35px] font-medium `}
+              } text-[14px] lg:text-[15px] xl:text-[18px] leading-[45px] font-medium `}
             >
               {feature}
             </li>
@@ -69,27 +71,27 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => (
       </div>
       <div
         className={`${
-          title == "Platinum User"
+          title == "Platinum"
             ? "pt-[26px] border-t-cyan-300"
-            : title == "Gold User"
+            : title == "Gold"
             ? "pt-5 border-t-yellow-500"
             : "pt-5 border-t-white"
-        }  px-5`}
+        }  px-5 border-none`}
       >
         <form
           action="http://localhost:4242/create-checkout-session"
           method="POST"
-          className="flex items-center justify-start"
+          className="flex items-center justify-center"
         >
           <input type="hidden" name="product_id" value={product_id} />
           <button
             className={`${
-              title == "Platinum User"
+              title == "Platinum"
                 ? "bg-transparent border border-cyan-300 text-cyan-300 hover:bg-cyan-300"
-                : title == "Gold User"
+                : title == "Gold"
                 ? "bg-transparent border border-yellow-400 text-yellow-400 hover:bg-yellow-400"
                 : "bg-transparent border border-white hover:bg-white"
-            } hover:text-black hover:font-bold m-0 rounded-3xl px-5 py-2 text-sidemenu text-[14px] leading-[17px] font-semibold`}
+            } hover:text-black hover:font-bold m-0 rounded-3xl w-full py-2 text-sidemenu text-[14px] leading-[17px] font-semibold`}
             type="submit"
           >
             Check out

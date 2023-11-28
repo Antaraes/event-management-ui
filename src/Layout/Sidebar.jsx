@@ -22,15 +22,10 @@ const Sidebar = () => {
       direction="right"
       style={{
         backgroundColor: "#002C32",
-        marginTop: "40px",
-        borderTopLeftRadius: "20px",
-        width: "310px",
-        position: "relative",
-        overflow: "hidden",
-        position: "left",
       }}
+      className="mt-[40px] min-w-[320px] relative overflow-hidden right -0 sm:rounded-tl-2xl"
     >
-      <span className="h-14 w-[1000px] z-10 -left-[244px] overflow-hidden top-10 absolute -rotate-45 bg-navbrand/80"></span>
+      <span className="h-14 w-[1200px] z-10 -left-[376.3px] overflow-hidden top-10 absolute -rotate-[62deg] bg-navbrand/80"></span>
       <NavBarMenu />
       {isUserActive && (
         <div className="bg-[#ffffff1e] absolute ps-5 pt-10 py-20 w-full bottom-0 flex justify-center items-center gap-x-2 shadow-md">

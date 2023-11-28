@@ -1,7 +1,13 @@
-import { Card, CardHeader, CardBody, Typography, Button } from "@material-tailwind/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+  Button,
+} from "@material-tailwind/react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-export function TicketTypeCard({ type, price, image }) {
+export function TicketTypeCard({ type, price, image, availableTicketCount }) {
   const [quantity, setQuantity] = useState(0);
   const TABLE_HEAD = ["Type", "Price", "Quantity"];
 
@@ -19,28 +25,34 @@ export function TicketTypeCard({ type, price, image }) {
     }
   };
   return (
-    <Card className="w-full max-w-full flex-row bg-transparent ">
+    <Card className="w-[98%] my-4 lg:w-[70%] flex flex-col md:flex-row bg-transparent px-2 lg:ml-6">
       <CardHeader
         shadow={false}
         floated={false}
-        className="m-0 relative w-2/5 shrink-0 rounded-r-none"
+        className="m-0 relative  w-full h-40 md:w-2/5 shrink-0  lg:rounded-r-none overflow-hidden"
       >
         <p className="absolute  top-4 px-10 -right-[2.5rem] rotate-45 bg-yellow-500 text-black font-bold ">
           {type}
         </p>
-        <p className="absolute bottom-0 text-white">Avaiable 15x</p>
-        <img src={image} alt="card-image" className="h-full w-full object-cover" />
+        <p className="absolute bottom-2  left-2 text-white tracking-wide">
+          {availableTicketCount}x Avaiable
+        </p>
+        <img
+          src={image}
+          alt="card-image"
+          className="h-full w-full  object-cover"
+        />
       </CardHeader>
-      <CardBody>
-        <table className="w-full min-w-max table-auto text-left">
+      <CardBody className="bg-gray-800 w-full lg:w-fit text-white bg-opacity-25 rounded-b-lg lg:rounded-e-lg ">
+        <table className="w-full text-left">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
-                <th key={head} className="border-b  p-4 px-10">
+                <th key={head} className="border-b  py-2 lg:p-4 lg:px-10">
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-normal leading-none text-white"
+                    className="font-bold text-base leading-none text-white"
                   >
                     {head}
                   </Typography>
@@ -48,7 +60,7 @@ export function TicketTypeCard({ type, price, image }) {
               ))}
             </tr>
           </thead>
-          <tbody className="text-center">
+          <tbody className="text-start lg:text-center">
             <tr>
               <td>
                 <Typography variant="small" className="font-normal py-3">
@@ -63,7 +75,7 @@ export function TicketTypeCard({ type, price, image }) {
               <td>
                 <Typography
                   variant="small"
-                  className="font-normal flex  items-center justify-center gap-4"
+                  className="font-normal flex  items-center justify-start lg:justify-center gap-4"
                 >
                   <Icon
                     icon={"fluent:subtract-12-filled"}
@@ -71,7 +83,11 @@ export function TicketTypeCard({ type, price, image }) {
                     onClick={subtractQuantity}
                   />
                   {quantity}
-                  <Icon icon={"mdi:plus"} className=" cursor-pointer" onClick={addQuantity} />
+                  <Icon
+                    icon={"mdi:plus"}
+                    className=" cursor-pointer"
+                    onClick={addQuantity}
+                  />
                 </Typography>
               </td>
             </tr>
