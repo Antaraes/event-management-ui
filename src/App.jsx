@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
@@ -25,11 +25,33 @@ import PageNotFound from "./pages/PageNotFound";
 import { useSelector } from "react-redux";
 import OrganizerEventList from "./pages/User/OrganizerEventList";
 import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
+import * as api from "./api/index";
+import Cookies from "js-cookie";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
   console.log(user);
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const checkTokenExpiration = async () => {
+      const accessToken = Cookies.get("accessToken");
+      console.log(accessToken);
+
+      if (accessToken) {
+        try {
+          if (exp * 1000 - Date.now() < 5 * 60 * 1000) {
+            await api.generateAccessToken();
+          }
+        } catch (error) {
+          console.error("Error decoding access token:", error);
+        }
+      }
+    };
+
+    const intervalId = setInterval(checkTokenExpiration, 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);

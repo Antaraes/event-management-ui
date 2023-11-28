@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import OTPInput from "react-otp-input";
+import * as api from "../../api/index";
 
 const OtpComponent = () => {
   const [otp, setOtp] = useState("");
+  const resetOTPCodehandle = () => {
+    api.getOTPCode({ email: "minbhonethantes@gmail.com" });
+  };
+
+  const verifyOTPCode = (code) => {
+    const isComfirm = api.verifyOTPcode(code);
+    console.log(isComfirm);
+  };
 
   return (
     <div className="flex bg-primary justify-center flex-col mt-10 items-center gap-24 rounded-lg shadow-sm shadow-slate-800 border-gray-900 border-2 w-[60%] mx-auto  h-[88vh]">
@@ -43,10 +52,16 @@ const OtpComponent = () => {
         renderInput={(props) => <input {...props} />}
       />
       <div className="flex justify-between w-[80%] mt-6">
-        <button className="underline decoration-secondary hover:-translate-y-1 duration-300 transition-all hover:text-secondary">
+        <button
+          className="underline decoration-secondary hover:-translate-y-1 duration-300 transition-all hover:text-secondary"
+          onClick={resetOTPCodehandle}
+        >
           Resent OTP Code
         </button>
-        <button className="bg-secondary p-3 w-24 rounded-md text-white hover:-translate-y-1 duration-300 transition-all">
+        <button
+          className="bg-secondary p-3 w-24 rounded-md text-white hover:-translate-y-1 duration-300 transition-all"
+          onClick={verifyOTPCode}
+        >
           Submit
         </button>
       </div>
