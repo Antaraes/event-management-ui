@@ -33,16 +33,16 @@ const BuyTicket = () => {
 
   return (
     <>
-      <section>
-        <div className="">
+      <section className="min-w-full max-w-fit inline-block">
+        <div className="min-w-full">
           <img
             src={event.thumbnail}
             alt=""
-            className=" w-screen h-[40vh] object-cover rounded-md grayscale-0 items-center"
+            className="w-full h-[40vh] object-cover rounded-md grayscale-0"
           />
         </div>
-        <div className="flex my-5 ">
-          <div className="w-[55%]">
+        <div className="flex w-full flex-col lg:flex-row lg:gap-8 my-5 lg:justify-around">
+          <div className="w-full lg:w-[55%]">
             {ticketData &&
               ticketData.map((availableTicket) => (
                 <TicketTypeCard
@@ -68,10 +68,10 @@ const BuyTicket = () => {
             )}
           </div>
 
-          <div className="w-[35%] p-4 border border-gray-300">
+          <div className="w-[92%] mx-auto lg:w-[35%] p-4 border border-gray-300 rounded-lg mt-4 lg:mt-0">
             <h1 className="text-center">Purchase</h1>
             <form action="" method="POST" className="my-5 ">
-              <div className="px-5 py-10 grid grid-cols-2 gap-10">
+              <div className="px-5 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
                 <Input
                   key={"email"}
                   labelId={"email"}
@@ -86,7 +86,7 @@ const BuyTicket = () => {
                   key={"name"}
                   labelId={"name"}
                   type={"name"}
-                  onChange={(event) => onChange("name", event)} // Pass the onChange prop here
+                  onChange={(event) => onChange("name", event)}
                   value={name}
                   required
                 >
@@ -96,7 +96,7 @@ const BuyTicket = () => {
                   key={"payment"}
                   labelId={"payment"}
                   labelText={"Payment"}
-                  onChange={(event) => onChange("payment", event)} // Pass the onChange prop here
+                  onChange={(event) => onChange("payment", event)}
                   value={payment}
                   required
                   options={[
@@ -115,20 +115,20 @@ const BuyTicket = () => {
                   ]}
                 />
               </div>
-              <hr />
-              <div className="flex justify-between mt-2">
+              <hr className="md:hidden" />
+              <div className="flex flex-col md:flex-row justify-between mt-2">
                 <div className="flex gap-2">
                   <p>Total Ticket:</p>
                   <p>2x</p>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 mt-2 md:mt-0">
                   <p>Total Price:</p>
                   <p>100</p>
                 </div>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-end md:justify-between">
                 <div></div>
-                <button className="mt-10 " onClick={(e) => onSubmit(e)}>
+                <button className="mt-10 md:mt-0" onClick={(e) => onSubmit(e)}>
                   Purchase
                 </button>
               </div>
