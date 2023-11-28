@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
@@ -22,15 +23,17 @@ import { Toaster } from "react-hot-toast";
 import CreateEvent from "./pages/User/CreateEvent";
 import BuyTicket from "./pages/User/BuyTicket";
 import PageNotFound from "./pages/PageNotFound";
+import BecomeAnOrganizer from "./pages/User/BecomeAnOrganizer";
 import { useSelector } from "react-redux";
 import OrganizerEventList from "./pages/User/OrganizerEventList";
 import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 import * as api from "./api/index";
 import Cookies from "js-cookie";
+import OrganizerInvoices from "./pages/User/OrganizerInvoices";
+
 
 function App() {
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const checkTokenExpiration = async () => {
@@ -62,6 +65,7 @@ function App() {
       path: "/user/login",
       element: <LoginPage />,
     },
+
     {
       path: "/user/register",
       element: <RegisterPage />,
@@ -81,11 +85,11 @@ function App() {
         },
 
         {
-          path: "/create-event/:organizerId",
+          path: "/create-event",
           element: <CreateEvent />,
         },
         {
-          path: "/create-ticket",
+          path: "/buy-ticket/:eventId",
           element: <BuyTicket />,
         },
         {
@@ -98,6 +102,10 @@ function App() {
             {
               path: "/organizer/dashboard/:organizerId",
               element: <OrganizerDashboard />,
+            },
+            {
+              path: "/organizer/invoices/:organizerId",
+              element: <OrganizerInvoices />,
             },
             {
               path: "/organizer/subscriptions",
@@ -132,6 +140,10 @@ function App() {
         {
           path: "/event/detail/:id",
           element: <EventDetail />,
+        },
+        {
+          path: "become-organizer",
+          element: <BecomeAnOrganizer />,
         },
       ],
     },

@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "../components/Admin/sidebar";
+//import Sidebar from "../components/Admin/sidebar";
 import { Outlet } from "react-router-dom";
 
 const AdminLayout = () => {

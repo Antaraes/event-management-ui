@@ -84,8 +84,8 @@ const OrganizerDashboard = () => {
     <>
       <div className="w-full overflow-hidden flex flex-col items-center">
         <div className="flex w-full flex-col md:flex-row justify-between items-center px-5 md:px-20 mx-auto pt-16 mb-3">
-          <h1 className="text-3xl mb-4 md:mb-0">
-            Organizer Dashboard{" "}
+          <h1 className="text-2xl text-center md:text-3xl mb-4 md:mb-0">
+            Organizer Dashboard
             {allEventsByOrganizer &&
               queryParams &&
               allEventsByOrganizer.map((event) =>
@@ -121,8 +121,7 @@ const OrganizerDashboard = () => {
               </svg>
 
               <span className=" hidden sm:block">
-                {" "}
-                Back to overall dashboard{" "}
+                Back to overall dashboard
               </span>
             </span>
           )}

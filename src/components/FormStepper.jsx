@@ -46,9 +46,8 @@ export function FormStepper() {
           ...event.event,
           organizer: organizerId,
           trendingLevel: 0,
+          tickets: ticketData
         },
-
-        tickets: ticketData,
       };
 
       try {
@@ -66,9 +65,6 @@ export function FormStepper() {
       dispatch({ type: PREV_STEP });
     }
   };
-
-  // console.log("Event Data from Redux:", eventData);
-  console.log("Event Data from Redux:", ticketData);
 
   return (
     <div className="w-full py-[80px] px-8">
