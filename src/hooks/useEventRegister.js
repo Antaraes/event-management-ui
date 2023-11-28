@@ -11,6 +11,7 @@ export default function useEventRegister() {
     contact: "",
     location: "",
     thumbnail: "",
+    ticket: [],
     description: "",
   });
   const {

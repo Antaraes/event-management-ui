@@ -6,7 +6,7 @@ import CreatePaymentForm from "./forms/Event/CreatePaymentForm";
 import CreateTicketsForm from "./forms/Event/CreateTicketsForm";
 import AlertModal from "./common/AlertModal";
 import { AnimatePresence } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 
@@ -35,6 +35,7 @@ export function FormStepper() {
   const event = useSelector((state) => state.global.eventData);
   const ticketData = useSelector((state) => state.global.ticketData);
   console.log("id", organizerId);
+  const dispatchRedux = useDispatch();
   const handleNext = async () => {
     if (state.activeStep < 2) {
       dispatch({ type: NEXT_STEP });
@@ -93,9 +94,7 @@ export function FormStepper() {
         </Button>
       </div>
       <AnimatePresence>
-        {isModal && (
-          <AlertModal isModal={setIsModal} children={<OtpComponent />} />
-        )}
+        {isModal && <AlertModal isModal={setIsModal} children={<OtpComponent />} />}
       </AnimatePresence>
     </div>
   );
