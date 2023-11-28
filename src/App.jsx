@@ -26,6 +26,7 @@ import { Toaster } from "react-hot-toast";
 import CreateEvent from "./pages/User/CreateEvent";
 import BuyTicket from "./pages/User/BuyTicket";
 import PageNotFound from "./pages/PageNotFound";
+import BecomeAnOrganizer from "./pages/User/BecomeAnOrganizer";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,6 +40,7 @@ function App() {
       path: "/user/login",
       element: <LoginPage />,
     },
+   
     {
       path: "/user/register",
       element: <RegisterPage />,
@@ -98,6 +100,10 @@ function App() {
           path: "/event/detail/:id",
           element: <EventDetail />,
         },
+        {
+          path: "become-organizer",
+          element: <BecomeAnOrganizer/>
+        }
       ],
     },
     {
