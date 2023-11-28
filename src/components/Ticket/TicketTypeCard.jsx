@@ -7,7 +7,14 @@ import {
 } from "@material-tailwind/react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-export function TicketTypeCard({ type, price, image, availableTicketCount }) {
+import toast from "react-hot-toast";
+export function TicketTypeCard({
+  availableTicket,
+  image,
+  handleSelectTicket,
+  totalSelectedTicketCount,
+  handleSelectTicketPrice,
+}) {
   const [quantity, setQuantity] = useState(0);
   const TABLE_HEAD = ["Type", "Price", "Quantity"];
 
@@ -18,12 +25,25 @@ export function TicketTypeCard({ type, price, image, availableTicketCount }) {
       quantity: "23/04/18",
     },
   ];
-  const addQuantity = () => setQuantity(quantity + 1);
-  const subtractQuantity = () => {
+  const handleClickQuantity = (isIncrease, ticketPrice, ticketInfoId) => {
+    if (isIncrease) {
+      if (totalSelectedTicketCount < 5) {
+        setQuantity(quantity + 1);
+        handleSelectTicket(true, ticketPrice, ticketInfoId);
+        return;
+      }
+      toast.error("You cant buy more than 5 tickets");
+      return;
+    }
     if (quantity > 0) {
       setQuantity(quantity - 1);
+      handleSelectTicket(false, ticketPrice, ticketInfoId);
+      return;
     }
+
+    toast.error("Ticket cannot be less than 0");
   };
+
   return (
     <Card className="w-[98%] my-4 lg:w-[70%] flex flex-col md:flex-row bg-transparent px-2 lg:ml-6">
       <CardHeader
@@ -32,10 +52,10 @@ export function TicketTypeCard({ type, price, image, availableTicketCount }) {
         className="m-0 relative  w-full h-40 md:w-2/5 shrink-0  lg:rounded-r-none overflow-hidden"
       >
         <p className="absolute  top-4 px-10 -right-[2.5rem] rotate-45 bg-yellow-500 text-black font-bold ">
-          {type}
+          {availableTicket.type}
         </p>
         <p className="absolute bottom-2  left-2 text-white tracking-wide">
-          {availableTicketCount}x Avaiable
+          {availableTicket.totalAvailableTickets}x Avaiable
         </p>
         <img
           src={image}
@@ -64,12 +84,12 @@ export function TicketTypeCard({ type, price, image, availableTicketCount }) {
             <tr>
               <td>
                 <Typography variant="small" className="font-normal py-3">
-                  {type}
+                  {availableTicket.type}
                 </Typography>
               </td>
               <td>
                 <Typography variant="small" className="font-normal">
-                  {price}
+                  {availableTicket.price}
                 </Typography>
               </td>
               <td>
@@ -80,13 +100,29 @@ export function TicketTypeCard({ type, price, image, availableTicketCount }) {
                   <Icon
                     icon={"fluent:subtract-12-filled"}
                     className=" cursor-pointer"
-                    onClick={subtractQuantity}
+                    onClick={() =>
+                      handleClickQuantity(
+                        false,
+                        availableTicket.price,
+                        availableTicket._id
+                      )
+                    }
                   />
                   {quantity}
                   <Icon
                     icon={"mdi:plus"}
-                    className=" cursor-pointer"
-                    onClick={addQuantity}
+                    className={`${
+                      totalSelectedTicketCount === 5
+                        ? "cursor-not-allowed disabled"
+                        : "cursor-pointer "
+                    }`}
+                    onClick={() =>
+                      handleClickQuantity(
+                        true,
+                        availableTicket.price,
+                        availableTicket._id
+                      )
+                    }
                   />
                 </Typography>
               </td>
