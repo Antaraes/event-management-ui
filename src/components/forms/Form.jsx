@@ -39,13 +39,7 @@ const Form = ({ onSubmit, onChange, config, isLoading, btnText }) => {
           );
         }
       })}
-      <div className="flex items-center justify-center py-5">
-        {/* <Link onClick={() => dispatch(setUserActive(true))} to='/organizer/dashboard/655db72a40abeabdf4678ec9'
-          type="submit"
-          className="flex px-5 py-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
-        >
-          {isLoading ? <Spinner sm /> : btnText}
-        </Link> */}
+      <div className="flex items-center justify-center ">
         <button
           type="submit"
           className="flex px-5 py-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
