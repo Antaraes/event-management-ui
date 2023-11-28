@@ -59,16 +59,16 @@ const HomePage = (props) => {
   return (
     <div>
       <Jumboltron />
-      <div className="px-16 mb-5">
-        <h1 className="flex text-start text-white text-4xl font-bold my-10">
+      <div className="px-3 md:px-10 mb-5">
+        <h1 className="flex text-start text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold my-10">
           Upcoming Popular Events
         </h1>
         <EventsCarousel events={events} />
-        <h1 className="flex text-start text-white text-4xl font-bold my-10">
+        <h1 className="flex text-start text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold my-10">
           Popular Events Today
         </h1>
         <EventCardCarousel events={events} />
-        <h1 className="flex text-start text-white text-4xl font-bold my-10">
+        <h1 className="flex text-start text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold my-10">
           Top Contributors
         </h1>
         <div>
