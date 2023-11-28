@@ -12,6 +12,7 @@ export const organizerLogin = (data) => API.post(`/auth/login_organizer`, data);
 
 //Organizer
 export const getOrganizers = () => API.get(`/organizer/get_all`);
+export const fetchOrganizers = (query) => API.get(`/organizer/all${query}`);
 export const getOrganizerProfile = (organizerId) =>
   API.get(`/organizer/${organizerId}`);
 
