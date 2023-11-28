@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -41,7 +45,7 @@ function App() {
       path: "/user/login",
       element: <LoginPage />,
     },
-   
+
     {
       path: "/user/register",
       element: <RegisterPage />,
@@ -65,7 +69,7 @@ function App() {
           element: <CreateEvent />,
         },
         {
-          path: "/create-ticket",
+          path: "/buy-ticket/:eventId",
           element: <BuyTicket />,
         },
         {
@@ -119,8 +123,8 @@ function App() {
         },
         {
           path: "become-organizer",
-          element: <BecomeAnOrganizer/>
-        }
+          element: <BecomeAnOrganizer />,
+        },
       ],
     },
     {

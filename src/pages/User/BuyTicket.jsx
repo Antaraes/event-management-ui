@@ -8,10 +8,17 @@ import { Button } from "@material-tailwind/react";
 import AlertModal from "../../components/common/AlertModal";
 import { AnimatePresence } from "framer-motion";
 import OtpComponent from "../../components/common/OtpComponent";
+import useFetchData from "../../hooks/useFetchData";
+import { useParams } from "react-router";
+import { getAllAvailableTicketsByEvent } from "../../api/index";
 const BuyTicket = () => {
   const { name, email, payment, onChange } = useCreateTicket();
   const [isModal, setIsModal] = useState(false);
-
+  const { eventId } = useParams();
+  const { data: ticketData } = useFetchData(
+    ["available-tickets", eventId],
+    () => getAllAvailableTicketsByEvent(eventId)
+  );
   const onSubmit = (e) => {
     e.preventDefault();
     setIsModal(true);
@@ -33,27 +40,18 @@ const BuyTicket = () => {
         </div>
         <div className="flex my-5 ">
           <div className="w-[55%]">
-            <TicketTypeCard
-              image={
-                "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
-              }
-              price={8000}
-              type={"Normal"}
-            />
-            <TicketTypeCard
-              image={
-                "https://plus.unsplash.com/premium_photo-1682855222843-0cd0827ed6e3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
-              }
-              price={8000}
-              type={"VIP"}
-            />
-            <TicketTypeCard
-              image={
-                "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
-              }
-              price={8000}
-              type={"VVIP"}
-            />
+            {ticketData &&
+              ticketData.map((availableTicket) => (
+                <TicketTypeCard
+                  key={availableTicket.type}
+                  image={
+                    "https://images.unsplash.com/photo-1506157786151-b8491531f063?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmVzdGl2YWx8ZW58MHx8MHx8fDA%3D"
+                  }
+                  price={availableTicket.price}
+                  type={availableTicket.type}
+                  availableTicketCount={availableTicket.totalAvailableTickets}
+                />
+              ))}
           </div>
 
           <div className="w-[35%] p-4 border border-gray-300">
@@ -64,7 +62,7 @@ const BuyTicket = () => {
                   key={"email"}
                   labelId={"email"}
                   type={"email"}
-                  onChange={(event) => onChange("email", event)} // Pass the onChange prop here
+                  onChange={(event) => onChange("email", event)}
                   value={email}
                   required
                 >

@@ -1,7 +1,13 @@
-import { Card, CardHeader, CardBody, Typography, Button } from "@material-tailwind/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Typography,
+  Button,
+} from "@material-tailwind/react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-export function TicketTypeCard({ type, price, image }) {
+export function TicketTypeCard({ type, price, image, availableTicketCount }) {
   const [quantity, setQuantity] = useState(0);
   const TABLE_HEAD = ["Type", "Price", "Quantity"];
 
@@ -19,7 +25,7 @@ export function TicketTypeCard({ type, price, image }) {
     }
   };
   return (
-    <Card className="w-full max-w-full flex-row bg-transparent ">
+    <Card className="w-full max-w-full flex-row bg-transparent ml-6">
       <CardHeader
         shadow={false}
         floated={false}
@@ -28,8 +34,14 @@ export function TicketTypeCard({ type, price, image }) {
         <p className="absolute  top-4 px-10 -right-[2.5rem] rotate-45 bg-yellow-500 text-black font-bold ">
           {type}
         </p>
-        <p className="absolute bottom-0 text-white">Avaiable 15x</p>
-        <img src={image} alt="card-image" className="h-full w-full object-cover" />
+        <p className="absolute bottom-2  left-2 text-white tracking-wide">
+          {availableTicketCount}x Avaiable
+        </p>
+        <img
+          src={image}
+          alt="card-image"
+          className="h-full w-full object-cover"
+        />
       </CardHeader>
       <CardBody>
         <table className="w-full min-w-max table-auto text-left">
@@ -71,7 +83,11 @@ export function TicketTypeCard({ type, price, image }) {
                     onClick={subtractQuantity}
                   />
                   {quantity}
-                  <Icon icon={"mdi:plus"} className=" cursor-pointer" onClick={addQuantity} />
+                  <Icon
+                    icon={"mdi:plus"}
+                    className=" cursor-pointer"
+                    onClick={addQuantity}
+                  />
                 </Typography>
               </td>
             </tr>

@@ -56,8 +56,9 @@ export const addCustomer = (data) => API.post(`customer/add-customer`, data);
 
 //Ticket
 export const getTickets = () => API.get(`/ticket/`);
-
 export const addTicket = (data) => API.post(`/ticket/create`, data);
+export const getAllAvailableTicketsByEvent = (eventId) =>
+  API.get(`/event/total-avaliable-ticket/${eventId}`);
 
 //Account Upgrade Payment
 export const getUpgradePayments = () => API.get(`/upgrade-payment/all`);
@@ -73,8 +74,10 @@ export const deactivateUpgradePaymentStatus = (paymentId, data) =>
   API.put(`/upgrade-payment/disable/${paymentId}`, data);
 
 //Organizer Invoice
-export const getOrganizerInvoices = (query) => API.get(`/ticket/get_tickets${query}`);
-export const getOrganizerInvoiceById = (invoiceId) => API.get(`/organizer-invoice/${invoiceId}`);
+export const getOrganizerInvoices = (query) =>
+  API.get(`/ticket/get_tickets${query}`);
+export const getOrganizerInvoiceById = (invoiceId) =>
+  API.get(`/organizer-invoice/${invoiceId}`);
 
 export const createOrganizer = (data) =>
   API.post(`/organizer-invoice/create`, data);
