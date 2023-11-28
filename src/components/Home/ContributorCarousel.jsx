@@ -13,9 +13,28 @@ import { Link } from "react-router-dom";
 const ContributorCarousel = ({contributors}) => {
     return ( 
       <>
-        <Swiper
+        <Swiper className="hidden sm:block"
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Pagination]}
         slidesPerView={'5'}
+        loop={true}
+        spaceBetween={40}
+        style={{
+          "--swiper-pagination-color": "#FFFFFF",
+          "--swiper-pagination-bullet-inactive-color": "#999999",
+          "--swiper-pagination-bullet-inactive-opacity": "1",
+          "--swiper-pagination-bullet-size": "10px",
+          "--swiper-pagination-bullet-horizontal-gap": "6px"
+        }}
+      >
+        {contributors.map((contributor, index) => {
+          return  <SwiperSlide key={index}>
+            <ContributorCard contributor={contributor} />
+          </SwiperSlide>;
+        })}
+        </Swiper>
+        <Swiper className="sm:hidden"
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Pagination]}
+        slidesPerView={'3'}
         loop={true}
         spaceBetween={40}
         style={{
