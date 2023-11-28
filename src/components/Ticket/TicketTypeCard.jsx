@@ -9,12 +9,11 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 export function TicketTypeCard({
-  type,
-  price,
+  availableTicket,
   image,
-  availableTicketCount,
   handleSelectTicket,
   totalSelectedTicketCount,
+  handleSelectTicketPrice,
 }) {
   const [quantity, setQuantity] = useState(0);
   const TABLE_HEAD = ["Type", "Price", "Quantity"];
@@ -26,19 +25,23 @@ export function TicketTypeCard({
       quantity: "23/04/18",
     },
   ];
-  const addQuantity = () => {
-    if (totalSelectedTicketCount < 5) {
-      setQuantity(quantity + 1);
-      handleSelectTicket(true);
+  const handleClickQuantity = (isIncrease, ticketPrice, ticketInfoId) => {
+    if (isIncrease) {
+      if (totalSelectedTicketCount < 5) {
+        setQuantity(quantity + 1);
+        handleSelectTicket(true, ticketPrice, ticketInfoId);
+        return;
+      }
+      toast.error("You cant buy more than 5 tickets");
       return;
     }
-    toast.error("You cant buy more than 5 tickets");
-  };
-  const subtractQuantity = () => {
     if (quantity > 0) {
       setQuantity(quantity - 1);
+      handleSelectTicket(false, ticketPrice, ticketInfoId);
+      return;
     }
-    handleSelectTicket(false);
+
+    toast.error("Ticket cannot be less than 0");
   };
 
   return (
@@ -49,10 +52,10 @@ export function TicketTypeCard({
         className="m-0 relative  w-full h-40 md:w-2/5 shrink-0  lg:rounded-r-none overflow-hidden"
       >
         <p className="absolute  top-4 px-10 -right-[2.5rem] rotate-45 bg-yellow-500 text-black font-bold ">
-          {type}
+          {availableTicket.type}
         </p>
         <p className="absolute bottom-2  left-2 text-white tracking-wide">
-          {availableTicketCount}x Avaiable
+          {availableTicket.totalAvailableTickets}x Avaiable
         </p>
         <img
           src={image}
@@ -81,12 +84,12 @@ export function TicketTypeCard({
             <tr>
               <td>
                 <Typography variant="small" className="font-normal py-3">
-                  {type}
+                  {availableTicket.type}
                 </Typography>
               </td>
               <td>
                 <Typography variant="small" className="font-normal">
-                  {price}
+                  {availableTicket.price}
                 </Typography>
               </td>
               <td>
@@ -97,7 +100,13 @@ export function TicketTypeCard({
                   <Icon
                     icon={"fluent:subtract-12-filled"}
                     className=" cursor-pointer"
-                    onClick={subtractQuantity}
+                    onClick={() =>
+                      handleClickQuantity(
+                        false,
+                        availableTicket.price,
+                        availableTicket._id
+                      )
+                    }
                   />
                   {quantity}
                   <Icon
@@ -107,7 +116,13 @@ export function TicketTypeCard({
                         ? "cursor-not-allowed disabled"
                         : "cursor-pointer "
                     }`}
-                    onClick={addQuantity}
+                    onClick={() =>
+                      handleClickQuantity(
+                        true,
+                        availableTicket.price,
+                        availableTicket._id
+                      )
+                    }
                   />
                 </Typography>
               </td>

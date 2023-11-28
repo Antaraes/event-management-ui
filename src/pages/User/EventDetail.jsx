@@ -11,7 +11,7 @@ const EventDetail = () => {
     getEventById(eventId)
   );
 
-  const { data: allEvent } = useFetchData(["events"], () => getEvents());
+  const { data: allEvent } = useFetchData(["events"], () => getEvents(""));
 
   return (
     <div className="px-2 sm:px-2 md:px-3 lg:px-6 xl:px-10 2xl:px-16 pt-14">

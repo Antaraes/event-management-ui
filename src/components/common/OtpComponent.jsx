@@ -2,15 +2,29 @@ import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import * as api from "../../api/index";
 
-const OtpComponent = ({ email }) => {
+const OtpComponent = ({ email, successFunc, failFunc }) => {
   const [otp, setOtp] = useState("");
   const resetOTPCodehandle = () => {
-    api.getOTPCode(email);
+    api.getOTPCode({ email: email });
   };
 
-  const verifyOTPCode = (code) => {
-    const isComfirm = api.verifyOTPcode(code);
-    console.log(isComfirm);
+  const verifyOTPCode = async (code) => {
+    try {
+      const response = await api.verifyOTPcode({ code: code });
+      const isConfirm = response.data;
+
+      console.log(isConfirm.tokenValidates);
+
+      if (!isConfirm.tokenValidates) {
+        failFunc();
+        setOtp("");
+        return;
+      }
+
+      successFunc();
+    } catch (error) {
+      console.error("Error verifying OTP code:", error);
+    }
   };
 
   return (
@@ -30,7 +44,6 @@ const OtpComponent = ({ email }) => {
         numInputs={6}
         renderSeparator={<span className="ml-3 mr-3">.</span>}
         shouldAutoFocus={true}
-        placeholder="0"
         inputStyle={{
           width: "3rem",
           height: "3rem",
@@ -58,7 +71,7 @@ const OtpComponent = ({ email }) => {
         </button>
         <button
           className="bg-secondary p-3 w-24 rounded-md text-white hover:-translate-y-1 duration-300 transition-all"
-          onClick={verifyOTPCode}
+          onClick={() => verifyOTPCode(otp)}
         >
           Submit
         </button>
