@@ -2,21 +2,22 @@ import React from "react";
 import Input from "../Input";
 import useEventRegister from "../../../hooks/useEventRegister";
 import DatePicker from "../DatePicker";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setEventData } from "../../../redux/global/globalSlice";
+import { useParams } from "react-router-dom";
 
 const CreateEventForm = () => {
   const {
     name,
-    eventStartDate,
-    eventEndDate,
-    ticketOpenDate,
-    ticketCloseDate,
     contact,
     location,
     thumbnail,
     description,
     onChange,
-    onSubmit,
   } = useEventRegister();
+
   const config = [
     {
       labelText: "Name",
@@ -34,7 +35,6 @@ const CreateEventForm = () => {
       value: contact,
       required: true,
     },
-
     {
       labelText: "Location",
       labelId: "location",
@@ -52,6 +52,7 @@ const CreateEventForm = () => {
       required: true,
     },
   ];
+
   const fileItem = [
     {
       labelText: "Thumbnail",
@@ -63,8 +64,97 @@ const CreateEventForm = () => {
       image: "image/*",
     },
   ];
+
+  const datePicker = [
+    {
+      labelText: "Event Start Date",
+      labelId: "eventStartDate",
+    },
+    {
+      labelText: "Event End Date",
+      labelId: "eventEndDate",
+    },
+    {
+      labelText: "Ticket Start Date",
+      labelId: "ticketStartDate",
+    },
+    {
+      labelText: "Ticket End Date",
+      labelId: "ticketEndDate",
+    },
+  ];
+
+  const [date, setDate] = useState([
+    {
+      labelText: "Event Start Date",
+      labelId: "eventStartDate",
+      value: new Date(),
+    },
+    {
+      labelText: "Event End Date",
+      labelId: "eventEndDate",
+      value: new Date(),
+    },
+    {
+      labelId: "ticketStartDate",
+      labelText: "Ticket Start Date",
+      value: new Date(),
+    },
+    {
+      labelId: "ticketEndDate",
+      labelText: "Ticket End Date",
+      value: new Date(),
+    },
+  ]);
+  const dispatchRedux = useDispatch();
+
+  const handleDatePickerChange = (selectedDate, labelId) => {
+    const labelIdExists = date.some((item) => item.labelId === labelId);
+
+    if (labelIdExists) {
+      const updatedDate = date.map((item) =>
+        item.labelId === labelId ? { ...item, value: selectedDate } : item
+      );
+      setDate(updatedDate);
+    } else {
+      setDate([...date, { labelId, value: selectedDate }]);
+    }
+  };
+
+  const formattedData = () => {
+    const formattedInput = config.reduce((acc, item) => {
+      acc[item.labelId] = item.value;
+      return acc;
+    }, {});
+
+    const formattedFile = fileItem.map((item) => {
+      return {
+        [item.labelId]: item.value,
+      };
+    });
+
+    const formattedDate = date.reduce((acc, item) => {
+      acc[item.labelId] = item.value;
+      return acc;
+    }, {});
+
+    const eventData = {
+      ...formattedInput,
+      ...formattedFile,
+      ...formattedDate,
+    };
+    return { event : eventData };
+  };
+
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const data = formattedData();
+    dispatchRedux(setEventData(data));
+  };
+
   return (
-    <div className="mx-24 mt-8 border p-10 border-2">
+    <div className="mx-24 mt-8 p-10 border-2">
       <form action="">
         <div className="grid grid-cols-2 gap-4">
           {config.map((item, index) => (
@@ -72,17 +162,23 @@ const CreateEventForm = () => {
               key={index}
               labelId={item.labelId}
               type={item.type}
-              onChange={item.onChange} // Pass the onChange prop here
+              onChange={item.onChange}
               value={item.value}
               required={item.required}
             >
               {item.labelText}
             </Input>
           ))}
-          <DatePicker labelText={"Event Start Date"} lableId={"Event Start Date"} />
-          <DatePicker labelText={"Event End Date"} lableId={"Event End Date"} />
-          <DatePicker labelText={"Ticket Open Date"} lableId={"Event End Date"} />
-          <DatePicker labelText={"Ticket Close Date"} lableId={"Event End Date"} />
+          {date.map((item, index) => (
+            <DatePicker
+              key={index}
+              labelText={item.labelText}
+              lableId={item.labelId}
+              onChange={(selectedDate) =>
+                handleDatePickerChange(selectedDate, item.labelId)
+              }
+            />
+          ))}
         </div>
 
         {fileItem.map((item, index) => (
@@ -90,7 +186,7 @@ const CreateEventForm = () => {
             key={index}
             labelId={item.labelId}
             type={item.type}
-            onChange={item.onChange} // Pass the onChange prop here
+            onChange={item.onChange}
             value={item.value}
             required={item.required}
             accept={item.image}
@@ -98,9 +194,10 @@ const CreateEventForm = () => {
             {item.labelText}
           </Input>
         ))}
+        <button onClick={(e) =>handleFormSubmit(e)}>Submit</button>
       </form>
     </div>
   );
 };
 
-export default CreateEventForm;
+export default React.memo(CreateEventForm);

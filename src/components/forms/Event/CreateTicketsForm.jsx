@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
+import { setEventData, setTicketData } from "../../../redux/global/globalSlice";
 
 const CreateTicketsForm = () => {
   const [formData, setFormData] = useState({
@@ -30,6 +32,7 @@ const CreateTicketsForm = () => {
   const [tableData, setTableData] = useState([]);
   const [disabledRows, setDisabledRows] = useState([]);
   const [allowEdit, setAllowEdit] = useState(false);
+  const dispatchRedux = useDispatch();
 
   const formElementArray = [];
   for (let key in formData.form) {
@@ -79,13 +82,8 @@ const CreateTicketsForm = () => {
     setAllowEdit(!allowEdit);
   };
 
-  // const handleInputChange = (e, index) => {
-  //   const updatedTableData = [...tableData];
-  //   updatedTableData[index][e.target.name] = e.target.value;
-  //   setTableData(updatedTableData);
-  // };
-
-  const handleShow = () => {
+  const handleShow = (e) => {
+    e.preventDefault();
     const insert = [...tableData];
     const formattedData = [];
     for (let key in tableData) {
@@ -96,7 +94,7 @@ const CreateTicketsForm = () => {
         ticketPerPrice: tableData[key][2].config.value,
       });
     }
-    console.log("formatedData: ", formattedData, "tableData", tableData);
+    dispatchRedux(setTicketData(formattedData));
   };
 
   return (
@@ -136,17 +134,17 @@ const CreateTicketsForm = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
+     {tableData.length > 0 ? <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
         <div>
           <button onClick={handleShow} className="p-[10px] border rounded-md">
             Show
           </button>
         </div>
-        <div className="flex flex-col ml-[20px] px-[50px] border">
+        <div className="flex flex-col ml-[20px] px-[50px] py-[10px] border">
           <label>Edit All</label>
           <Checkbox onChange={handleAllCheckboxChange} />
         </div>
-      </div>
+      </div> : null}
       <div className="my-[20px] h-[300px] w-[1300px] mx-[10px]">
         <table className="table-fixed w-full">
           {tableData.length > 0 ? (
