@@ -145,13 +145,11 @@ const CreateEventForm = () => {
     };
     return { event : eventData };
   };
-
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
+  
+  useEffect(() => {
     const data = formattedData();
     dispatchRedux(setEventData(data));
-  };
+  }, [formattedData()]);
 
   return (
     <div className="mx-24 mt-8 p-10 border-2">
@@ -194,7 +192,6 @@ const CreateEventForm = () => {
             {item.labelText}
           </Input>
         ))}
-        <button onClick={(e) =>handleFormSubmit(e)}>Submit</button>
       </form>
     </div>
   );
