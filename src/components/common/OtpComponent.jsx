@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import * as api from "../../api/index";
 
-const OtpComponent = () => {
+const OtpComponent = ({ email }) => {
   const [otp, setOtp] = useState("");
   const resetOTPCodehandle = () => {
-    api.getOTPCode({ email: "minbhonethantes@gmail.com" });
+    api.getOTPCode(email);
   };
 
   const verifyOTPCode = (code) => {
@@ -14,15 +14,13 @@ const OtpComponent = () => {
   };
 
   return (
-    <div className="flex bg-primary justify-center flex-col mt-10 items-center gap-24 rounded-lg shadow-sm shadow-slate-800 border-gray-900 border-2 w-[60%] mx-auto  h-[88vh]">
-      <div className="flex  relative justify-center flex-col w-[60%] gap-4 items-center">
+    <div className="flex bg-primary justify-center flex-col mt-10 items-center gap-24 rounded-lg shadow-sm shadow-slate-800  w-full mx-auto  h-[88vh]">
+      <div className="flex relative justify-center flex-col w-[60%] gap-4 items-center">
         <h1 className="text-4xl font-bold text-center border-b-2 border-secondary w-fit">
           OTP CODE
         </h1>
-        <p className="font-light ml-8">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe ex ipsum, modi quasi
-          dolorem alias odit, voluptatum possimus doloribus sequi dolore aliquam delectus
-          repudiandae natus dolorum earum amet eum rem.
+        <p className="font-light  text-center w-full">
+          Check Your Email For OTP <i className="fa-regular fa-envelope"></i>
         </p>
       </div>
 

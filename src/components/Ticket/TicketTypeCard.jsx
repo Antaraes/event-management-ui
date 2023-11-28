@@ -7,7 +7,15 @@ import {
 } from "@material-tailwind/react";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-export function TicketTypeCard({ type, price, image, availableTicketCount }) {
+import toast from "react-hot-toast";
+export function TicketTypeCard({
+  type,
+  price,
+  image,
+  availableTicketCount,
+  handleSelectTicket,
+  totalSelectedTicketCount,
+}) {
   const [quantity, setQuantity] = useState(0);
   const TABLE_HEAD = ["Type", "Price", "Quantity"];
 
@@ -18,12 +26,21 @@ export function TicketTypeCard({ type, price, image, availableTicketCount }) {
       quantity: "23/04/18",
     },
   ];
-  const addQuantity = () => setQuantity(quantity + 1);
+  const addQuantity = () => {
+    if (totalSelectedTicketCount < 5) {
+      setQuantity(quantity + 1);
+      handleSelectTicket(true);
+      return;
+    }
+    toast.error("You cant buy more than 5 tickets");
+  };
   const subtractQuantity = () => {
     if (quantity > 0) {
       setQuantity(quantity - 1);
     }
+    handleSelectTicket(false);
   };
+
   return (
     <Card className="w-[98%] my-4 lg:w-[70%] flex flex-col md:flex-row bg-transparent px-2 lg:ml-6">
       <CardHeader
@@ -85,7 +102,11 @@ export function TicketTypeCard({ type, price, image, availableTicketCount }) {
                   {quantity}
                   <Icon
                     icon={"mdi:plus"}
-                    className=" cursor-pointer"
+                    className={`${
+                      totalSelectedTicketCount === 5
+                        ? "cursor-not-allowed disabled"
+                        : "cursor-pointer "
+                    }`}
                     onClick={addQuantity}
                   />
                 </Typography>

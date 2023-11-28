@@ -14,6 +14,7 @@ import { getAllAvailableTicketsByEvent } from "../../api/index";
 const BuyTicket = () => {
   const { name, email, payment, onChange } = useCreateTicket();
   const [isModal, setIsModal] = useState(false);
+  const [totalSelectedTicketCount, setTotalSelectedTicketCount] = useState(0);
   const { eventId } = useParams();
   const {
     data: ticketData,
@@ -22,6 +23,13 @@ const BuyTicket = () => {
   } = useFetchData(["available-tickets", eventId], () =>
     getAllAvailableTicketsByEvent(eventId)
   );
+
+  const handleSelectTicket = (isIncrease) => {
+    setTotalSelectedTicketCount(
+      isIncrease ? totalSelectedTicketCount + 1 : totalSelectedTicketCount - 1
+    );
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     setIsModal(true);
@@ -53,6 +61,8 @@ const BuyTicket = () => {
                   price={availableTicket.price}
                   type={availableTicket.type}
                   availableTicketCount={availableTicket.totalAvailableTickets}
+                  handleSelectTicket={handleSelectTicket}
+                  totalSelectedTicketCount={totalSelectedTicketCount}
                 />
               ))}
             {isTicketDataLoading && (
@@ -69,7 +79,7 @@ const BuyTicket = () => {
           </div>
 
           <div className="w-[92%] mx-auto lg:w-[35%] p-4 border border-gray-300 rounded-lg mt-4 lg:mt-0">
-            <h1 className="text-center">Purchase</h1>
+            <h1 className="text-center text-2xl">Purchase</h1>
             <form action="" method="POST" className="my-5 ">
               <div className="px-5 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
                 <Input
@@ -115,20 +125,21 @@ const BuyTicket = () => {
                   ]}
                 />
               </div>
-              <hr className="md:hidden" />
               <div className="flex flex-col md:flex-row justify-between mt-2">
                 <div className="flex gap-2">
                   <p>Total Ticket:</p>
-                  <p>2x</p>
+                  <p>{totalSelectedTicketCount}x</p>
                 </div>
                 <div className="flex gap-2 mt-2 md:mt-0">
                   <p>Total Price:</p>
-                  <p>100</p>
+                  <p>100000</p>
                 </div>
               </div>
-              <div className="flex justify-end md:justify-between">
-                <div></div>
-                <button className="mt-10 md:mt-0" onClick={(e) => onSubmit(e)}>
+              <div className="flex h-full  justify-center  mt-10">
+                <button
+                  className="rounded-full bg-secondary p-2 text-center w-[80%] bg-opacity-70 hover:opacity-100 transition-all duration-200 hover:-translate-y-1 cursor-pointer "
+                  onClick={(e) => onSubmit(e)}
+                >
                   Purchase
                 </button>
               </div>
