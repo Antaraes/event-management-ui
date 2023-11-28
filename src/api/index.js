@@ -17,9 +17,7 @@ export const generateAccessToken = () => API.post(`/auth/refresh`);
 export const getOrganizers = () => API.get(`/organizer/get_all`);
 export const getOrganizerProfile = (organizerId) =>
   API.get(`/organizer/${organizerId}`);
-
 export const addOrganizer = (data) => API.post(`/organizer/create`, data);
-
 export const updateOrganizerProfile = (organizerId, organizerData) =>
   API.patch(`/organizer/update/${organizerId}`, organizerData);
 export const manageOrganizerLevel = (organizerId, organizerLevel) =>
@@ -30,6 +28,10 @@ export const manageOrganizerPhone = (organizerId, organizerPhone) =>
   API.patch(`/organizer/update_phone/${organizerId}/${organizerPhone}`);
 export const manageOrganizerEmail = (organizerId, organizerEmail) =>
   API.patch(`/organizer/update_email/${organizerId}/${organizerEmail}`);
+
+//Public Side Organizer
+export const getPublicSideOrganizerDetail = (organizerId) =>
+  API.get(`/public-organizer/${organizerId}`);
 
 //Organizer Payment
 export const getAllPaymentFromOrganizer = (organizerId) =>

@@ -1,6 +1,9 @@
-
 import React, { useState, useEffect } from "react";
-import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -30,7 +33,6 @@ import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 import * as api from "./api/index";
 import Cookies from "js-cookie";
 import OrganizerInvoices from "./pages/User/OrganizerInvoices";
-
 
 function App() {
   const user = useSelector((state) => state.auth.user);
@@ -130,7 +132,7 @@ function App() {
           element: <Contributor />,
         },
         {
-          path: "/contributor/detail/:id",
+          path: "/contributor/detail/:organizerId",
           element: <OrgNameAndEvent />,
         },
         {
