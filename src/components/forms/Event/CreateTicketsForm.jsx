@@ -4,6 +4,8 @@ import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
 import { setEventData, setTicketData } from "../../../redux/global/globalSlice";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const CreateTicketsForm = () => {
   const [formData, setFormData] = useState({
@@ -33,6 +35,7 @@ const CreateTicketsForm = () => {
   const [disabledRows, setDisabledRows] = useState([]);
   const [allowEdit, setAllowEdit] = useState(false);
   const dispatchRedux = useDispatch();
+  const event = useSelector((state) => state.global.eventData);
 
   const formElementArray = [];
   for (let key in formData.form) {
@@ -97,6 +100,23 @@ const CreateTicketsForm = () => {
     dispatchRedux(setTicketData(formattedData));
   };
 
+  const formattedData = () => {
+    const formattedData = [];
+    for (let key in tableData) {
+      formattedData.push({
+        type: tableData[key][0].config.value,
+        quantity: tableData[key][1].config.value,
+        price: tableData[key][2].config.value,
+      });
+    }
+    return formattedData;
+  };
+
+  useEffect(() => {
+    const data = formattedData();
+    dispatchRedux(setTicketData(data));
+  }, [formattedData()])
+
   return (
     <div className="mt-[20px] flex flex-col rounded-lg bg-white/10">
       <div className="h-[100px] w-[1000px] my-[20px] mr-[20px] flex flex-row p-[30px] px-[100px]">
@@ -134,17 +154,19 @@ const CreateTicketsForm = () => {
           </button>
         </div>
       </div>
-     {tableData.length > 0 ? <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
-        <div>
-          <button onClick={handleShow} className="p-[10px] border rounded-md">
-            Show
-          </button>
+      {tableData.length > 0 ? (
+        <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
+          <div>
+            <button onClick={handleShow} className="p-[10px] border rounded-md">
+              Show
+            </button>
+          </div>
+          <div className="flex flex-col ml-[20px] px-[50px] py-[10px] border">
+            <label>Edit All</label>
+            <Checkbox onChange={handleAllCheckboxChange} />
+          </div>
         </div>
-        <div className="flex flex-col ml-[20px] px-[50px] py-[10px] border">
-          <label>Edit All</label>
-          <Checkbox onChange={handleAllCheckboxChange} />
-        </div>
-      </div> : null}
+      ) : null}
       <div className="my-[20px] h-[300px] w-[1300px] mx-[10px]">
         <table className="table-fixed w-full">
           {tableData.length > 0 ? (
@@ -237,4 +259,4 @@ const CreateTicketsForm = () => {
   );
 };
 
-export default CreateTicketsForm;
+export default React.memo(CreateTicketsForm);
