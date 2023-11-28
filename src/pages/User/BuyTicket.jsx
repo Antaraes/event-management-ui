@@ -15,9 +15,12 @@ const BuyTicket = () => {
   const { name, email, payment, onChange } = useCreateTicket();
   const [isModal, setIsModal] = useState(false);
   const { eventId } = useParams();
-  const { data: ticketData } = useFetchData(
-    ["available-tickets", eventId],
-    () => getAllAvailableTicketsByEvent(eventId)
+  const {
+    data: ticketData,
+    isLoading: isTicketDataLoading,
+    isError: isTicketDataError,
+  } = useFetchData(["available-tickets", eventId], () =>
+    getAllAvailableTicketsByEvent(eventId)
   );
   const onSubmit = (e) => {
     e.preventDefault();
@@ -52,6 +55,17 @@ const BuyTicket = () => {
                   availableTicketCount={availableTicket.totalAvailableTickets}
                 />
               ))}
+            {isTicketDataLoading && (
+              <span className="text-4xl w-full h-full text-center mt-20 inline-block">
+                Loading...
+              </span>
+            )}
+
+            {isTicketDataError && (
+              <span className="text-4xl w-full h-full text-center mt-20 inline-block">
+                Something went wrong TwT
+              </span>
+            )}
           </div>
 
           <div className="w-[35%] p-4 border border-gray-300">
