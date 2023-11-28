@@ -23,9 +23,9 @@ const Sidebar = () => {
       style={{
         backgroundColor: "#002C32",
       }}
-      className="mt-[40px] min-w-[320px] relative overflow-hidden right -0 sm:rounded-t-2xl"
+      className="mt-[40px] min-w-[320px] relative overflow-hidden right -0 sm:rounded-tl-2xl"
     >
-      <span className="h-14 w-[1200px] z-10 -left-[376px] overflow-hidden top-10 absolute -rotate-[62deg] bg-navbrand/80"></span>
+      <span className="h-14 w-[1200px] z-10 -left-[376.3px] overflow-hidden top-10 absolute -rotate-[62deg] bg-navbrand/80"></span>
       <NavBarMenu />
       {isUserActive && (
         <div className="bg-[#ffffff1e] absolute ps-5 pt-10 py-20 w-full bottom-0 flex justify-center items-center gap-x-2 shadow-md">
