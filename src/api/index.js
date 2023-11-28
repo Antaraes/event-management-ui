@@ -64,7 +64,7 @@ export const deactivateUpgradePaymentStatus = (paymentId, data) =>
   API.put(`/upgrade-payment/disable/${paymentId}`, data);
 
 //Organizer Invoice
-export const getOrganizerInvoices = () => API.get(`/organizer-invoice/all`);
+export const getOrganizerInvoices = (query) => API.get(`/ticket/get_tickets${query}`);
 export const getOrganizerInvoiceById = (invoiceId) => API.get(`/organizer-invoice/${invoiceId}`);
 
 export const createOrganizer = (data) => API.post(`/organizer-invoice/create`, data);
