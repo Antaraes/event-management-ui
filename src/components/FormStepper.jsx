@@ -34,7 +34,18 @@ export function FormStepper() {
   const { organizerId } = useParams();
   const event = useSelector((state) => state.global.eventData);
   const ticketData = useSelector((state) => state.global.ticketData);
+  const paymentData = useSelector((state) => state.global.paymentType);
+  console.log(
+    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ paymentData:",
+    paymentData
+  );
+  console.log("🚀 ~ file: FormStepper.jsx:36 ~ FormStepper ~ event:", event);
+  console.log(
+    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ ticketData:",
+    ticketData
+  );
   console.log("id", organizerId);
+  
   const handleNext = async () => {
     if (state.activeStep < 2) {
       dispatch({ type: NEXT_STEP });
@@ -45,7 +56,8 @@ export function FormStepper() {
           ...event.event,
           organizer: organizerId,
           trendingLevel: 0,
-          tickets: ticketData
+          payments: Object.keys(paymentData),
+          tickets: ticketData,
         },
       };
 
@@ -89,7 +101,7 @@ export function FormStepper() {
           Prev
         </Button>
         <Button onClick={handleNext} disabled={state.isLastStep}>
-          {state.activeStep === 1 ? "Submit" : "Next"}
+          {state.activeStep === 2 ? "Submit" : "Next"}
         </Button>
       </div>
       <AnimatePresence>

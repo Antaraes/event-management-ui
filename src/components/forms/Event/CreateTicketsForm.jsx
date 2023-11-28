@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { setEventData, setTicketData } from "../../../redux/global/globalSlice";
+import { setTicketData } from "../../../redux/global/globalSlice";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -35,7 +35,6 @@ const CreateTicketsForm = () => {
   const [disabledRows, setDisabledRows] = useState([]);
   const [allowEdit, setAllowEdit] = useState(false);
   const dispatchRedux = useDispatch();
-  const event = useSelector((state) => state.global.eventData);
 
   const formElementArray = [];
   for (let key in formData.form) {
