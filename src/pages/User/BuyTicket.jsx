@@ -81,7 +81,7 @@ const BuyTicket = () => {
   };
 
   const OTPFailFunc = () => {
-    alert("failed");
+    toast.error("Wrong OTP, Try Again");
   };
 
   const onSubmit = async (e) => {
