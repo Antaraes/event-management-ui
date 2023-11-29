@@ -3,6 +3,7 @@ import CardList from '../../components/Card/CardList'
 import Filter from '../../components/Filter/Filter';
 import { fetchOrganizers } from '../../api';
 import useFetchData from '../../hooks/useFetchData';
+import PaginationServerSide from '../../components/common/PaginationServerSide';
 
 export default function Contributor() {
 
@@ -19,6 +20,7 @@ export default function Contributor() {
   const [page, setPage] = useState(1);
   const [name, setName] = useState('');
   const [isBlueMark, setIsBlueMark] = useState(true);
+  const pageCount = Math.ceil(contributorsData?.total / pageSize);
 
   useEffect(() => {
 
@@ -38,10 +40,12 @@ export default function Contributor() {
       }
       />
       <CardList
+        data={contributorsData?.content} link={'/contributor/detail/'} />
+      <PaginationServerSide
         page={page}
         setPage={(value) => setPage(value)}
-        pageCount = {Math.ceil(contributorsData?.total / pageSize)}
-        data={contributorsData?.content} link={'/contributor/detail/'} />
+        pageCount={pageCount}
+      />
     </div>
   )
 }

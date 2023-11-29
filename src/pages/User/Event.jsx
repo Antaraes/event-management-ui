@@ -3,6 +3,7 @@ import CardList from '../../components/Card/CardList'
 import Filter from '../../components/Filter/Filter'
 import useFetchData from '../../hooks/useFetchData'
 import { getEvents } from '../../api'
+import PaginationServerSide from '../../components/common/PaginationServerSide'
 
 export default function Event() {
 
@@ -33,9 +34,11 @@ export default function Event() {
     const formattedStartDate = eventDate.startDate ? eventDate.startDate.toISOString() : '';
     const formattedEndDate = eventDate.endDate ? eventDate.endDate.toISOString() : '';
 
-    const updatedQuery = `?page=${page}&pageSize=6&name=${name}&eventStartDate=${formattedStartDate}&eventEndDate=${formattedEndDate}&isUpcoming=${isUpcoming}&location=${location}&sortBy=${isTrending ? 'trending' : ''}`;
+    const updatedQuery = `?page=${page}&pageSize=${pageSize}&name=${name}&eventStartDate=${formattedStartDate}&eventEndDate=${formattedEndDate}&isUpcoming=${isUpcoming}&location=${location}&sortBy=${isTrending ? 'trending' : ''}`;
     setQuery(updatedQuery);
   }, [page, name, eventDate, isUpcoming, location, isTrending]);
+
+  const pageCount = Math.ceil(eventsData?.total / pageSize);
 
   return (
     <div className='px-2 lg:px-10 py-12'>
@@ -51,10 +54,12 @@ export default function Event() {
         }
       } />
       <CardList
+        data={eventsData?.content} link={'/event/detail/'} />
+      <PaginationServerSide
         page={page}
         setPage={(value) => setPage(value)}
-        pageCount = {Math.ceil(eventsData?.total / pageSize)}
-        data={eventsData?.content} link={'/event/detail/'} />
+        pageCount={pageCount}
+      />
     </div>
   )
 }
