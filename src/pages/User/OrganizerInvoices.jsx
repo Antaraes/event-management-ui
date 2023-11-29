@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getOrganizerInvoices } from "../../api/index";
-import OrganizerTable from "../../components/Organizer/OrganizerTable";
 import useFetchData from "../../hooks/useFetchData";
 
 export default function OrganizerInvoices() {
