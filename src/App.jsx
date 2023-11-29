@@ -95,10 +95,6 @@ function App() {
         },
 
         {
-          path: "/create-event/:organizerId",
-          element: <CreateEvent />,
-        },
-        {
           path: "/buy-ticket/:eventId",
           element: <BuyTicket />,
         },
@@ -107,7 +103,7 @@ function App() {
           // element: <ProtectedRoute />,
           children: [
             {
-              path: "/organizer/create-event/:organizerId",
+              path: "/organizer/create-event",
               element: <CreateEvent />,
             },
             {
