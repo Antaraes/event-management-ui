@@ -33,10 +33,12 @@ import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 import * as api from "./api/index";
 import Cookies from "js-cookie";
 import OrganizerInvoices from "./pages/User/OrganizerInvoices";
+import ProtectedRoute from "./helper/ProtectedRoute";
 
 function App() {
-  const user = useSelector((state) => state.auth.user);
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
+  console.log(user, isAuthenticated);
   useEffect(() => {
     const checkTokenExpiration = async () => {
       const accessToken = Cookies.get("accessToken");
@@ -57,6 +59,7 @@ function App() {
 
     return () => clearInterval(intervalId);
   }, []);
+
 
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -96,7 +99,12 @@ function App() {
         },
         {
           path: "/organizer",
+          // element: <ProtectedRoute />,
           children: [
+            {
+              path: "/organizer/create-event/:organizerId",
+              element: <CreateEvent />,
+            },
             {
               path: "/organizer/profile/:organizerId",
               element: <OrganizerProfile />,

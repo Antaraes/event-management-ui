@@ -3,8 +3,8 @@ const subscriptions = [
     title: "Normal",
     price: "Free",
     features: ["Create 1 Event per month", "Access to Basic Events", "Limited Customer Support"],
-    product_id: "prod_BasicUserProductID",
-    recommend:false
+    product_id: "0",
+    recommend: false,
   },
   {
     title: "Platinum",
@@ -15,8 +15,8 @@ const subscriptions = [
       "24/7 Premium Customer Support",
       "Exclusive Event Analytics",
     ],
-    product_id: "prod_PlatinumUserProductID",
-    recommend:true
+    product_id: "1",
+    recommend: true,
   },
   {
     title: "Gold",
@@ -26,10 +26,9 @@ const subscriptions = [
       "Access to Premium Events",
       "Priority Customer Support",
     ],
-    product_id: "prod_GoldUserProductID",
-    recommend: true
+    product_id: "2",
+    recommend: true,
   },
-  
 ];
 
 export { subscriptions };
