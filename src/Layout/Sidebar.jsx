@@ -11,6 +11,7 @@ const Sidebar = () => {
   const isUserActive = useSelector((state) => state.global.isUserActive);
   const dispatch = useDispatch();
 
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const handleClose = () => {
     dispatch(setDrawer(false));
   };
@@ -27,7 +28,7 @@ const Sidebar = () => {
     >
       <span className="h-14 w-[1200px] z-10 -left-[376.3px] overflow-hidden top-10 absolute -rotate-[62deg] bg-navbrand/80"></span>
       <NavBarMenu />
-      {isUserActive && (
+      {isAuthenticated && (
         <div className="bg-[#ffffff1e] absolute ps-5 pt-10 py-20 w-full bottom-0 flex justify-center items-center gap-x-2 shadow-md">
           <Link to="/organizer/profile/655db72a40abeabdf4678ec9">
             <img
@@ -53,7 +54,7 @@ const Sidebar = () => {
                   className="px-2 py-1 rounded text-white bg-red-500"
                   onClick={() => {
                     dispatch(setUserActive(false));
-                    handleClose(); 
+                    handleClose();
                   }}
                 >
                   Log out
