@@ -4,7 +4,7 @@ import useEventRegister from "../../../hooks/useEventRegister";
 import DatePicker from "../DatePicker";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEventData } from "../../../redux/global/globalSlice";
 import { useParams } from "react-router-dom";
 
@@ -150,7 +150,9 @@ const CreateEventForm = () => {
     const data = formattedData();
     dispatchRedux(setEventData(data));
   }, [formattedData()]);
-
+  
+  // const eventData = useSelector((state) => state.global.eventData)
+  // console.log("🚀 ~ file: CreateEventForm.jsx:155 ~ CreateEventForm ~ eventData:", eventData)
   return (
     <div className="mx-24 mt-8 p-10 border-2">
       <form action="">

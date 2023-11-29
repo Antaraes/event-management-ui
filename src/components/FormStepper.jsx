@@ -74,6 +74,7 @@ export function FormStepper() {
   const handlePrev = () => {
     if (state.activeStep > 0) {
       dispatch({ type: PREV_STEP });
+      
     }
   };
 
@@ -92,7 +93,7 @@ export function FormStepper() {
 
       <div className="h-auto ">
         {state.activeStep === 0 && <CreateEventForm />}
-        {state.activeStep === 1 && <CreateTicketsForm />}
+        {state.activeStep === 1 && <CreateTicketsForm/>}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
