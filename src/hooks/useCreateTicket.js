@@ -4,7 +4,8 @@ export default function useCreateTicket() {
   const [formData, setFormData] = useState({
     email: "",
     name: "",
-    payment: "",
+    totalSelectedTicketPrice: "",
+    boughtTicket: [],
   });
   const { email, name, payment } = formData;
   const onChange = (field, event) => {
@@ -19,8 +20,7 @@ export default function useCreateTicket() {
     }
   };
   return {
-    email,
-    name,
+    ...formData,
     onChange,
     onSubmit,
   };
