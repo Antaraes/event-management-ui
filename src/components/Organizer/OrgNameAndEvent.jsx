@@ -1,25 +1,33 @@
+import { useParams } from "react-router-dom";
+import {
+  getEventByOrganizerId,
+  getPublicSideOrganizerDetail,
+} from "../../api/index";
 import CardList from "../Card/CardList";
+import useFetchData from "../../hooks/useFetchData";
 
 const OrgNameAndEvent = () => {
+  const { organizerId } = useParams();
 
-  const events = [
-    { id:1, name: "Event-1" },
-    { id:2, name: "Event-2" },
-    { id:3, name: "Event-3" },
-    { id:4, name: "Event-4" },
-    { id:5, name: "Event-5" },
-    { id:6, name: "Event-6" }
-  ]
+  const { data: organizerDetail, isLoading: isOrganizerDetailLoading } =
+    useFetchData(["public-organizer", organizerId], () =>
+      getPublicSideOrganizerDetail(organizerId)
+    );
+
+  const { data: allEventByOrganizer } = useFetchData(
+    ["events", organizerId],
+    () => getEventByOrganizerId(organizerId)
+  );
 
   return (
     <div className="py-12 px-16 text-white">
       <div className="flex items-center justify-evenly h-[300px]">
         <div className="flex-1 flex justify-center items-center">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAoj1gJjBN4X_mEPb2LLkGRm-oZCV7kO-m_Q&usqp=CAU"
-          alt=""
-          className="w-[500px] h-[300px] rounded-md"
-        />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAoj1gJjBN4X_mEPb2LLkGRm-oZCV7kO-m_Q&usqp=CAU"
+            alt=""
+            className="w-[500px] h-[300px] rounded-md"
+          />
         </div>
         <article className="flex-1 flex justify-center items-center relative w-[300px] mx-auto p-3 m-2">
           <img
@@ -38,54 +46,34 @@ const OrgNameAndEvent = () => {
 
       <div className="mt-8 flex items-center justify-between text-xl">
         <div className="flex-1 pl-16">
-        <h1 className="font-semibold">Organization-name</h1>
-        <h1 className="font-thin text-base mt-2">Email@gmail.com</h1>
-        <h1 className="font-thin text-base">09985654635</h1>
+          {organizerDetail && (
+            <>
+              <h1 className="font-semibold">{organizerDetail.companyName}</h1>
+              <h1 className="font-thin text-base mt-2">
+                {organizerDetail.email}
+              </h1>
+              <h1 className="font-thin text-base">{organizerDetail.phone}</h1>
+            </>
+          )}
         </div>
-        <h1 className="flex-1 flex justify-center">Best Selling Event Of (Org-Name)</h1>
+        <h1 className="flex-1 flex justify-center">
+          Best Selling Event Of (Org-Name)
+        </h1>
       </div>
 
       <div className="mt-5">
-        <p className="text-base">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-            consequuntur corporis delectus doloribus eos, expedita facere
-            fugiat, fugit harum impedit ipsam, itaque laudantium maiores
-            molestias natus neque, nulla odit quaerat quasi quidem quos
-            repellendus repudiandae soluta sunt tempore ullam unde voluptatum.
-
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-            consequuntur corporis delectus doloribus eos, expedita facere
-            fugiat, fugit harum impedit ipsam, itaque laudantium maiores
-            molestias natus neque, nulla odit quaerat quasi quidem quos
-            repellendus repudiandae soluta sunt tempore ullam unde voluptatum.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-            consequuntur corporis delectus doloribus eos, expedita facere
-            fugiat, fugit harum impedit ipsam, itaque laudantium maiores
-            molestias natus neque, nulla odit quaerat quasi quidem quos
-            repellendus repudiandae soluta sunt tempore ullam unde voluptatum.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-            consequuntur corporis delectus doloribus eos, expedita facere
-            fugiat, fugit harum impedit ipsam, itaque laudantium maiores
-            molestias natus neque, nulla odit quaerat quasi quidem quos
-            repellendus repudiandae soluta sunt tempore ullam unde voluptatum.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-            consequuntur corporis delectus doloribus eos, expedita facere
-            fugiat, fugit harum impedit ipsam, itaque laudantium maiores
-            molestias natus neque, nulla odit quaerat quasi quidem quos
-            repellendus repudiandae soluta sunt tempore ullam unde voluptatum.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-            consequuntur corporis delectus doloribus eos, expedita facere
-            fugiat, fugit harum impedit ipsam, itaque laudantium maiores
-            molestias natus neque, nulla odit quaerat quasi quidem quos
-            repellendus repudiandae soluta sunt tempore ullam unde voluptatum.
-            
-            
-        </p>
-        <h1 className="text-2xl mt-5 font-bold">
-            Event From John Doe
-        </h1>
+        {organizerDetail && (
+          <>
+            <p className="text-base">{organizerDetail.bio}</p>
+            <h1 className="text-2xl mt-5 font-bold">
+              Event From {organizerDetail.name}
+            </h1>
+          </>
+        )}
       </div>
-      <CardList data={events} link={'/event/detail/'} />
+      {allEventByOrganizer && (
+        <CardList data={allEventByOrganizer} link={"/event/detail/"} />
+      )}
     </div>
   );
 };

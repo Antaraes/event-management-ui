@@ -1,5 +1,9 @@
-import React, { useState } from "react";
-import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -22,14 +26,37 @@ import { Toaster } from "react-hot-toast";
 import CreateEvent from "./pages/User/CreateEvent";
 import BuyTicket from "./pages/User/BuyTicket";
 import PageNotFound from "./pages/PageNotFound";
+import BecomeAnOrganizer from "./pages/User/BecomeAnOrganizer";
 import { useSelector } from "react-redux";
 import OrganizerEventList from "./pages/User/OrganizerEventList";
 import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
+import * as api from "./api/index";
+import Cookies from "js-cookie";
+import OrganizerInvoices from "./pages/User/OrganizerInvoices";
 
 function App() {
   const user = useSelector((state) => state.auth.user);
-  console.log(user);
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const checkTokenExpiration = async () => {
+      const accessToken = Cookies.get("accessToken");
+      console.log(accessToken);
+
+      if (accessToken) {
+        try {
+          if (exp * 1000 - Date.now() < 5 * 60 * 1000) {
+            await api.generateAccessToken();
+          }
+        } catch (error) {
+          console.error("Error decoding access token:", error);
+        }
+      }
+    };
+
+    const intervalId = setInterval(checkTokenExpiration, 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -40,6 +67,7 @@ function App() {
       path: "/user/login",
       element: <LoginPage />,
     },
+
     {
       path: "/user/register",
       element: <RegisterPage />,
@@ -63,7 +91,7 @@ function App() {
           element: <CreateEvent />,
         },
         {
-          path: "/create-ticket",
+          path: "/buy-ticket/:eventId",
           element: <BuyTicket />,
         },
         {
@@ -76,6 +104,10 @@ function App() {
             {
               path: "/organizer/dashboard/:organizerId",
               element: <OrganizerDashboard />,
+            },
+            {
+              path: "/organizer/invoices/:organizerId",
+              element: <OrganizerInvoices />,
             },
             {
               path: "/organizer/subscriptions",
@@ -100,7 +132,7 @@ function App() {
           element: <Contributor />,
         },
         {
-          path: "/contributor/detail/:id",
+          path: "/contributor/detail/:organizerId",
           element: <OrgNameAndEvent />,
         },
         {
@@ -110,6 +142,10 @@ function App() {
         {
           path: "/event/detail/:id",
           element: <EventDetail />,
+        },
+        {
+          path: "become-organizer",
+          element: <BecomeAnOrganizer />,
         },
       ],
     },

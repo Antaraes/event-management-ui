@@ -16,7 +16,7 @@ const NavBarMenu = () => {
     },
     {
       title: "Become an Organizer",
-      path: "/BecomeAnOrganizer"
+      path: "/become-organizer"
     },
     {
       title: "Create Event",

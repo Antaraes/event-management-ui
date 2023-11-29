@@ -18,10 +18,7 @@ export default function useLogin() {
   const onSubmit = (event) => {
     event.preventDefault();
     api
-      .organizerLogin({
-        email: "nobita@gmail.com",
-        password: "12345678",
-      })
+      .organizerLogin({ email, password })
       .then((res) => {
         console.log(res.data.user);
         dispatch(setUser(res.data.user));

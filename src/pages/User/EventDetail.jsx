@@ -10,7 +10,6 @@ const EventDetail = () => {
   const { data: eventDetail } = useFetchData(["event", eventId], () =>
     getEventById(eventId)
   );
-
   const { data: allEvent } = useFetchData(["events"], () => getEvents(''));
 
   console.log(eventDetail?.thumbnail);
