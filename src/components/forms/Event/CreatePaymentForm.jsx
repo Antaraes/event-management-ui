@@ -64,9 +64,9 @@ const CreatePaymentForm = () => {
     dispatchRedux(setPaymentType(checkedItems));
   }, [checkedItems]);
 
-  console.log("useState", items);
-  console.log("sele", selectedPaymentType);
-  console.log(checkedItems);
+  // console.log("useState", items);
+  // console.log("sele", selectedPaymentType);
+  // console.log(checkedItems);
   
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevState) => {

@@ -30,24 +30,7 @@ export default function useEventRegister() {
   };
   const onSubmit = (event) => {
     event.preventDefault();
-    login({
-      name,
-      eventStartDate,
-      eventEndDate,
-      ticketOpenDate,
-      ticketCloseDate,
-      contact,
-      location,
-      thumbnail,
-      description,
-    })
-      .unwrap()
-      .then(() => {
-        toast.success("register Sucessfully");
-      })
-      .catch(() => {
-        toast.error("Failed to register");
-      });
+    console.log(formData)
   };
   return {
     name,

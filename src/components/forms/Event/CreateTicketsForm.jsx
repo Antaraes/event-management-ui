@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { setTicketData } from "../../../redux/global/globalSlice";
+import { setTicketData, setTicketTypeRaw } from "../../../redux/global/globalSlice";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
-const CreateTicketsForm = () => {
+const CreateTicketsForm = ({localStorage}) => {
   const [formData, setFormData] = useState({
     form: {
       ticketType: {
@@ -31,7 +31,9 @@ const CreateTicketsForm = () => {
     },
   });
 
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([
+  
+  ]);
   const [disabledRows, setDisabledRows] = useState([]);
   const [allowEdit, setAllowEdit] = useState(false);
   const dispatchRedux = useDispatch();
@@ -44,7 +46,12 @@ const CreateTicketsForm = () => {
     });
   }
 
-  const handleAddTicketType = () => {
+  console.log(tableData);
+  console.log('local', localStorage);
+  // const formElementArray = Object.entries(formData.form).map(([id, config]) => ({ id, config }));
+
+  const handleAddTicketType = (e) => {
+    e.preventDefault();
     const isEmpty = formElementArray.some(
       (element) => element.config.value === ""
     );
@@ -54,6 +61,7 @@ const CreateTicketsForm = () => {
         id: element.id,
         config: { ...element.config },
       }));
+      console.log();
       setTableData([...tableData, newFormElementArray]);
       const newFormData = { ...formData.form };
       for (let key in newFormData) {
@@ -98,8 +106,17 @@ const CreateTicketsForm = () => {
 
   useEffect(() => {
     const data = formattedData();
+    dispatchRedux(setTicketTypeRaw(tableData))
     dispatchRedux(setTicketData(data));
   }, [formattedData()])
+
+  // localStorage && setTableData(localStorage);
+  useEffect(() => {
+    console.log(localStorage)
+    if(localStorage.length) {
+      setTableData([...localStorage, formElementArray])
+    }
+  }, [tableData])
 
   return (
     <div className="mt-[20px] flex flex-col rounded-lg bg-white/10">
@@ -131,7 +148,7 @@ const CreateTicketsForm = () => {
         })}
         <div>
           <button
-            onClick={handleAddTicketType}
+            onClick={(e) => handleAddTicketType(e)}
             className="w-[50px] bg-green-300 p-[10px] border rounded-full text-white hover:text-black hover:bg-blue-gray-"
           >
             +
@@ -160,7 +177,9 @@ const CreateTicketsForm = () => {
             </thead>
           ) : null}
           <tbody>
-            {tableData.map((form, index) => (
+           {
+            tableData.length > 0 ? 
+            tableData.map((form, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2">
                   <Input
@@ -230,7 +249,9 @@ const CreateTicketsForm = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))
+            : null
+           }
           </tbody>
         </table>
       </div>

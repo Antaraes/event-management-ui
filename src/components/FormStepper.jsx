@@ -9,6 +9,8 @@ import { AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
+import useEventRegister from "../hooks/useEventRegister";
+import { setEventData } from "../redux/global/globalSlice";
 
 const NEXT_STEP = "NEXT_STEP";
 const PREV_STEP = "PREV_STEP";
@@ -30,53 +32,88 @@ export function FormStepper() {
     isLastStep: false,
     isFirstStep: true,
   };
+  const { name, onSubmit } = useEventRegister();
   const [state, dispatch] = useReducer(stepperReducer, initialState);
   const { organizerId } = useParams();
-  const event = useSelector((state) => state.global.eventData);
+  const [form, setForm] = useState({});
+  const [ticketForm, setTicketForm] = useState({});
+  const eventData = useSelector((state) => state.global.eventData);
   const ticketData = useSelector((state) => state.global.ticketData);
   const paymentData = useSelector((state) => state.global.paymentType);
-  console.log(
-    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ paymentData:",
-    paymentData
-  );
-  console.log("🚀 ~ file: FormStepper.jsx:36 ~ FormStepper ~ event:", event);
-  console.log(
-    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ ticketData:",
-    ticketData
-  );
-  console.log("id", organizerId);
+  const ticketDataRaw = useSelector((state) => state.global.ticketTypeRaw);
+ // console.log("🚀 ~ file: FormStepper.jsx:44 ~ FormStepper ~ ticketDataRaw:", ticketDataRaw)
+  // console.log(
+  //   "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ paymentData:",
+  //   paymentData
+  // );
+  // console.log("🚀 ~ file: FormStepper.jsx:36 ~ FormStepper ~ event:", event);
+  // console.log(
+  //   "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ ticketData:",
+  //   ticketData
+  // );
+  // console.log("id", organizerId);
+
+  const localEventDataString = localStorage.getItem("eventData");
+  const localEventData = JSON.parse(localEventDataString);
+  const localTicketTypeString = localStorage.getItem("ticketType");
+  const localTicketType = JSON.parse(localTicketTypeString);
 
   const handleNext = async () => {
-    if (state.activeStep < 2) {
+    if (state.activeStep === 0) {
+      localStorage.setItem("eventData", JSON.stringify(eventData));
       dispatch({ type: NEXT_STEP });
-    } else {
-      const apiEndpoint = "/event/create";
-      const payload = {
-        event: {
-          ...event.event,
-          organizer: organizerId,
-          trendingLevel: 0,
-          payments: Object.keys(paymentData),
-          tickets: ticketData,
-        },
-      };
-
-      try {
-        const response = await axios.post(apiEndpoint, payload);
-        console.log("Axios Response:", response.data);
-        //setIsModal(true);
-      } catch (error) {
-        console.error("Axios Error:", error);
-      }
+      console.log("success");
+    } else if (state.activeStep === 1) {
+      localStorage.setItem("ticketType", JSON.stringify(ticketDataRaw));
+      dispatch({ type: NEXT_STEP });
+      console.log("success");
     }
+    // else if (state.activeStep < 2) {
+    //   // dispatch(setEventData(name))
+    //   dispatch({ type: NEXT_STEP });
+    // }
+    // else {
+    //   const apiEndpoint = "/event/create";
+    //   const payload = {
+    //     event: {
+    //       ...event.event,
+    //       organizer: organizerId,
+    //       trendingLevel: 0,
+    //       payments: Object.keys(paymentData),
+    //       tickets: ticketData,
+    //     },
+    //   };
+
+    //   try {
+    //     const response = await axios.post(apiEndpoint, payload);
+    //     console.log("Axios Response:", response.data);
+    //     //setIsModal(true);
+    //   } catch (error) {
+    //     console.error("Axios Error:", error);
+    //   }
+    // }
   };
 
   const handlePrev = () => {
+    if(localEventData !== undefined) {
+      setForm(localEventData);
+    }
+    if(localEventData !== undefined) {
+      setTicketForm(localTicketType);
+    }
     if (state.activeStep > 0) {
       dispatch({ type: PREV_STEP });
-      
     }
   };
+
+
+  const saveFormData = (formData) => {
+    log("FORM Data", formData);
+  };
+
+  const handleGetEvent = () => {
+    
+  }
 
   return (
     <div className="w-full py-[80px] px-8">
@@ -92,8 +129,8 @@ export function FormStepper() {
       </Stepper>
 
       <div className="h-auto ">
-        {state.activeStep === 0 && <CreateEventForm />}
-        {state.activeStep === 1 && <CreateTicketsForm/>}
+        {state.activeStep === 0 && <CreateEventForm localStorage={form}/>}
+        {state.activeStep === 1 && <CreateTicketsForm localStorage={ticketForm}/>}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
@@ -106,7 +143,9 @@ export function FormStepper() {
         </Button>
       </div>
       <AnimatePresence>
-        {isModal && <AlertModal isModal={setIsModal} children={<OtpComponent />} />}
+        {isModal && (
+          <AlertModal isModal={setIsModal} children={<OtpComponent />} />
+        )}
       </AnimatePresence>
     </div>
   );

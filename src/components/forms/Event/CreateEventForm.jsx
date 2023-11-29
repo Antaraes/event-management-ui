@@ -8,16 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEventData } from "../../../redux/global/globalSlice";
 import { useParams } from "react-router-dom";
 
-const CreateEventForm = () => {
-  const {
-    name,
-    contact,
-    location,
-    thumbnail,
-    description,
-    onChange,
-  } = useEventRegister();
-
+const CreateEventForm = ({ localStorage }) => {
+  const { name, contact, location, thumbnail, description, onChange } =
+    useEventRegister();
   const config = [
     {
       labelText: "Name",
@@ -143,16 +136,16 @@ const CreateEventForm = () => {
       ...formattedFile,
       ...formattedDate,
     };
-    return { event : eventData };
+    return { event: eventData };
   };
-  
+
   useEffect(() => {
     const data = formattedData();
     dispatchRedux(setEventData(data));
   }, [formattedData()]);
-  
-  // const eventData = useSelector((state) => state.global.eventData)
-  // console.log("🚀 ~ file: CreateEventForm.jsx:155 ~ CreateEventForm ~ eventData:", eventData)
+
+  console.log(localStorage);
+
   return (
     <div className="mx-24 mt-8 p-10 border-2">
       <form action="">
@@ -163,21 +156,29 @@ const CreateEventForm = () => {
               labelId={item.labelId}
               type={item.type}
               onChange={item.onChange}
-              value={item.value}
+              value={
+                localStorage && localStorage.event
+                  ? localStorage.event[item.labelId]
+                  : item.value
+              }
               required={item.required}
             >
               {item.labelText}
             </Input>
           ))}
+
           {date.map((item, index) => (
-            <DatePicker
-              key={index}
-              labelText={item.labelText}
-              lableId={item.labelId}
-              onChange={(selectedDate) =>
-                handleDatePickerChange(selectedDate, item.labelId)
-              }
-            />
+            <>
+              <DatePicker
+                key={index}
+                labelId={item.labelId}
+                labelText={item.labelText}
+                onChange={(selectedDate) =>
+                  handleDatePickerChange(selectedDate, item.labelId)
+                }
+                value={localStorage && localStorage.event ? new Date(`${localStorage.event[item.labelId]}`) : new Date()}
+              />
+            </>
           ))}
         </div>
 
