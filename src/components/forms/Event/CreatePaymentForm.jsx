@@ -83,60 +83,27 @@ const CreatePaymentForm = () => {
 
   return (
     <>
-      <div className=" mt-8 text-white p-12 w-full rounded-lg">
+      <div className=" mt-8 text-white p-12 w-full rounded-lg  flex flex-col items-center justify-center">
         <h1 className="text-2xl mb-8">
           Please choose which Paymant System do you wanna use.
         </h1>
 
-        {/* <div className="text-primary mb-[20px]">
-          <select
-            name="payments"
-            id="payments"
-            onChange={(e) =>
-              setSelectedPaymentType({ paymentType: e.target.value })
-            }
-          >
-            {items.map((item) => (
-              <option value={item._id}>{item.name}</option>
-            ))}
-          </select>
-        </div> */}
-
         {items.map((item) => (
-          <div key={item._id} className="mb-10 ">
-            <label className="flex items-center">
-              <Checkbox
-              onChange={() => handleCheckboxChange(item._id)}/>
-
+          <div key={item._id} className="h-[80px] w-[500px] px-[20px] py-[10px] relative mb-10 border flex justify-between ">
+            <div className=" flex items-center">
               <img
-                src={item.img}
-                width={50}
-                height={50}
-                className="rounded ml-2"
-                alt=""
-              />
-              <span className="ml-3">{item.name}</span>
-            </label>
-            {/* {checkedItems[item._id] && (
-              <div className="my-7 grid grid-cols-2 gap-5">
-                <div>
-                  <label>Enter Card Number or Phone Number</label>
-                  <input
-                    type="text"
-                    placeholder={`Card No. <or> Ph No. for ${item.name}`}
-                    className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer tracking-wider"
-                  />
-                </div>
-                <div>
-                  <label>Choose QR Code</label>
-                  <input
-                    type="file"
-                    className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none  focus:outline-none focus:ring-0 focus:border-blue-600 peer tracking-wider"
-                    accept="image/*"
-                  />
-                </div>
-              </div>
-            )} */}
+                  src={item.img}
+                  width={50}
+                  height={50}
+                  className="rounded ml-2 "
+                  alt=""
+                />
+              <span className="mx-10">{item.name}&nbsp;({item.phone})</span>
+            </div>
+            <div className=" flex items-center justify-end">
+              <Checkbox
+                onChange={() => handleCheckboxChange(item._id)}/>
+            </div>
           </div>
         ))}
       </div>
