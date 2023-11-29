@@ -1,6 +1,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectCoverflow, } from "swiper/modules";
+import { getEvents } from "../../api";
+import useFetchData from "../../hooks/useFetchData";
 
 import "swiper/css";
 import "swiper/css";
@@ -11,7 +13,14 @@ import 'swiper/css/effect-coverflow';
 
 import EventPreview from "../../components/Home/EventPreview";
 
-const EventsCarousel = ({events}) => {
+const EventsCarousel = () => {
+
+    const queryKey = ["events-today"]
+    const {
+    data: eventsData,
+    isLoading: eventsLoading
+  } = useFetchData(queryKey, () => getEvents('?page=1&pageSize=6&name=&eventStartDate=&eventEndDate=&isUpcoming=&location=&organizerId=&sortBy='));
+
     return ( 
         <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, Pagination]}
@@ -29,7 +38,7 @@ const EventsCarousel = ({events}) => {
           "--swiper-pagination-bullet-horizontal-gap": "6px"
         }}
       >
-        {events.map((event, index) => {
+        {eventsData?.content?.map((event, index) => {
           return  <SwiperSlide key={index}>
             <EventPreview key={index} event={event} />
           </SwiperSlide>;
