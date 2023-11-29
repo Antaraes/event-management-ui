@@ -8,9 +8,12 @@ import {
 } from "../../api/index";
 import toast from "react-hot-toast";
 import OrganizerProfilePayments from "../../components/Organizer/OrganizerProfilePayments";
+import OrganizerProfileAddPaymentForm from "../../components/Organizer/OrganizerProfileAddPaymentForm";
+
 function OrganizerProfile() {
   const navigate = useNavigate();
   const { organizerId } = useParams();
+
   const { data: organizerDetail, isLoading: isOrganizerDetailLoading } =
     useFetchData(["organizer", organizerId], () =>
       getOrganizerProfile(organizerId)
@@ -22,6 +25,8 @@ function OrganizerProfile() {
   } = useFetchData(["organizer-payment", organizerId], () =>
     getAllPaymentFromOrganizer(organizerId)
   );
+
+  const [isPaymentAdd, setIsPaymentAdd] = useState(false);
   const [organizerData, setOrganizerData] = useState(null);
   const [shouldUpdateBtnAppear, setShouldUpdateBtnAppear] = useState(false);
 
@@ -203,7 +208,28 @@ function OrganizerProfile() {
             {isOrganizerDetailLoading && "Loading...."}
           </div>
           <div className="w-full sm:w-[50%] flex flex-col gap-4 mt-3  ">
-            <span>Your Payments :</span>
+            <div className="w-full flex justify-between items-center">
+              <span>Your Payments :</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className={`w-6 h-6 mr-4 ${
+                  isPaymentAdd
+                    ? "cursor-not-allowed disabled"
+                    : "cursor-pointer"
+                }`}
+                onClick={() => setIsPaymentAdd(true)}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
             <div className="border-2 border-gray-900 h-[240px]  rounded-lg w-full p-3 overflow-auto grid grid-cols-1 lg:grid-cols-2">
               {organizerPayment &&
                 organizerPayment.map((payment) => (
@@ -215,6 +241,11 @@ function OrganizerProfile() {
                 ))}
 
               {isOrganizerPaymentLoading && "Loading...."}
+              {isPaymentAdd && (
+                <OrganizerProfileAddPaymentForm
+                  cancelAction={() => setIsPaymentAdd(false)}
+                />
+              )}
             </div>
           </div>
         </div>
