@@ -3,13 +3,20 @@ import { useState } from "react";
 import AlertModal from "../common/AlertModal";
 import ConfirmAlert from "../common/ConfirmAlert";
 import { useEffect } from "react";
-import { updateOrganizerPayment } from "../../api/index";
+import { getOTPCode, updateOrganizerPayment } from "../../api/index";
 import toast from "react-hot-toast";
+import OtpComponent from "../common/OtpComponent";
 
-const OrganizerProfilePayments = ({ payment, refetchOrganizerPayment }) => {
+const OrganizerProfilePayments = ({
+  email,
+  payment,
+  refetchOrganizerPayment,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [formData, setFormData] = useState(null);
+  const availablePays = ["Kpay", "Wave", "Paypal"];
+  const [isOTPOpen, setIsOTPOpen] = useState(false);
 
   const handleCancelEditing = () => {
     setIsEditing(false);
@@ -91,10 +98,16 @@ const OrganizerProfilePayments = ({ payment, refetchOrganizerPayment }) => {
   };
 
   const handleConfirm = () => {
+    getOTPCode("lin@gmailcom");
+    setIsOTPOpen(true);
+  };
+
+  const OTPSuccesFunc = () => {
     updateOrganizerPayment(formData._id, formData)
       .then(() => {
         setIsConfirmModalOpen(false);
         setIsEditing(false);
+        setIsOTPOpen(false);
         refetchOrganizerPayment();
         toast.success("Updated Successfully");
       })
@@ -123,12 +136,22 @@ const OrganizerProfilePayments = ({ payment, refetchOrganizerPayment }) => {
   return (
     <div className="h-20 rounded-lg border-2 border-white m-2 p-2 flex flex-col gap-2  border-opacity-40 ">
       {isEditing ? (
-        <input
+        <select
           className="bg-transparent w-[60%] focus:outline-none border-b border-white border-opacity-25 focus:border-opacity-100"
           value={formData.name}
           onChange={(e) => handleInputChange("name", e)}
           autoFocus
-        />
+        >
+          {availablePays.map((paymentMethod) => (
+            <option
+              className="text-black"
+              key={paymentMethod}
+              value={paymentMethod}
+            >
+              {paymentMethod}
+            </option>
+          ))}
+        </select>
       ) : (
         <span className="text-lg">{payment.name}</span>
       )}
@@ -157,6 +180,19 @@ const OrganizerProfilePayments = ({ payment, refetchOrganizerPayment }) => {
               handleCancel={handleCancel}
               titleText={`Do You Want To Update This ${payment.name} ?`}
               confirmMessage={"Update"}
+            />
+          }
+        />
+      )}
+
+      {isOTPOpen && (
+        <AlertModal
+          isModal={setIsOTPOpen}
+          children={
+            <OtpComponent
+              email={"lin27@gmail.com"}
+              successFunc={OTPSuccesFunc}
+              failFunc={() => toast.error("Invalid Pin. Try Again")}
             />
           }
         />
