@@ -10,6 +10,38 @@
     box-sizing: border-box;
 }
 
+/* Select the scrollbar */
+::-webkit-scrollbar {
+    width: 12px;
+    /* Width of the entire scrollbar */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Change color on hover */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #1E95C8;
+    /* Scrollbar thumb color */
+    border-radius: 6px;
+    /* Roundness of the scrollbar thumb */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* Color of the scrollbar track */
+}
+
+/* Handle on drag */
+::-webkit-scrollbar-thumb:active {
+    background-color: #555;
+    /* Change color on click */
+}
+
 body {
     overflow-x: hidden;
     scroll-behavior: smooth;

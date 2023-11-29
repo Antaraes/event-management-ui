@@ -15,6 +15,7 @@ export const generateAccessToken = () => API.post(`/auth/refresh`);
 
 //Organizer
 export const getOrganizers = () => API.get(`/organizer/get_all`);
+export const fetchOrganizers = (query) => API.get(`/organizer/all${query}`);
 export const getOrganizerProfile = (organizerId) =>
   API.get(`/organizer/${organizerId}`);
 export const addOrganizer = (data) => API.post(`/organizer/create`, data);

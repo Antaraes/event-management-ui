@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import EventCard from "./EventCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectCoverflow, } from "swiper/modules";
+import useFetchData from "../../hooks/useFetchData";
 
 import "swiper/css";
 import "swiper/css";
@@ -9,8 +10,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import 'swiper/css/effect-coverflow';
+import { getEvents } from "../../api";
 
-const EventCardCarousel = ({events}) => {
+
+
+const EventCardCarousel = () => {
+
+  const queryKey = ["events-today"]
+  const {
+    data: eventsData,
+    isLoading: eventsLoading
+  } = useFetchData(queryKey, () => getEvents('?page=1&pageSize=6&name=&eventStartDate=&eventEndDate=&isUpcoming=&location=&organizerId=&sortBy='));
+
     return ( 
       <>
         <Swiper className="md:hidden"
@@ -30,7 +41,7 @@ const EventCardCarousel = ({events}) => {
           "--swiper-pagination-bullet-horizontal-gap": "6px"
         }}
       >
-        {events.map((event, index) => {
+        {eventsData?.content?.map((event, index) => {
           return <SwiperSlide key={index} size={1}>
             <EventCard key={index} event={event} />
           </SwiperSlide>;
@@ -53,7 +64,7 @@ const EventCardCarousel = ({events}) => {
           "--swiper-pagination-bullet-horizontal-gap": "6px"
         }}
       >
-        {events.map((event, index) => {
+        {eventsData?.content?.map((event, index) => {
           return <SwiperSlide key={index} size={1}>
             <EventCard key={index} event={event} />
           </SwiperSlide>;
