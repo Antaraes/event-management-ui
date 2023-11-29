@@ -245,6 +245,7 @@ function OrganizerProfile() {
                 <OrganizerProfileAddPaymentForm
                   cancelAction={() => setIsPaymentAdd(false)}
                   // email={organizerDetail.email}
+                  refetchOrganizerPayment={refetchOrganizerPayment}
                 />
               )}
             </div>

@@ -5,8 +5,14 @@ import OtpComponent from "../common/OtpComponent";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { addOrganizerPayment, getOTPCode } from "../../api/index";
+import { useParams } from "react-router-dom";
 
-const OrganizerProfileAddPaymentForm = ({ cancelAction, email }) => {
+const OrganizerProfileAddPaymentForm = ({
+  cancelAction,
+  email,
+  refetchOrganizerPayment,
+}) => {
+  const { organizerId } = useParams();
   const availablePays = ["Kpay", "Wave", "Paypal"];
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isOTPOpen, setIsOTPOpen] = useState(false);
@@ -37,9 +43,19 @@ const OrganizerProfileAddPaymentForm = ({ cancelAction, email }) => {
   const OTPSuccessFunc = async () => {
     try {
       const payment = {
-        payment: [{ name: formData.name, phone: formData.phone }],
+        payment: [
+          {
+            name: formData.name,
+            phone: formData.phone,
+            organizer: organizerId,
+          },
+        ],
       };
       const response = await addOrganizerPayment(payment);
+      setIsOTPOpen(false);
+      setIsConfirmModalOpen(false);
+      refetchOrganizerPayment();
+      cancelAction();
       toast.success("Added new Payment");
     } catch (error) {
       toast.error("Failed to add payment. Try Again");
