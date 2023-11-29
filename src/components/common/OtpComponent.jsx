@@ -2,27 +2,39 @@ import React, { useState } from "react";
 import OTPInput from "react-otp-input";
 import * as api from "../../api/index";
 
-const OtpComponent = () => {
+const OtpComponent = ({ email, successFunc, failFunc }) => {
   const [otp, setOtp] = useState("");
   const resetOTPCodehandle = () => {
-    api.getOTPCode({ email: "minbhonethantes@gmail.com" });
+    api.getOTPCode({ email: email });
   };
 
-  const verifyOTPCode = (code) => {
-    const isComfirm = api.verifyOTPcode(code);
-    console.log(isComfirm);
+  const verifyOTPCode = async (code) => {
+    try {
+      const response = await api.verifyOTPcode({ code: code });
+      const isConfirm = response.data;
+
+      console.log(isConfirm.tokenValidates);
+
+      if (!isConfirm.tokenValidates) {
+        failFunc();
+        setOtp("");
+        return;
+      }
+
+      successFunc();
+    } catch (error) {
+      console.error("Error verifying OTP code:", error);
+    }
   };
 
   return (
-    <div className="flex bg-primary justify-center flex-col mt-10 items-center gap-24 rounded-lg shadow-sm shadow-slate-800 border-gray-900 border-2 w-[60%] mx-auto  h-[88vh]">
-      <div className="flex  relative justify-center flex-col w-[60%] gap-4 items-center">
+    <div className="flex bg-primary justify-center flex-col mt-10 items-center gap-24 rounded-lg shadow-sm shadow-slate-800  w-full mx-auto  h-[88vh]">
+      <div className="flex relative justify-center flex-col w-[60%] gap-4 items-center">
         <h1 className="text-4xl font-bold text-center border-b-2 border-secondary w-fit">
           OTP CODE
         </h1>
-        <p className="font-light ml-8">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe ex ipsum, modi quasi
-          dolorem alias odit, voluptatum possimus doloribus sequi dolore aliquam delectus
-          repudiandae natus dolorum earum amet eum rem.
+        <p className="font-light  text-center w-full">
+          Check Your Email For OTP <i className="fa-regular fa-envelope"></i>
         </p>
       </div>
 
@@ -32,7 +44,6 @@ const OtpComponent = () => {
         numInputs={6}
         renderSeparator={<span className="ml-3 mr-3">.</span>}
         shouldAutoFocus={true}
-        placeholder="0"
         inputStyle={{
           width: "3rem",
           height: "3rem",
@@ -60,7 +71,7 @@ const OtpComponent = () => {
         </button>
         <button
           className="bg-secondary p-3 w-24 rounded-md text-white hover:-translate-y-1 duration-300 transition-all"
-          onClick={verifyOTPCode}
+          onClick={() => verifyOTPCode(otp)}
         >
           Submit
         </button>

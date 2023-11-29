@@ -1,35 +1,47 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import CardList from '../../components/Card/CardList'
-import { useSelector, useDispatch } from 'react-redux'
-import contributorSlice, { setBlueMark } from '../../redux/Filter/contributorSlice'
 import Filter from '../../components/Filter/Filter';
+import { fetchOrganizers } from '../../api';
+import useFetchData from '../../hooks/useFetchData';
 
 export default function Contributor() {
 
-  const isBlueMark = useSelector(state => state.contributor.isBlueMark);
-  const dispatch = useDispatch();
+  
+  const [query, setQuery] = useState('?page=1&pageSize=6&name=&accountStatus=active&sortBy=');
+  const queryKey = ["contributors",query]
+  const {
+    data: contributorsData,
+    isLoading: contributorsLoading
+  } = useFetchData(queryKey, () => fetchOrganizers(query));
+  
+  const pageSize = 6;
+  
+  const [page, setPage] = useState(1);
+  const [name, setName] = useState('');
+  const [isBlueMark, setIsBlueMark] = useState(true);
 
-  const contributors = [
-      {id:1, name: "Contri-1"},
-      {id:2, name: "Contri-2"},
-      {id:3, name: "Contri-3"},
-      {id:4, name: "Contri-4"}
-  ]
+  useEffect(() => {
+
+    const updatedQuery = `?page=${page}&pageSize=6&name=${name}&accountStatus=active&sortBy=${isBlueMark ? 'blueMark' : ''}`;
+    setQuery(updatedQuery);
+  }, [page, name, isBlueMark]);
 
   return (
-    <div className='px-16 py-12'>
+    <div className='px-2 lg:px-10 py-12'>
       <Filter options={
         {
           inputs: [
-            { label: "Blue Mark", type: "checkbox" , value: isBlueMark, action: () => dispatch(setBlueMark())}
+            { label: "Organizer Name", type: "text", value: name, action: (value) => setName(value)},
+            { label: "Sort by Blue Mark", type: "checkbox" , value: isBlueMark, action: () => setIsBlueMark(!isBlueMark)}
           ],
-          data: [
-            {value: isBlueMark && 'Blue Mark', remove: () => dispatch(setBlueMark())},
-          ]
         }
       }
       />
-      <CardList data={contributors} link={'/contributor/detail/'} />
+      <CardList
+        page={page}
+        setPage={(value) => setPage(value)}
+        pageCount = {Math.ceil(contributorsData?.total / pageSize)}
+        data={contributorsData?.content} link={'/contributor/detail/'} />
     </div>
   )
 }
