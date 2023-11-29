@@ -57,7 +57,7 @@ const useRegister = () => {
     onSuccess: (data) => {
       console.log(data);
       toast.success("Login Sucessfully");
-      navigate("/user/login");
+      navigate("/verify");
     },
     onError: (error) => {
       alert("there was an error");

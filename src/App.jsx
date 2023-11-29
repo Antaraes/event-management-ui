@@ -1,9 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  useLocation,
-} from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -31,19 +27,21 @@ import { useSelector } from "react-redux";
 import OrganizerEventList from "./pages/User/OrganizerEventList";
 import OrganizerBoostPayment from "./pages/User/OrganizerBoostPayment";
 import * as api from "./api/index";
-import Cookies from "js-cookie";
 import OrganizerInvoices from "./pages/User/OrganizerInvoices";
 import ProtectedRoute from "./helper/ProtectedRoute";
-
+import { useCookies } from "react-cookie";
+import Verification from "./pages/User/Verification";
+import EmailVerify from "./pages/User/EmailVerify";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies();
+
   console.log(user, isAuthenticated);
   useEffect(() => {
+    const { accessToken } = cookies;
+    console.log("accessToken", accessToken);
     const checkTokenExpiration = async () => {
-      const accessToken = Cookies.get("accessToken");
-      console.log(accessToken);
-
       if (accessToken) {
         try {
           if (exp * 1000 - Date.now() < 5 * 60 * 1000) {
@@ -60,12 +58,19 @@ function App() {
     return () => clearInterval(intervalId);
   }, []);
 
-
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
 
   const router = createBrowserRouter([
+    {
+      path: "/verification/:userId/:verifyToken",
+      element: <Verification />,
+    },
+    {
+      path: "verify",
+      element: <EmailVerify />,
+    },
     {
       path: "/user/login",
       element: <LoginPage />,
