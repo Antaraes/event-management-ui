@@ -6,7 +6,7 @@ import CreatePaymentForm from "./forms/Event/CreatePaymentForm";
 import CreateTicketsForm from "./forms/Event/CreateTicketsForm";
 import AlertModal from "./common/AlertModal";
 import { AnimatePresence } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 
@@ -34,7 +34,18 @@ export function FormStepper() {
   const { organizerId } = useParams();
   const event = useSelector((state) => state.global.eventData);
   const ticketData = useSelector((state) => state.global.ticketData);
+  const paymentData = useSelector((state) => state.global.paymentType);
+  console.log(
+    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ paymentData:",
+    paymentData
+  );
+  console.log("🚀 ~ file: FormStepper.jsx:36 ~ FormStepper ~ event:", event);
+  console.log(
+    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ ticketData:",
+    ticketData
+  );
   console.log("id", organizerId);
+
   const handleNext = async () => {
     if (state.activeStep < 2) {
       dispatch({ type: NEXT_STEP });
@@ -45,9 +56,9 @@ export function FormStepper() {
           ...event.event,
           organizer: organizerId,
           trendingLevel: 0,
+          payments: Object.keys(paymentData),
+          tickets: ticketData,
         },
-
-        tickets: ticketData,
       };
 
       try {
@@ -65,9 +76,6 @@ export function FormStepper() {
       dispatch({ type: PREV_STEP });
     }
   };
-
-  // console.log("Event Data from Redux:", eventData);
-  console.log("Event Data from Redux:", ticketData);
 
   return (
     <div className="w-full py-[80px] px-8">
@@ -93,13 +101,11 @@ export function FormStepper() {
           Prev
         </Button>
         <Button onClick={handleNext} disabled={state.isLastStep}>
-          {state.activeStep === 1 ? "Submit" : "Next"}
+          {state.activeStep === 2 ? "Submit" : "Next"}
         </Button>
       </div>
       <AnimatePresence>
-        {isModal && (
-          <AlertModal isModal={setIsModal} children={<OtpComponent />} />
-        )}
+        {isModal && <AlertModal isModal={setIsModal} children={<OtpComponent />} />}
       </AnimatePresence>
     </div>
   );

@@ -2,50 +2,81 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* global usage */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Select the scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  /* Width of the entire scrollbar */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Change color on hover */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #1e95c8;
+  /* Scrollbar thumb color */
+  border-radius: 6px;
+  /* Roundness of the scrollbar thumb */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  /* Color of the scrollbar track */
+}
+
+/* Handle on drag */
+::-webkit-scrollbar-thumb:active {
+  background-color: #555;
+  /* Change color on click */
 }
 
 body {
-    overflow-x: hidden;
-    scroll-behavior: smooth;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 .black-gradient {
-    @apply bg-gradient-to-r from-[#111] to-[#333]
+  @apply bg-gradient-to-r from-[#111] to-[#333];
 }
 
 .bg-glass-transparent {
-    @apply bg-gradient-to-r from-[#fff2] to-[#fff3] backdrop-blur-[2px]
+  @apply bg-gradient-to-r from-[#fff2] to-[#fff3] backdrop-blur-[2px];
 }
 
 /* pagination style */
 .custom-pagination {
-    @apply flex justify-center mt-8;
+  @apply flex justify-center mt-8;
 }
 
 .pagination a,
 .pagination span {
-    @apply inline-block px-3 py-2 text-white border border-secondary hover:bg-secondary hover:text-white;
+  @apply inline-block px-3 py-2 text-white border border-secondary hover:bg-secondary hover:text-white;
 }
 
 .pagination .disabled {
-    @apply opacity-50 cursor-not-allowed;
+  @apply opacity-50 cursor-not-allowed;
 }
 
 .pagination .active {
-    @apply bg-secondary text-white;
+  @apply bg-secondary text-white;
 }
 
 .EZDrawer__overlay {
-    background: transparent !important;
+  background: transparent !important;
 }
 
 /* Date Range Picker */
 .rdrStaticRangeLabel {
-    @apply text-gray-800 hover:text-blue-gray-500
+  @apply text-gray-800 hover:text-blue-gray-500;
 }

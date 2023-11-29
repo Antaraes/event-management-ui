@@ -19,7 +19,7 @@ const NavButton = (props) => {
 
   return (
     <NavLink
-      className={`text-white text-start py-[10px] mr-[100px] z-100 ps-10 text-[1rem] block w-full
+      className={`text-white text-start py-[10px] mr-[100px] z-100 ps-14 text-[1rem] block w-full
       ${
         active && "bg-activeside/25"
       } hover:bg-sidemenu/20`}

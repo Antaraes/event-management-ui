@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 
 const EventPreview = ({event}) => {
   return (
-    <Link to='event/detail/1'>
+    <Link to={`event/detail/${event._id}`}>
       <div className="relative flex justify-end">
         <img
           className="w-[65vw] h-[200px] md:h-[450px] rounded-lg"
-          src={ event.img }
+          src={ event.thumbnail[0] }
         />
         <div className="absolute bottom-0 left-0 sm:p-2">
           <div className="w-[60vw] md:w-[450px] h-[35px] md:h-[50px] bg-secondary relative left-0 bottom-0 overflow-hidden rounded-br-3xl">
