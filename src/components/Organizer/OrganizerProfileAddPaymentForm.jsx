@@ -1,21 +1,49 @@
 import React from "react";
 import AlertModal from "../common/AlertModal";
 import ConfirmAlert from "../common/ConfirmAlert";
+import OtpComponent from "../common/OtpComponent";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { addOrganizerPayment, getOTPCode } from "../../api/index";
 
-const OrganizerProfileAddPaymentForm = ({ cancelAction }) => {
+const OrganizerProfileAddPaymentForm = ({ cancelAction, email }) => {
   const availablePays = ["Kpay", "Wave", "Paypal"];
-
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isOTPOpen, setIsOTPOpen] = useState(false);
   const [formData, setFormData] = useState({
-    name: "",
+    name: availablePays[0],
     phone: "",
   });
-
   const handleInputChange = (name, e) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: e.target.value,
     }));
+  };
+
+  const handleAddClick = () => {
+    if (formData.name.trim() == "" || formData.phone.trim() == "") {
+      toast.error("Fields Cannot be Blank");
+      return;
+    }
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleConfirmClick = () => {
+    setIsOTPOpen(true);
+    getOTPCode({ email: "lin27@gail.com" });
+  };
+
+  const OTPSuccessFunc = async () => {
+    try {
+      const payment = {
+        payment: [{ name: formData.name, phone: formData.phone }],
+      };
+      const response = await addOrganizerPayment(payment);
+      toast.success("Added new Payment");
+    } catch (error) {
+      toast.error("Failed to add payment. Try Again");
+    }
   };
   return (
     <div className="h-20 rounded-lg border-2 border-white m-2 p-2 flex flex-col gap-2  border-opacity-40 ">
@@ -57,6 +85,7 @@ const OrganizerProfileAddPaymentForm = ({ cancelAction }) => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
+            onClick={handleAddClick}
             className="w-5 h-5  hover:bg-green-600 rounded-full hover:-translate-y-1 transition-all duration-200"
           >
             <path
@@ -82,19 +111,32 @@ const OrganizerProfileAddPaymentForm = ({ cancelAction }) => {
           </svg>
         </div>
       </div>
-      {/* {isConfirmModalOpen && (
+      {isConfirmModalOpen && (
         <AlertModal
-          isModal={false}
+          isModal={setIsConfirmModalOpen}
           children={
             <ConfirmAlert
-            //   handleConfirm={handleConfirm}
-            //   handleCancel={handleCancel}
-            //   titleText={`Do You Want To Update This ${payment.name} ?`}
-            //   confirmMessage={"Update"}
+              handleConfirm={handleConfirmClick}
+              handleCancel={() => setIsConfirmModalOpen(false)}
+              titleText={`Do You Want To Add This ${formData.name} ?`}
+              confirmMessage={"Add"}
             />
           }
         />
-      )} */}
+      )}
+
+      {isOTPOpen && (
+        <AlertModal
+          isModal={setIsOTPOpen}
+          children={
+            <OtpComponent
+              successFunc={OTPSuccessFunc}
+              failFunc={() => toast.error("Incorrect Pin. Try Again")}
+              email={"lin27@gmail.com"}
+            />
+          }
+        />
+      )}
     </div>
   );
 };

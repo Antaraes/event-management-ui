@@ -244,6 +244,7 @@ function OrganizerProfile() {
               {isPaymentAdd && (
                 <OrganizerProfileAddPaymentForm
                   cancelAction={() => setIsPaymentAdd(false)}
+                  // email={organizerDetail.email}
                 />
               )}
             </div>
