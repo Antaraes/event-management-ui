@@ -84,21 +84,6 @@ const CreateTicketsForm = () => {
     setAllowEdit(!allowEdit);
   };
 
-  const handleShow = (e) => {
-    e.preventDefault();
-    const insert = [...tableData];
-    const formattedData = [];
-    for (let key in tableData) {
-      console.log(tableData[key], key);
-      formattedData.push({
-        ticketType: tableData[key][0].config.value,
-        quantity: tableData[key][1].config.value,
-        ticketPerPrice: tableData[key][2].config.value,
-      });
-    }
-    dispatchRedux(setTicketData(formattedData));
-  };
-
   const formattedData = () => {
     const formattedData = [];
     for (let key in tableData) {
@@ -154,15 +139,10 @@ const CreateTicketsForm = () => {
         </div>
       </div>
       {tableData.length > 0 ? (
-        <div className="flex flex-row items-center justify-end mx-[50px] px-[50px] mt-[-50px] ">
-          <div>
-            <button onClick={handleShow} className="p-[10px] border rounded-md">
-              Show
-            </button>
-          </div>
-          <div className="flex flex-col ml-[20px] px-[50px] py-[10px] border">
-            <label>Edit All</label>
+        <div className="flex flex-row items-center justify-start">
+          <div className="flex items-center justify-center ml-[20px] px-[20px] py-[5px] border">
             <Checkbox onChange={handleAllCheckboxChange} />
+            <label className="pr-[20px]">Edit All</label>
           </div>
         </div>
       ) : null}
