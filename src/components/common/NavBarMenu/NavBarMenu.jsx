@@ -1,34 +1,45 @@
 import React, { useState } from "react";
 import NavButton from "../NavButton/NavButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const NavBarMenu = () => {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const btn = [
+  const navButtons = [
     {
       title: "Upcoming",
-      path: "/event?type=upcoming"
+      path: "/event?type=upcoming",
     },
     {
       title: "All Events",
-      path: "/event?type=all"
+      path: "/event?type=all",
     },
     {
-      title: "Become an Organizer",
-      path: "/organizer/subscriptions",
+      title: isAuthenticated ? "Dashboard" : "Become an Organizer",
+      path: isAuthenticated
+        ? "/organizer/dashboard"
+        : "/organizer/subscriptions",
     },
     {
-      title: "Create Event",
-      path: "/user/login",
+      title: isAuthenticated ? "Invoices" : "Create Event",
+      path: isAuthenticated ? "/organizer/invoices" : "/user/login",
     },
   ];
 
+  const renderContent = () => {
+    return (
+      <>
+        {navButtons.map((item) => (
+          <NavButton title={item.title} href={item.path} key={item.title} />
+        ))}
+      </>
+    );
+  };
+
   return (
     <div className="bg-sidemenu/10 text-[0.8rem] sm:text-[1rem] relative z-50">
-      {btn.map((item) => {
-        return <NavButton title={item.title} href={item.path} key={item.title} />;
-      })}
+      {renderContent()}
     </div>
   );
 };
