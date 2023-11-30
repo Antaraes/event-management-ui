@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom";
 const CreateEventForm = ({ localStorage }) => {
   const { name, contact, location, thumbnail, description, onChange } =
     useEventRegister();
+  
+  const {organizerId} = useParams();
   const config = [
     {
       labelText: "Name",
@@ -135,6 +137,7 @@ const CreateEventForm = ({ localStorage }) => {
       ...formattedInput,
       ...formattedFile,
       ...formattedDate,
+      organizerId
     };
     return { event: eventData };
   };

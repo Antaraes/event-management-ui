@@ -11,6 +11,8 @@ import axios from "../api/axios";
 import { useParams } from "react-router-dom";
 import useEventRegister from "../hooks/useEventRegister";
 import { setEventData } from "../redux/global/globalSlice";
+import { createEvent } from "../api";
+import toast from 'react-hot-toast'
 
 const NEXT_STEP = "NEXT_STEP";
 const PREV_STEP = "PREV_STEP";
@@ -36,7 +38,8 @@ export function FormStepper() {
   const [state, dispatch] = useReducer(stepperReducer, initialState);
   const { organizerId } = useParams();
   const [form, setForm] = useState({});
-  const [ticketForm, setTicketForm] = useState({});
+  // const [memoTickets, setMemoTickets] = useState([]);
+  const [selectedPayments, setSelectedPayments] = useState([]);
   const eventData = useSelector((state) => state.global.eventData);
   const ticketData = useSelector((state) => state.global.ticketData);
   const paymentData = useSelector((state) => state.global.paymentType);
@@ -64,10 +67,27 @@ export function FormStepper() {
       dispatch({ type: NEXT_STEP });
       console.log("success");
     } else if (state.activeStep === 1) {
-      localStorage.setItem("ticketType", JSON.stringify(ticketDataRaw));
+      // localStorage.setItem("ticketType", JSON.stringify(ticketDataRaw));
       dispatch({ type: NEXT_STEP });
       console.log("success");
     }
+    // else {
+
+    //   const formData = { ...eventData, tickets: [...ticketDataRaw], payments: [...paymentData] }
+    //   console.log("Form Data", formData);
+
+    //   createEvent(organizerId, formData)
+    //     .then(() => {
+    //       setIsConfirmModalOpen(false);
+    //       setIsEditing(false);
+    //       setIsOTPOpen(false);
+    //       refetchOrganizerPayment();
+    //       toast.success("Updated Successfully");
+    //     })
+    //     .catch((error) => {
+    //       toast.error(`Something went Wrong`);
+    //     });
+    // }
     // else if (state.activeStep < 2) {
     //   // dispatch(setEventData(name))
     //   dispatch({ type: NEXT_STEP });
@@ -79,14 +99,12 @@ export function FormStepper() {
           ...eventData.event,
           organizer: organizerId,
           trendingLevel: 0,
-          
           payments: Object.keys(paymentData),
           tickets: ticketData,
         },
       };
 
       try {
-        console.log(payload, eventData);
         const response = await axios.post(apiEndpoint, payload);
         console.log("Axios Response:", response.data);
         //setIsModal(true);
@@ -100,8 +118,8 @@ export function FormStepper() {
     if(localEventData !== undefined) {
       setForm(localEventData);
     }
-    if(localEventData !== undefined) {
-      setTicketForm(localTicketType);
+    if(localTicketType !== undefined) {
+      // setMemoTickets(localTicketType);
     }
     if (state.activeStep > 0) {
       dispatch({ type: PREV_STEP });
@@ -132,7 +150,7 @@ export function FormStepper() {
 
       <div className="h-auto ">
         {state.activeStep === 0 && <CreateEventForm localStorage={form}/>}
-        {state.activeStep === 1 && <CreateTicketsForm localStorage={ticketForm}/>}
+        {state.activeStep === 1 && <CreateTicketsForm/>}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
