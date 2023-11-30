@@ -53,7 +53,7 @@ const ContributorCarousel = ({contributors}) => {
         </Swiper>
         <div className="flex justify-center items-center mt-4">
           <Link to="/contributor">
-            <button className="px-4 py-1 text-white bg-orange-400 text-center rounded-md">See more</button>
+            <button className="px-4 py-1 md:px-6 md:py-2 md:text-[18px] lg:text-[20px] text-white bg-orange-400 text-center rounded-md">See more</button>
           </Link>
         </div>
       </>
