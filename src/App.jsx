@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -32,6 +36,7 @@ import ProtectedRoute from "./helper/ProtectedRoute";
 import { useCookies } from "react-cookie";
 import Verification from "./pages/User/Verification";
 import EmailVerify from "./pages/User/EmailVerify";
+import SuccessTicketBought from "./pages/User/SuccessTicketBought";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
@@ -97,6 +102,11 @@ function App() {
         {
           path: "/buy-ticket/:eventId",
           element: <BuyTicket />,
+        },
+
+        {
+          path: "/ticket-success",
+          element: <SuccessTicketBought />,
         },
         {
           path: "/organizer",
