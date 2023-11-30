@@ -17,13 +17,11 @@ const NavBarMenu = () => {
     },
     {
       title: isAuthenticated ? "Dashboard" : "Become an Organizer",
-      path: isAuthenticated
-        ? "/organizer/dashboard"
-        : "/organizer/subscriptions",
+      path: isAuthenticated ? "/organizer/dashboard" : "/organizer/subscriptions",
     },
     {
-      title: isAuthenticated ? "Invoices" : "Create Event",
-      path: isAuthenticated ? "/organizer/invoices" : "/user/login",
+      title: isAuthenticated ? "Create Event" : "Login",
+      path: isAuthenticated ? "/organizer/create-event" : "/user/login",
     },
   ];
 

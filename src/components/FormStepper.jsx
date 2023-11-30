@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../api/axios";
 import { useParams } from "react-router-dom";
+import * as api from "../api/index";
 
 const NEXT_STEP = "NEXT_STEP";
 const PREV_STEP = "PREV_STEP";
@@ -35,16 +36,6 @@ export function FormStepper() {
   const event = useSelector((state) => state.global.eventData);
   const ticketData = useSelector((state) => state.global.ticketData);
   const paymentData = useSelector((state) => state.global.paymentType);
-  console.log(
-    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ paymentData:",
-    paymentData
-  );
-  console.log("🚀 ~ file: FormStepper.jsx:36 ~ FormStepper ~ event:", event);
-  console.log(
-    "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ ticketData:",
-    ticketData
-  );
-  console.log("id", organizerId);
 
   const handleNext = async () => {
     if (state.activeStep < 2) {
@@ -54,7 +45,6 @@ export function FormStepper() {
       const payload = {
         event: {
           ...event.event,
-          organizer: organizerId,
           trendingLevel: 0,
           payments: Object.keys(paymentData),
           tickets: ticketData,
@@ -62,7 +52,7 @@ export function FormStepper() {
       };
 
       try {
-        const response = await axios.post(apiEndpoint, payload);
+        const response = await api.createEvent(payload);
         console.log("Axios Response:", response.data);
         //setIsModal(true);
       } catch (error) {
@@ -74,7 +64,6 @@ export function FormStepper() {
   const handlePrev = () => {
     if (state.activeStep > 0) {
       dispatch({ type: PREV_STEP });
-      
     }
   };
 
@@ -93,7 +82,7 @@ export function FormStepper() {
 
       <div className="h-auto ">
         {state.activeStep === 0 && <CreateEventForm />}
-        {state.activeStep === 1 && <CreateTicketsForm/>}
+        {state.activeStep === 1 && <CreateTicketsForm />}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
