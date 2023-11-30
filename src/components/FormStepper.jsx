@@ -8,6 +8,7 @@ import AlertModal from "./common/AlertModal";
 import { AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function FormStepper() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,8 +31,18 @@ export function FormStepper() {
   });
 
   const handleStepClick = (direction) => {
+    const isAnyFieldEmpty = Object.values(eventFormData).some(
+      (value) => value === "" || (Array.isArray(value) && value.length === 0)
+    );
+
+    if (isAnyFieldEmpty) {
+      toast.error("Event Data Cannot be Black !!");
+      return;
+    }
+
     setCurrentStep((prevStep) => {
       const newStep = { ...prevStep };
+
       newStep.activeStep =
         direction === "next" ? newStep.activeStep + 1 : newStep.activeStep - 1;
       newStep.isLastStep = newStep.activeStep === 2;
@@ -56,7 +67,10 @@ export function FormStepper() {
 
       <div className="h-auto ">
         {currentStep.activeStep === 0 && (
-          <CreateEventForm setEventFormData={setEventFormData} />
+          <CreateEventForm
+            eventFormData={eventFormData}
+            setEventFormData={setEventFormData}
+          />
         )}
         {currentStep.activeStep === 1 && <CreateTicketsForm />}
         {currentStep.activeStep === 2 && <h2>Step 3 Content</h2>}
