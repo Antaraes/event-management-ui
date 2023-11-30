@@ -44,24 +44,24 @@ const CreatePaymentForm = () => {
 
   const dispatchRedux = useDispatch();
 
-  useEffect(() => {
-    try {
-      api
-        .getAllPaymentFromOrganizer()
-        .then((response) => {
-          setItems(response.data);
-          setCheckedItems(response.data._id);
-          return response.data;
-        })
-        .then((response) => setSelectedPaymentType(response))
-        .catch((error) => console.log(error.message));
-      items.map((item) => {
-        setSelectedPaymentType(item._id);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     api
+  //       .getAllPaymentFromOrganizer()
+  //       .then((response) => {
+  //         setItems(response.data);
+  //         setCheckedItems(response.data._id);
+  //         return response.data;
+  //       })
+  //       .then((response) => setSelectedPaymentType(response))
+  //       .catch((error) => console.log(error.message));
+  //     items.map((item) => {
+  //       setSelectedPaymentType(item._id);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, []);
 
   useEffect(() => {
     dispatchRedux(setPaymentType(checkedItems));
@@ -86,7 +86,9 @@ const CreatePaymentForm = () => {
   return (
     <>
       <div className=" mt-8 text-white p-12 w-full rounded-lg  flex flex-col items-center justify-center">
-        <h1 className="text-2xl mb-8">Please choose which Paymant System do you wanna use.</h1>
+        <h1 className="text-2xl mb-8">
+          Please choose which Paymant System do you wanna use.
+        </h1>
 
         {items.map((item) => (
           <div
@@ -94,7 +96,13 @@ const CreatePaymentForm = () => {
             className="h-[80px] w-[500px] px-[20px] py-[10px] relative mb-10 border flex justify-between "
           >
             <div className=" flex items-center">
-              <img src={item.img} width={50} height={50} className="rounded ml-2 " alt="" />
+              <img
+                src={item.img}
+                width={50}
+                height={50}
+                className="rounded ml-2 "
+                alt=""
+              />
               <span className="mx-10">
                 {item.name}&nbsp;({item.phone})
               </span>

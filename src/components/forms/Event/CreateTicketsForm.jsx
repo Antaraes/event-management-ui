@@ -96,10 +96,10 @@ const CreateTicketsForm = () => {
     return formattedData;
   };
 
-  useEffect(() => {
-    const data = formattedData();
-    dispatchRedux(setTicketData(data));
-  }, [formattedData()])
+  // useEffect(() => {
+  //   const data = formattedData();
+  //   dispatchRedux(setTicketData(data));
+  // }, [formattedData()])
 
   return (
     <div className="mt-[20px] flex flex-col rounded-lg bg-white/10">
