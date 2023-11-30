@@ -66,7 +66,7 @@ const CreatePaymentForm = () => {
 
   // console.log("useState", items);
   // console.log("sele", selectedPaymentType);
-  // console.log(checkedItems);
+  console.log(checkedItems);
   
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevState) => {
@@ -88,7 +88,7 @@ const CreatePaymentForm = () => {
           Please choose which Paymant System do you wanna use.
         </h1>
 
-        {items.map((item) => (
+        {items?.map((item) => (
           <div key={item._id} className="h-[80px] w-[500px] px-[20px] py-[10px] relative mb-10 border flex justify-between ">
             <div className=" flex items-center">
               <img

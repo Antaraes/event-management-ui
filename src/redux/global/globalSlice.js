@@ -5,7 +5,7 @@ const inititalState = {
   isUserActive: false,
   eventData: null,
   ticketData: null,
-  paymentType: null,
+  paymentType: [],
   ticketTypeRaw: null,
 };
 export const globalSlice = createSlice({
@@ -33,5 +33,12 @@ export const globalSlice = createSlice({
   },
 });
 
-export const { setDrawer, setUserActive, setEventData, setTicketData, setPaymentType, setTicketTypeRaw } = globalSlice.actions;
+export const {
+  setDrawer,
+  setUserActive,
+  setEventData,
+  setTicketData,
+  setPaymentType,
+  setTicketTypeRaw,
+} = globalSlice.actions;
 export default globalSlice.reducer;
