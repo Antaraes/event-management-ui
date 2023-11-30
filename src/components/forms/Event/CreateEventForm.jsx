@@ -10,8 +10,6 @@ import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const CreateEventForm = ({ setEventFormData, eventFormData }) => {
-  console.log(eventFormData);
-
   const [imageUrilInputCount, setImageUrilInputCount] = useState(1);
 
   const handleChange = (fieldName, value) => {

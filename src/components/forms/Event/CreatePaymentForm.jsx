@@ -44,24 +44,24 @@ const CreatePaymentForm = () => {
 
   const dispatchRedux = useDispatch();
 
-  // useEffect(() => {
-  //   try {
-  //     api
-  //       .getAllPaymentFromOrganizer()
-  //       .then((response) => {
-  //         setItems(response.data);
-  //         setCheckedItems(response.data._id);
-  //         return response.data;
-  //       })
-  //       .then((response) => setSelectedPaymentType(response))
-  //       .catch((error) => console.log(error.message));
-  //     items.map((item) => {
-  //       setSelectedPaymentType(item._id);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, []);
+  useEffect(() => {
+    try {
+      api
+        .getAllPaymentFromOrganizer()
+        .then((response) => {
+          setItems(response.data);
+          setCheckedItems(response.data._id);
+          return response.data;
+        })
+        .then((response) => setSelectedPaymentType(response))
+        .catch((error) => console.log(error.message));
+      items.map((item) => {
+        setSelectedPaymentType(item._id);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   useEffect(() => {
     dispatchRedux(setPaymentType(checkedItems));

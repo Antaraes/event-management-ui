@@ -29,6 +29,7 @@ export function FormStepper() {
     ticketCloseDate: "",
     thumbnail: [],
   });
+  const [ticketTypesData, setTicketTypesData] = useState([]);
 
   const handleStepClick = (direction) => {
     const isAnyFieldEmpty = Object.values(eventFormData).some(
@@ -72,8 +73,13 @@ export function FormStepper() {
             setEventFormData={setEventFormData}
           />
         )}
-        {currentStep.activeStep === 1 && <CreateTicketsForm />}
-        {currentStep.activeStep === 2 && <h2>Step 3 Content</h2>}
+        {currentStep.activeStep === 1 && (
+          <CreateTicketsForm
+            ticketTypesData={ticketTypesData}
+            setTicketTypesData={setTicketTypesData}
+          />
+        )}
+        {currentStep.activeStep === 2 && <CreatePaymentForm />}
       </div>
 
       <div className="mt-16 flex justify-between">
