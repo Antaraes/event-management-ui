@@ -10,6 +10,7 @@ export const organizerLogin = (data) => API.post(`/auth/login_organizer`, data);
 export const getOTPCode = (data) => API.post(`/auth/get_otpcode`, data);
 export const verifyOTPcode = (data) => API.post(`/auth/verify_otpcode`, data);
 export const generateAccessToken = () => API.post(`/auth/refresh`);
+export const logout = () => API.post(`/auth/logout`);
 
 //Organizer
 export const getOrganizers = () => API.get(`/organizer/get_all`);
@@ -88,9 +89,8 @@ export const deactivateAccount = (accountId, data) =>
 export const subscription = (data) => API.post(`/organizer-invoice/upgradeOrganizerLevel`, data);
 
 //Organizer Dashboard
-export const getOrganizerDashboardBarChartData = (organizerId, queryParams) =>
-  API.get(`/organizer-dashboard/barchart/${organizerId}?${queryParams}`);
-export const getOrganizerDashboardOverviewData = (organizerId, queryParams) =>
-  API.get(`/organizer-dashboard/overview-data/${organizerId}?${queryParams}`);
-export const getEventsByOrganizerId = (organizerId) =>
-  API.get(`/event/events-by-organizer/${organizerId}`);
+export const getOrganizerDashboardBarChartData = (queryParams) =>
+  API.get(`/organizer-dashboard/barchart?${queryParams}`);
+export const getOrganizerDashboardOverviewData = (queryParams) =>
+  API.get(`/organizer-dashboard/overview-data?${queryParams}`);
+export const getEventsByOrganizerId = () => API.get(`/event/events-by-organizer`);
