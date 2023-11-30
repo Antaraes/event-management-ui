@@ -72,26 +72,28 @@ export function FormStepper() {
     //   // dispatch(setEventData(name))
     //   dispatch({ type: NEXT_STEP });
     // }
-    // else {
-    //   const apiEndpoint = "/event/create";
-    //   const payload = {
-    //     event: {
-    //       ...event.event,
-    //       organizer: organizerId,
-    //       trendingLevel: 0,
-    //       payments: Object.keys(paymentData),
-    //       tickets: ticketData,
-    //     },
-    //   };
+    else {
+      const apiEndpoint = "/event/create";
+      const payload = {
+        event: {
+          ...eventData.event,
+          organizer: organizerId,
+          trendingLevel: 0,
+          
+          payments: Object.keys(paymentData),
+          tickets: ticketData,
+        },
+      };
 
-    //   try {
-    //     const response = await axios.post(apiEndpoint, payload);
-    //     console.log("Axios Response:", response.data);
-    //     //setIsModal(true);
-    //   } catch (error) {
-    //     console.error("Axios Error:", error);
-    //   }
-    // }
+      try {
+        console.log(payload, eventData);
+        const response = await axios.post(apiEndpoint, payload);
+        console.log("Axios Response:", response.data);
+        //setIsModal(true);
+      } catch (error) {
+        console.error("Axios Error:", error);
+      }
+    }
   };
 
   const handlePrev = () => {
