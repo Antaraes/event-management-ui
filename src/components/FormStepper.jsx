@@ -63,7 +63,7 @@ export function FormStepper() {
 
   const handleNext = async () => {
     if (state.activeStep === 0) {
-      localStorage.setItem("eventData", JSON.stringify(eventData));
+      //localStorage.setItem("eventData", JSON.stringify(eventData));
       dispatch({ type: NEXT_STEP });
       console.log("success");
     } else if (state.activeStep === 1) {
@@ -116,7 +116,7 @@ export function FormStepper() {
 
   const handlePrev = () => {
     if(localEventData !== undefined) {
-      setForm(localEventData);
+      //setForm(localEventData);
     }
     if(localTicketType !== undefined) {
       // setMemoTickets(localTicketType);
@@ -149,7 +149,7 @@ export function FormStepper() {
       </Stepper>
 
       <div className="h-auto ">
-        {state.activeStep === 0 && <CreateEventForm localStorage={form}/>}
+        {state.activeStep === 0 && <CreateEventForm/>}
         {state.activeStep === 1 && <CreateTicketsForm/>}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>

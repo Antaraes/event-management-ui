@@ -8,11 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEventData } from "../../../redux/global/globalSlice";
 import { useParams } from "react-router-dom";
 
-const CreateEventForm = ({ localStorage }) => {
+const CreateEventForm = () => {
   const { name, contact, location, thumbnail, description, onChange } =
     useEventRegister();
-  
-  const {organizerId} = useParams();
+
+  const { organizerId } = useParams();
   const config = [
     {
       labelText: "Name",
@@ -137,17 +137,91 @@ const CreateEventForm = ({ localStorage }) => {
       ...formattedInput,
       ...formattedFile,
       ...formattedDate,
-      organizerId
+      organizerId,
     };
     return { event: eventData };
   };
 
   useEffect(() => {
     const data = formattedData();
-    dispatchRedux(setEventData(data));
-  }, [formattedData()]);
+    console.log(data);
+    if (!data) {
+      console.log("Rest Data!!");
+      localStorage.setItem("eventData", JSON.stringify(data));
+    }
+    const storedEventData = localStorage.getItem("eventText");
 
-  console.log(localStorage);
+    // console.log('spw',JSON.parse(storedEventData).some((item) => item.value === ""));
+    // if (
+    //   storedEventData &&
+    //   storedEventData.length > 0 &&
+    //   JSON.parse(storedEventData).some((item) => item.value !== "")
+    // ) {
+    //   localStorage.setItem("eventText", JSON.stringify(config));
+    // }
+
+    // if(localStorage.getItem("eventText").length > 0 && (localStorage.getItem("eventText").some(item => item.value !== ''))){
+    //   localStorage.setItem("eventText", JSON.stringify(config))
+    // }
+    if (localStorage.getItem("eventDate")) {
+      localStorage.setItem("eventDate", JSON.stringify(datePicker));
+    }
+    //localStorage.setItem("eventDate", JSON.stringify(datePicker))
+    dispatchRedux(setEventData(data));
+  }, [config, datePicker]);
+
+  // useEffect(() => {
+  //   console.log(localStorage.getItem("eventData") ? "yes" : "No")
+  //   if(localStorage.getItem("eventData")){
+  //     const memoEve = JSON.parse(localStorage.getItem("eventData"));
+  //     config.map(() => {
+  //       return onChange(memoEve.event.name, memoEve.event.name);
+  //     }).
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log(localStorage.getItem("eventData") ? "yes" : "No");
+
+    // if (localStorage.getItem("eventData")) {
+    //   const memoEve = JSON.parse(localStorage.getItem("eventData"));
+    //   const memoEveText = JSON.parse(localStorage.getItem("eventText"));
+    //   const memoEventDate = JSON.parse(localStorage.getItem("eventDate"));
+    //   console.log(memoEve.event);
+    //   const formattedField = [];
+    //   memoEveText.forEach((text) => {
+    //     config.forEach((item) => {
+    //       console.log("text", text, "\n itm", item);
+    //       if (item.labelId === text.labelId) {
+    //         item.value = text.value;
+    //         console.log("Change value:", item.value, "text", text.value);
+    //       }
+    //     });
+    //   });
+
+      //  for(const key of memoEveText) {
+      //   if(key)
+      //   formattedField.push({
+      //     [key] : memoEve.event[key]
+      //   })
+      // }
+      // console.log(formattedField);
+      // formattedField.map((item, index) => {});
+      // memoEve.eventData.forEach(event => {
+      //   console.log(event);
+      // })
+  //     datePicker.forEach((item) => {
+  //       console.log("date", item.labelId);
+  //     });
+  //   }
+  // }, []);
+
+  console.log(localStorage.getItem("eventData"));
+
+  
+  // localStorage && localStorage.event
+  // ? localStorage.event[item.labelId]
+  // : 
 
   return (
     <div className="mx-24 mt-8 p-10 border-2">
@@ -159,10 +233,7 @@ const CreateEventForm = ({ localStorage }) => {
               labelId={item.labelId}
               type={item.type}
               onChange={item.onChange}
-              value={
-                localStorage && localStorage.event
-                  ? localStorage.event[item.labelId]
-                  : item.value
+              value={item.value
               }
               required={item.required}
             >
@@ -179,7 +250,11 @@ const CreateEventForm = ({ localStorage }) => {
                 onChange={(selectedDate) =>
                   handleDatePickerChange(selectedDate, item.labelId)
                 }
-                value={localStorage && localStorage.event ? new Date(`${localStorage.event[item.labelId]}`) : new Date()}
+                value={
+                  localStorage && localStorage.event
+                    ? new Date(`${localStorage.event[item.labelId]}`)
+                    : new Date()
+                }
               />
             </>
           ))}

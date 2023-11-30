@@ -3,7 +3,10 @@ import React, { useState } from "react";
 import Input from "../Input";
 import { Checkbox } from "@material-tailwind/react";
 import { useDispatch } from "react-redux";
-import { setTicketData, setTicketTypeRaw } from "../../../redux/global/globalSlice";
+import {
+  setTicketData,
+  setTicketTypeRaw,
+} from "../../../redux/global/globalSlice";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 
@@ -31,9 +34,7 @@ const CreateTicketsForm = () => {
     },
   });
 
-  const [tableData, setTableData] = useState([
-  
-  ]);
+  const [tableData, setTableData] = useState([]);
 
   const [disabledRows, setDisabledRows] = useState([]);
   const [allowEdit, setAllowEdit] = useState(false);
@@ -60,7 +61,7 @@ const CreateTicketsForm = () => {
       }));
       console.log("new Form", newFormElementArray);
       setTableData([...tableData, newFormElementArray]);
-      console.log("cheee",tableData);
+      console.log("cheee", tableData);
       // Reset FormData back to empty
       const newFormData = { ...formData.form };
       console.log("New formData", newFormData);
@@ -94,7 +95,7 @@ const CreateTicketsForm = () => {
 
   const formattedData = () => {
     const formattedData = [];
-    console.log("table:",tableData);
+    console.log("table:", tableData);
     for (let key in tableData) {
       formattedData.push({
         type: tableData[key][0].config.value,
@@ -107,15 +108,15 @@ const CreateTicketsForm = () => {
 
   useEffect(() => {
     const data = formattedData();
-    console.log("Problem",data);
+    console.log("Problem", data);
     if (data.length > 0) {
       console.log("Reset data!!!!");
       localStorage.setItem("ticketType", JSON.stringify(tableData));
     }
-    console.log("savedTickets",localStorage.getItem("ticketType"));
-    dispatchRedux(setTicketTypeRaw(data))
+    console.log("savedTickets", localStorage.getItem("ticketType"));
+    dispatchRedux(setTicketTypeRaw(data));
     dispatchRedux(setTicketData(data));
-  }, [tableData])
+  }, [tableData]);
 
   // memoTickets && setTableData(memoTickets);
   useEffect(() => {
@@ -123,10 +124,10 @@ const CreateTicketsForm = () => {
     if (localStorage.getItem("ticketType")) {
       // console.log("Memo tk:",JSON.parse(localStorage.getItem("ticketType")));
       const memoTk = JSON.parse(localStorage.getItem("ticketType"));
-      setTableData([...memoTk, ...tableData])
+      setTableData([...memoTk, ...tableData]);
       // console.log(tableData);
     }
-  }, [])
+  }, []);
 
   return (
     <div className="mt-[20px] flex flex-col rounded-lg bg-white/10">
@@ -165,23 +166,20 @@ const CreateTicketsForm = () => {
           </button>
         </div>
       </div>
-          <div className="w-[80%] mx-auto flex flex-row items-center justify-end">
-            {/* <div className="w-full h-full flex items-center justify-center px-2 py-1 border">
-              <Checkbox onChange={handleAllCheckboxChange} />
-              <label className="pr-[20px]">Edit All</label>
-            </div> */}
-              <button className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md" onClick={handleAllCheckboxChange}>{ allowEdit ? 'Done' : 'Edit All'}</button>
-          </div>
-      {/* {tableData.length > 0 ? (
-        ) : null} */}
+      <div className="w-[80%] mx-auto flex flex-row items-center justify-end">
+        <button
+          className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md"
+          onClick={handleAllCheckboxChange}
+        >
+          {allowEdit ? "Done" : "Edit All"}
+        </button>
+      </div>
       <div className="my-[20px] h-[300px] w-[80%] mx-auto relative">
         <table className="table-fixed w-full">
           {tableData.length > 0 ? (
             <thead>
               <tr className="bg-secondary text-gray-300">
-                <th className="border w-[100px]">
-                  
-                </th>
+                <th className="border w-[100px]"></th>
                 <th className="border px-4 py-2">Ticket Type</th>
                 <th className="border px-4 py-2">Quantity</th>
                 <th className="border px-4 py-2">Ticket Per Price</th>
@@ -190,10 +188,9 @@ const CreateTicketsForm = () => {
             </thead>
           ) : null}
           <tbody>
-            {
-            tableData.length > 0 ? 
-                tableData.map((form, index) => {
-                  console.log("from in FormData", formData.form)
+            {tableData.length > 0
+              ? tableData.map((form, index) => {
+                  console.log("from in FormData", formData.form);
                   return (
                     <tr key={index}>
                       <td className="border px-4 py-2 flex items-center justify-center">
@@ -202,10 +199,9 @@ const CreateTicketsForm = () => {
                           onChange={(e) => handleCheckboxChange(e, index)}
                         />
                       </td>
-                      {
-                        Object.keys(formData.form).map((key, formIndex) => {
-                          // console.log("kye",key);
-                          return (
+                      {Object.keys(formData.form).map((key, formIndex) => {
+                        // console.log("kye",key);
+                        return (
                           <td className="border px-4 h-full" key={formIndex}>
                             <Input
                               key={form[formIndex].value}
@@ -218,14 +214,15 @@ const CreateTicketsForm = () => {
                               disabled={!allowEdit && !disabledRows[index]}
                               onChange={(e) => {
                                 const updatedTableData = [...tableData];
-                                updatedTableData[index][formIndex].config.value = e.target.value;
+                                updatedTableData[index][
+                                  formIndex
+                                ].config.value = e.target.value;
                                 setTableData(updatedTableData);
                               }}
                             />
                           </td>
-                        )
-                        })
-                      }
+                        );
+                      })}
                       <td class="border px-4 py-2 text-white text-center">
                         <button
                           onClick={() => {
@@ -237,10 +234,9 @@ const CreateTicketsForm = () => {
                         </button>
                       </td>
                     </tr>
-                  )
+                  );
                 })
-            : null
-           }
+              : null}
           </tbody>
         </table>
       </div>
