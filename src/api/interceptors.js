@@ -25,7 +25,6 @@ API.interceptors.request.use(
   (config) => {
     const publicRoutes = ["/", "/event/", "/user/login", "/auth/signup_organizer"];
 
-
     if (publicRoutes.includes(config.url)) {
       delete config.headers["Authorization"];
     }

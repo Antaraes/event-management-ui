@@ -38,6 +38,11 @@ function App() {
   const [cookies, setCookie, removeCookie] = useCookies();
   console.log("cookies", cookies);
   console.log(user, isAuthenticated);
+  function getCookie(name) {
+    const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return cookieValue ? decodeURIComponent(cookieValue.pop()) : null;
+  }
+  console.log("getockk", getCookie("accessToken"));
   useEffect(() => {
     const { accessToken } = cookies;
     console.log("accessToken", accessToken);
@@ -61,6 +66,7 @@ function App() {
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
+  console.log("document.cookie", document.cookie);
 
   const router = createBrowserRouter([
     {
@@ -100,7 +106,7 @@ function App() {
         },
         {
           path: "/organizer",
-          // element: <ProtectedRoute />,
+          element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",
@@ -111,7 +117,7 @@ function App() {
               element: <OrganizerProfile />,
             },
             {
-              path: "/organizer/dashboard/:organizerId",
+              path: "/organizer/dashboard",
               element: <OrganizerDashboard />,
             },
             {
