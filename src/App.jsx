@@ -36,7 +36,7 @@ function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
-
+  console.log("cookies", cookies);
   console.log(user, isAuthenticated);
   useEffect(() => {
     const { accessToken } = cookies;
@@ -107,7 +107,7 @@ function App() {
               element: <CreateEvent />,
             },
             {
-              path: "/organizer/profile/:organizerId",
+              path: "/organizer/profile",
               element: <OrganizerProfile />,
             },
             {
