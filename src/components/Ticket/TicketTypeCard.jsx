@@ -32,6 +32,10 @@ export function TicketTypeCard({
         handleSelectTicket(true, ticketPrice, ticketInfoId);
         return;
       }
+      if (availableTicket.totalAvailableTickets === 0) {
+        toast.error("No Ticket Available For You to Buy ( • ᴖ • ｡) ");
+        return;
+      }
       toast.error("You cant buy more than 5 tickets");
       return;
     }
@@ -112,7 +116,8 @@ export function TicketTypeCard({
                   <Icon
                     icon={"mdi:plus"}
                     className={`${
-                      totalSelectedTicketCount === 5
+                      totalSelectedTicketCount === 5 ||
+                      availableTicket.totalAvailableTickets === 0
                         ? "cursor-not-allowed disabled"
                         : "cursor-pointer "
                     }`}
