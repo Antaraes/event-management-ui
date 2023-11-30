@@ -1,5 +1,7 @@
 import React from "react";
 import OrganizerRegisterForm from "../../components/forms/OrganizerRegisterForm";
+import { Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
   return (
@@ -11,6 +13,14 @@ const RegisterPage = () => {
         <div className=" ">
           <OrganizerRegisterForm />
         </div>
+
+        <Typography className="text-center mt-3">
+          If you have an account, you can{" "}
+          <Link to={"/user/login"} className="text-blue-500">
+            login
+          </Link>{" "}
+          with your created account to become an organizer
+        </Typography>
       </div>
     </>
   );
