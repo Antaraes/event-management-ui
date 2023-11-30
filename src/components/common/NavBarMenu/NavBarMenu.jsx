@@ -38,7 +38,7 @@ const NavBarMenu = () => {
   };
 
   return (
-    <div className="bg-sidemenu/10 text-[0.8rem] sm:text-[1rem] relative z-50">
+    <div className="bg-[#ffffff3a] text-[0.8rem] sm:text-[1rem] relative z-50">
       {renderContent()}
     </div>
   );
