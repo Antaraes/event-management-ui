@@ -1,6 +1,7 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const EventDetailText = ({ eventDetail }) => {
+  const { id: eventId } = useParams();
   const formatDate = (date) => {
     const eventDate = new Date(date);
     const day = eventDate.getDate();
@@ -13,7 +14,6 @@ const EventDetailText = ({ eventDetail }) => {
   };
   return (
     <div className="text-white py-0 w-full">
-
       <div className="flex justify-between items-center text-lg mt-7">
         <div className="flex justify-evenly font-serif text-sm lg:text-lg">
           <div className="bg-transparent border border-secondary text-secondary py-1 px-3 rounded-lg">
@@ -30,7 +30,7 @@ const EventDetailText = ({ eventDetail }) => {
         </div>
 
         <Link
-          to="/create-ticket"
+          to={`/buy-ticket/${eventId}`}
           className="bg-purchase py-2 px-5 rounded-3xl ml-2 md:ml-0 hover:bg-amber-800 hidden md:block"
         >
           go to purchase
@@ -39,7 +39,9 @@ const EventDetailText = ({ eventDetail }) => {
 
       <div className="mt-2 md:mt-7 flex flex-col gap-8 justify-center md:p-0 items-center md:items-start">
         <div className="border-b border-white flex justify-between items-center w-full pb-1 m-0">
-          <h2 className="text-xl lg:text-2xl font-semibold font-serif">{eventDetail.name}</h2>
+          <h2 className="text-xl lg:text-2xl font-semibold font-serif">
+            {eventDetail.name}
+          </h2>
           <Link
             to="/create-ticket"
             className="bg-purchase py-2 px-5 rounded-3xl hover:bg-amber-800 md:hidden"
@@ -50,22 +52,26 @@ const EventDetailText = ({ eventDetail }) => {
 
         <div className="flex flex-col gap-4 text-[15px] md:text-[18px] font-extralight">
           <span>
-          <i className="fa-solid fa-calendar-days"></i> {"\t"} Start Date :{"\t"}
+            <i className="fa-solid fa-calendar-days"></i> {"\t"} Start Date :
+            {"\t"}
             {formatDate(eventDetail.eventStartDate)}
           </span>
 
           <span>
-          <i className="fa-solid fa-calendar-days"></i> {"\t"} End Date  :{"\t"}
+            <i className="fa-solid fa-calendar-days"></i> {"\t"} End Date :
+            {"\t"}
             {formatDate(eventDetail.eventEndDate)}
           </span>
 
           <span>
-          <i className="fa-solid fa-location-dot"></i>{"\t"}Location  :{"\t"}
+            <i className="fa-solid fa-location-dot"></i>
+            {"\t"}Location :{"\t"}
             {eventDetail.location}
           </span>
 
           <span>
-          <i className="fa-solid fa-address-card"></i>{"\t"}Contact  :{"\t"}
+            <i className="fa-solid fa-address-card"></i>
+            {"\t"}Contact :{"\t"}
             {eventDetail.contact}
           </span>
 
@@ -76,7 +82,9 @@ const EventDetailText = ({ eventDetail }) => {
           </span>
         </div>
 
-        <p className="text-[15px] md:text-[18px] pb-5">{eventDetail.description}</p>
+        <p className="text-[15px] md:text-[18px] pb-5">
+          {eventDetail.description}
+        </p>
       </div>
     </div>
   );
