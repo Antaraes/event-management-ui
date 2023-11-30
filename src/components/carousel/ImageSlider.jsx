@@ -28,10 +28,10 @@ export default function ImageSlider({ images }) {
         }}
         navigation={true}
         modules={[Autoplay, Pagination, Navigation]}
-        className="w-80 md:w-[600px] lg:w-[800px] xl:w-[900px] 2xl:w-[900px] flex items-center justify-center object-cover"
+        className="w-[310px] h-[150px] md:w-[700px] md:h-[250px] lg:w-[1000px] lg:h-[400px] xl:w-[1200px] xl:h-[250px] 2xl:w[1000px] 2xl:h-[330px] flex items-center justify-center"
       >{
         images?.map((url,index)=>(
-        <SwiperSlide key={index}><img src={url} alt="" /></SwiperSlide>
+        <SwiperSlide key={index}><img src={url} alt="" className='w-full h-full object-cover'/></SwiperSlide>
         ))
       }
       </Swiper>

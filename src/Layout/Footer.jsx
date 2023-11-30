@@ -12,11 +12,11 @@ const Footer = () => {
               Work with us! Let everyone know by <span className="text-white">EVENTHUB</span>.
             </p>
           </div>
-          <div className="mt-[20px] flex">
-            <div className="mx-10 h-[50px] w-[50%]">
+          <div className="mt-[20px] grid grid-cols-1 md:grid-cols-2">
+            <div className="hidden md:block mx-10 h-[50px]">
               <img src={image} alt="Hello" />
             </div>
-            <div className="mx-10 h-[50px] w-[50%] flex justify-end">
+            <div className="mx-auto md:mx-10 h-[50px] flex justify-end">
               <div className="mx-[10px] px-[10px] py-2">
                 <Icon icon="ion:logo-facebook" width="30px" />
               </div>
