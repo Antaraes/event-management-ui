@@ -9,6 +9,7 @@ import master from "/payment/master.png";
 import visa from "/payment/visa.png";
 import wave from "/payment/wave.png";
 import Spinner from "../common/Spinner";
+import { Link } from "react-router-dom";
 
 const OrganizerRegisterForm = () => {
   const {
@@ -119,28 +120,7 @@ const OrganizerRegisterForm = () => {
       value: contact,
       required: true,
     },
-    {
-      labelText: "Account Level ",
-      labelId: "account_level",
-      type: "number",
-      tag: "select",
-      onChange: (event) => onChange("accountLevel", event),
-      value: accountLevel,
-      options: [
-        {
-          value: 0,
-          label: "Free",
-        },
-        {
-          value: 1,
-          label: "Gold",
-        },
-        {
-          value: 2,
-          label: "Premium",
-        },
-      ],
-    },
+    
     {
       labelText: "Bio ",
       labelId: "bio",
@@ -151,9 +131,9 @@ const OrganizerRegisterForm = () => {
     },
   ];
   return (
-    <form className="w-[80%] mx-auto  text-black " action="#" method="POST" onSubmit={onSubmit}>
-      <div className="flex justify-between  gap-10">
-        <div className="w-[70%]">
+    <form className="mx-auto  text-black " action="#" method="POST" onSubmit={onSubmit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="w-full">
           {config.map((item, index) => {
             if (item.tag === "select") {
               return (
@@ -183,8 +163,8 @@ const OrganizerRegisterForm = () => {
             }
           })}
         </div>
-        <div className="bg-[#FEFEFA] p-10 overflow-y-scroll max-h-[500px] w-full rounded-lg">
-          <h1 className="text-2xl font-semibold mb-8">Payment System</h1>
+        <div className="bg-[#FEFEFA] px-2 md:px-5 lg:px-10 py-10 w-full rounded-lg mb-5">
+          <h1 className="text-2xl font-semibold mb-8 text-center">Payment System</h1>
           {items.map((item) => (
             <div key={item.id} className="mb-2">
               <label className="flex items-center">
@@ -215,7 +195,14 @@ const OrganizerRegisterForm = () => {
           ))}
         </div>
       </div>
-      <div className="flex items-center justify-end ">
+      <div className="flex items-center justify-end">
+      <Link to={'/become-organizer'}>
+      <button
+          className="mr-3 flex px-5 py-2 mt-2 justify-center bg-gray-700 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-900 rounded-2xl tracking-wider"
+        >
+          Back
+      </button>
+      </Link>
         <button
           type="submit"
           className="flex px-5 py-2 mt-2 justify-center bg-blue-600 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-700 rounded-2xl tracking-wider"
