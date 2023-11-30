@@ -17,7 +17,7 @@ export default function Card({ data, link }) {
           className="h-[130px] w-[200px] md:w-[350px] md:h-[200px] object-cover rounded-md"
           alt=""
         />
-        <div className="w-[80%] bg-secondary absolute bottom-0 left-1 xl:left-8 p-2 overflow-hidden rounded-br-3xl">
+        <div className="w-[80%] bg-secondary absolute bottom-0 left-1 xl:left-6 p-2 overflow-hidden rounded-br-3xl">
           <p className="flex justify-start gap-x-1 text-xs sm:text-sm lg:text-lg text-white font-semibold truncate">
             {data.name}
             {data.accountLevel && data.accountLevel == 2 ? (
