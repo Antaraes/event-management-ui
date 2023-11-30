@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { RouterProvider, createBrowserRouter, useLocation } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  useLocation,
+} from "react-router-dom";
 import EventDetailCarousel from "./components/carousel/EventDetailCarousel";
 import EventDetailText from "./components/carousel/EventDetailText";
 import OrgNameAndEvent from "./components/Organizer/OrgNameAndEvent";
@@ -32,12 +36,18 @@ import ProtectedRoute from "./helper/ProtectedRoute";
 import { useCookies } from "react-cookie";
 import Verification from "./pages/User/Verification";
 import EmailVerify from "./pages/User/EmailVerify";
+import SuccessTicketBought from "./pages/User/SuccessTicketBought";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
-
+  console.log("cookies", cookies);
   console.log(user, isAuthenticated);
+  function getCookie(name) {
+    const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    return cookieValue ? decodeURIComponent(cookieValue.pop()) : null;
+  }
+  console.log("getockk", getCookie("accessToken"));
   useEffect(() => {
     const { accessToken } = cookies;
     console.log("accessToken", accessToken);
@@ -61,6 +71,7 @@ function App() {
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
+  console.log("document.cookie", document.cookie);
 
   const router = createBrowserRouter([
     {
@@ -98,20 +109,25 @@ function App() {
           path: "/buy-ticket/:eventId",
           element: <BuyTicket />,
         },
+
+        {
+          path: "/ticket-success",
+          element: <SuccessTicketBought />,
+        },
         {
           path: "/organizer",
-          // element: <ProtectedRoute />,
+          element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",
               element: <CreateEvent />,
             },
             {
-              path: "/organizer/profile/:organizerId",
+              path: "/organizer/profile",
               element: <OrganizerProfile />,
             },
             {
-              path: "/organizer/dashboard/:organizerId",
+              path: "/organizer/dashboard",
               element: <OrganizerDashboard />,
             },
             {

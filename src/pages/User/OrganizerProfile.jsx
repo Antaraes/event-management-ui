@@ -12,19 +12,16 @@ import OrganizerProfileAddPaymentForm from "../../components/Organizer/Organizer
 
 function OrganizerProfile() {
   const navigate = useNavigate();
-  const { organizerId } = useParams();
 
-  const { data: organizerDetail, isLoading: isOrganizerDetailLoading } =
-    useFetchData(["organizer", organizerId], () =>
-      getOrganizerProfile(organizerId)
-    );
+  const { data: organizerDetail, isLoading: isOrganizerDetailLoading } = useFetchData(
+    ["organizer"],
+    () => getOrganizerProfile()
+  );
   const {
     data: organizerPayment,
     isLoading: isOrganizerPaymentLoading,
     refetch: refetchOrganizerPayment,
-  } = useFetchData(["organizer-payment", organizerId], () =>
-    getAllPaymentFromOrganizer(organizerId)
-  );
+  } = useFetchData(["organizer-payment"], () => getAllPaymentFromOrganizer());
 
   const [isPaymentAdd, setIsPaymentAdd] = useState(false);
   const [organizerData, setOrganizerData] = useState(null);
@@ -44,17 +41,12 @@ function OrganizerProfile() {
 
   const handleUpdateClick = () => {
     const { name, companyName, contact, bio } = organizerData;
-    if (
-      name.trim() == "" ||
-      companyName.trim() == "" ||
-      contact.trim() == "" ||
-      bio.trim() == ""
-    ) {
+    if (name.trim() == "" || companyName.trim() == "" || contact.trim() == "" || bio.trim() == "") {
       toast.error("Field Shouldnt Be Black");
       return;
     }
     const updatedData = { name, companyName, contact, bio };
-    updateOrganizerProfile(organizerId, updatedData);
+    updateOrganizerProfile(updatedData);
     navigate("/");
     toast.success("Successfully Updated!");
   };
@@ -66,7 +58,7 @@ function OrganizerProfile() {
           <div className="flex gap-10 justify-around bg-white  p-6 text-primary w-full md:w-[40%] rounded-lg">
             <img
               className="object-cover rounded-full min-h-[130px] max-h-[130px] min-w-[130px] max-w-[130px] md:min-h-[100px] md:max-h-[100px] md:min-w-[100px] md:max-w-[100px] lg:min-h-[130px] lg:max-h-[130px] lg:min-w-[130px] lg:max-w-[130px] shadow-lg shadow-gray-800"
-              src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAH8AfwMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAAAQUGBAMCB//EADQQAAIBAwIDBAgFBQAAAAAAAAABAgMEMQURIUGBUXFysRITIiQyMzRhFJGSwdEjQkNSYv/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAwDAQACEQMRAD8A/WgGCoAAAAAAAAAAAAAAAAEogLIBgMAAAAAAAFfd6rTotwopVJrL34Irp6ndzfzFHwxQwaEGep6pdwe7qKa7JRRZWeqUq7UKq9XUeOxjB3gAAAAAWQFkAwGAAAAFXrF46fu9J7SfGbXZ2Fo2km3hcWZStUdarOpLMnuIPkEAqBJAAvNIvHWj6iq95xW8W+aLIy1vVdCvCrHMXv0NT3YJVgAAAWQFkAwGAAAA8rrha1ts+rlt+RljWyipxcXhrZmUnB05yhLMXsyxK+QAAAAEmqo/Jp7/AOq8jMUqbq1YU45lJI1KWy2WEKRIAIoFkBZAMBgAAABT61aNS/EwXB/Hty+5cENJpprdPtAyQLi80jdudrLb/iXLuZXTtLmHxUKnSLZUeBJ707O5m/ZoVOsdvMsbPSVCSnc7Nrj6Cx1YEaLaNe81Ftw9j+S2HcCKAAAFkBZAMBgACHwW7eyKi+1RtunavZYdTm+4CxuLuhbfNntLlFcW+hXVtZk+FCkl95vcqm222223lsgqOueo3c/8zj4UkeTurh5r1P1s8QB7K6uI4uKv62etPUruG39VyXZJJnIALehrPKvSXig/2LKhc0bhb0aik+aw10MuTGUoSUoyakuafEYrWAqrDVfSap3TSb4Kp295akwAsgLIBgM87mp6m3qVX/bFvryAqtYvG5O2pvZL42uf2KsNttuXFt7tkFQAAAAAAAAAAAudIvfTX4eo/aS9hvmuwpj7pzlTqRnD4ovdAasLJ8wmpwjNYkk0fSyRRnHq30FTp5nbscerfQVOnmBnQQDSJBAIJBAAkEACQQAJBAKNNp/0VHwI6Fk59PXuVHwI6UuJlX//2Q=="
+              src={organizerDetail?.thumbnail}
             />
             <div className="flex flex-col justify-around gap-4">
               <span>
@@ -75,8 +67,7 @@ function OrganizerProfile() {
               </span>
               <div className="flex gap-1 flex-col justify-end">
                 <span>
-                  Account Level :{" "}
-                  {organizerData && organizerDetail.accountLevel}
+                  Account Level : {organizerData && organizerDetail.accountLevel}
                   {isOrganizerDetailLoading && "Loading..."}
                 </span>
                 <Link
@@ -217,9 +208,7 @@ function OrganizerProfile() {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className={`w-6 h-6 mr-4 ${
-                  isPaymentAdd
-                    ? "cursor-not-allowed disabled"
-                    : "cursor-pointer"
+                  isPaymentAdd ? "cursor-not-allowed disabled" : "cursor-pointer"
                 }`}
                 onClick={() => setIsPaymentAdd(true)}
               >
@@ -267,10 +256,7 @@ function OrganizerProfile() {
         </div>
         <div className="flex justify-end p-3">
           {shouldUpdateBtnAppear && (
-            <button
-              className=" bg-secondary p-2 rounded-lg"
-              onClick={handleUpdateClick}
-            >
+            <button className=" bg-secondary p-2 rounded-lg" onClick={handleUpdateClick}>
               Update
             </button>
           )}

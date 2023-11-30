@@ -73,7 +73,7 @@ const BuyTicket = () => {
 
     try {
       const responseData = await addCustomer(requestData);
-      navigate("/");
+      navigate("/ticket-success");
       toast.success("Successfully Bought Tickets :3");
     } catch (error) {
       toast.error("Something went Wrong");

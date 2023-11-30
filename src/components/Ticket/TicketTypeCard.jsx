@@ -25,13 +25,20 @@ export function TicketTypeCard({
       quantity: "23/04/18",
     },
   ];
+
+  console.log(availableTicket.totalAvailableTickets);
   const handleClickQuantity = (isIncrease, ticketPrice, ticketInfoId) => {
     if (isIncrease) {
+      if (availableTicket.totalAvailableTickets == 0) {
+        toast.error("No Ticket Available For You to Buy • ᴖ •  ");
+        return;
+      }
       if (totalSelectedTicketCount < 5) {
         setQuantity(quantity + 1);
         handleSelectTicket(true, ticketPrice, ticketInfoId);
         return;
       }
+
       toast.error("You cant buy more than 5 tickets");
       return;
     }
@@ -112,9 +119,10 @@ export function TicketTypeCard({
                   <Icon
                     icon={"mdi:plus"}
                     className={`${
-                      totalSelectedTicketCount === 5
-                        ? "cursor-not-allowed disabled"
-                        : "cursor-pointer "
+                      totalSelectedTicketCount === 5 ||
+                      availableTicket.totalAvailableTickets === 0
+                        ? "cursor-not-allowed text-gray-700 text-opacity-30 "
+                        : "cursor-pointer hover:text-white"
                     }`}
                     onClick={() =>
                       handleClickQuantity(
