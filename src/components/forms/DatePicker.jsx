@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
 
-const DatePicker = ({ lableId, labelText, onChange }) => {
+const DatePicker = ({ lableId, labelText, onChange, value }) => {
   const options = {
     title: labelText,
     autoHide: true,
@@ -48,7 +48,7 @@ const DatePicker = ({ lableId, labelText, onChange }) => {
     setShow(state);
   };
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(value || new Date());
 
   const handlerChange = (date) => {
     setSelectedDate(date);
@@ -63,7 +63,8 @@ const DatePicker = ({ lableId, labelText, onChange }) => {
       >
         {labelText}
       </label>
-      <Datepicker options={options} onChange={handlerChange} show={show} setShow={handleClose} />
+      <Datepicker options={options} onChange={handlerChange} show={show} setShow={handleClose} value={selectedDate} />
+      {/* <Datepicker options={options} onChange={handlerChange} show={show} setShow={handleClose} /> */}
     </div>
   );
 };

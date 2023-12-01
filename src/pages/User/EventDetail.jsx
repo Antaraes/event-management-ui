@@ -1,4 +1,5 @@
 import { useParams } from "react-router";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getEventById, getEvents } from "../../api/index";
 import CardList from "../../components/Card/CardList";
 import EventDetailCarousel from "../../components/carousel/EventDetailCarousel";
@@ -12,14 +13,16 @@ const EventDetail = () => {
   const { data: eventDetail } = useFetchData(["event", eventId], () =>
     getEventById(eventId)
   );
-
-  const [query, setQuery] = useState('?page=1&pageSize=6&sortBy=trending');
-  const { data: allEvent } = useFetchData(["events",query], () => getEvents(query));
+  const location = useLocation();
+  const organizerId = location.state?.organizerId.organizerId;
+  const [query, setQuery] = useState("?page=1&pageSize=6&sortBy=trending");
+  const { data: allEvent } = useFetchData(["events", query], () =>
+    getEvents(query)
+  );
 
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-
     const updatedQuery = `?page=${page}&pageSize=6&sortBy=trending`;
     setQuery(updatedQuery);
   }, [page]);
@@ -28,15 +31,19 @@ const EventDetail = () => {
   return (
     <div className="px-2 sm:px-2 md:px-3 lg:px-6 xl:px-10 2xl:px-16 pt-14">
       <EventDetailCarousel thumbnail={eventDetail?.thumbnail} />
-      {eventDetail && <EventDetailText eventDetail={eventDetail} />}
-      {allEvent && <CardList data={allEvent?.content} link={"/event/detail/"} />}
-      {allEvent?.content && 
+      {eventDetail && (
+        <EventDetailText eventDetail={eventDetail} orgId={organizerId} />
+      )}
+      {allEvent && (
+        <CardList data={allEvent?.content} link={"/event/detail/"} />
+      )}
+      {allEvent?.content && (
         <PaginationServerSide
-        page={page}
-        setPage={(value) => setPage(value)}
-        pageCount={pageCount}
-      />
-      }
+          page={page}
+          setPage={(value) => setPage(value)}
+          pageCount={pageCount}
+        />
+      )}
     </div>
   );
 };
