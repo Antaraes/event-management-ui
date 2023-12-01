@@ -6,11 +6,15 @@ import CreatePaymentForm from "./forms/Event/CreatePaymentForm";
 import CreateTicketsForm from "./forms/Event/CreateTicketsForm";
 import AlertModal from "./common/AlertModal";
 import { AnimatePresence } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { createEvent, getOTPCode } from "../api/index";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function FormStepper() {
+  const organizer = useSelector((state) => state.auth.user);
+
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState({
     activeStep: 0,
@@ -32,31 +36,65 @@ export function FormStepper() {
   });
   const [ticketTypesData, setTicketTypesData] = useState([]);
 
+  const OTPSuccessFunc = async () => {
+    const eventData = {
+      ...eventFormData,
+      payments: organizerPaymentIds,
+    };
+    const requestData = {
+      event: eventData,
+      ticketInfos: ticketTypesData,
+    };
+
+    try {
+      const responseData = await createEvent(requestData);
+      setIsModalOpen(false);
+      toast.success("Added Event Successfully :3");
+      navigate(`/organizer/eventList/${organizer._id}`);
+    } catch (error) {
+      toast.error("Something went Wrong");
+    }
+  };
+
   const handleStepClick = (direction) => {
     const isAnyFieldEmpty = Object.values(eventFormData).some(
       (value) => value === "" || (Array.isArray(value) && value.length === 0)
     );
 
-    // if (isAnyFieldEmpty) {
-    //   toast.error("Event Data Cannot be Black !!");
-    //   return;
-    // }
+    if (isAnyFieldEmpty) {
+      toast.error("Event Data Cannot be Black !!");
+      return;
+    }
 
-    // if (
-    //   direction === "next" &&
-    //   ticketTypesData.length === 0 &&
-    //   currentStep.activeStep === 1
-    // ) {
-    //   toast.error("Put a minimum of 1 ticket type!");
-    //   return;
-    // }
+    if (
+      direction === "next" &&
+      ticketTypesData.length === 0 &&
+      currentStep.activeStep === 1
+    ) {
+      toast.error("Put a minimum of 1 ticket type!");
+      return;
+    }
 
+    if (
+      direction === "next" &&
+      organizerPaymentIds.length === 0 &&
+      currentStep.activeStep === 2
+    ) {
+      toast.error("Choose 1 payment minimum");
+      return;
+    }
+
+    if (direction === "next" && currentStep.activeStep === 2) {
+      getOTPCode();
+      setIsModalOpen(true);
+      reutrn;
+    }
     setCurrentStep((prevStep) => {
       const newStep = { ...prevStep };
 
       newStep.activeStep =
         direction === "next" ? newStep.activeStep + 1 : newStep.activeStep - 1;
-      newStep.isLastStep = newStep.activeStep === 2;
+      newStep.isLastStep = newStep.activeStep === 3;
       newStep.isFirstStep = newStep.activeStep === 0;
 
       return newStep;
@@ -90,7 +128,10 @@ export function FormStepper() {
           />
         )}
         {currentStep.activeStep === 2 && (
-          <CreatePaymentForm setOrganizerPaymentIds={setOrganizerPaymentIds} />
+          <CreatePaymentForm
+            organizerPaymentIds={organizerPaymentIds}
+            setOrganizerPaymentIds={setOrganizerPaymentIds}
+          />
         )}
       </div>
 
@@ -105,11 +146,23 @@ export function FormStepper() {
           onClick={() => handleStepClick("next")}
           disabled={currentStep.isLastStep}
         >
-          Next
+          {currentStep.activeStep == 2 ? "Add Event" : "Next"}
         </Button>
       </div>
 
-      <AnimatePresence>{/* Your Modal Code */}</AnimatePresence>
+      <AnimatePresence>
+        {isModalOpen && (
+          <AlertModal
+            isModal={setIsModalOpen}
+            children={
+              <OtpComponent
+                successFunc={OTPSuccessFunc}
+                failFunc={() => toast.error("Wrong Pin ,Try Again • ᴖ • ")}
+              />
+            }
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }

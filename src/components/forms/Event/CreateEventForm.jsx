@@ -1,13 +1,4 @@
-import React from "react";
-import Input from "../Input";
-import useEventRegister from "../../../hooks/useEventRegister";
-import DatePicker from "../DatePicker";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setEventData } from "../../../redux/global/globalSlice";
-import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
+import React, { useState } from "react";
 
 const CreateEventForm = ({ setEventFormData, eventFormData }) => {
   const [imageUrilInputCount, setImageUrilInputCount] = useState(1);

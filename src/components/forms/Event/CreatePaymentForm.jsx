@@ -1,18 +1,7 @@
-import { Checkbox } from "@material-tailwind/react";
 import React from "react";
-import { useState } from "react";
-import ABAPay from "/payment/ABAPay.jpg";
-import Kpay from "/payment/kpay.png";
-import Master from "/payment/master.png";
-import VISA from "/payment/visa.png";
-import wave from "/payment/wave.png";
-import { useEffect } from "react";
-import { useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { setPaymentType } from "../../../redux/global/globalSlice";
-import SelectOption from "@material-tailwind/react/components/Select/SelectOption";
 import { getAllPaymentFromOrganizer } from "../../../api/index";
 import useFetchData from "../../../hooks/useFetchData";
+import { useSelector } from "react-redux";
 
 const IMAGES = [
   {
@@ -36,7 +25,7 @@ const IMAGES = [
   },
 ];
 
-const CreatePaymentForm = ({ setOrganizerPaymentIds }) => {
+const CreatePaymentForm = ({ organizerPaymentIds, setOrganizerPaymentIds }) => {
   const organizer = useSelector((state) => state.auth.user);
 
   const handleImage = (organizerPaymentName) => {
@@ -88,6 +77,7 @@ const CreatePaymentForm = ({ setOrganizerPaymentIds }) => {
                   handleCheckboxChange(organizerPayment._id, e.target.checked)
                 }
                 type="checkbox"
+                checked={organizerPaymentIds.includes(organizerPayment._id)}
                 className="w-4 h-4 rounded-2xl accent-secondary overflow-hidden"
               />
             </div>

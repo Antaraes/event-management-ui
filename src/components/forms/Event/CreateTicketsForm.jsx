@@ -1,11 +1,4 @@
 import React, { useState } from "react";
-
-import Input from "../Input";
-import { Checkbox } from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
-import { setTicketData } from "../../../redux/global/globalSlice";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import TicketTypeCard from "./TicketTypeCard";
 import toast from "react-hot-toast";
 
@@ -15,7 +8,6 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
     quantity: 0,
     price: 0,
   });
-  console.log(ticketTypesData);
   const handleTicketTypeChange = (fieldName, value) => {
     setTicketType((prevTicketTypeData) => ({
       ...prevTicketTypeData,
