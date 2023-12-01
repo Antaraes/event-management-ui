@@ -16,16 +16,24 @@ const NavBarMenu = () => {
       title: "All Events",
       path: "/event?type=all",
     },
+
     {
       title: isAuthenticated ? "Dashboard" : "Become an Organizer",
-      path: isAuthenticated ? "/organizer/dashboard" : "/organizer/subscriptions",
+      path: isAuthenticated
+        ? "/organizer/dashboard"
+        : "/organizer/subscriptions",
     },
     {
-      title: isAuthenticated ? "Create Event" : "Login",
-      path: isAuthenticated ? "/organizer/create-event" : "/user/login",
+      title: isAuthenticated ? "Invoices" : "Create Event",
+      path: isAuthenticated ? "/organizer/invoices" : "/organizer/create-event",
+    },
+    {
+      title: isAuthenticated ? "Create Event" : "",
+      path: isAuthenticated ? "/organizer/create-event" : "",
     },
   ];
 
+  
   const renderContent = () => {
     return (
       <>

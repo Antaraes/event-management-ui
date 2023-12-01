@@ -1,238 +1,121 @@
 import React, { useState } from "react";
+import TicketTypeCard from "./TicketTypeCard";
+import toast from "react-hot-toast";
 
-import Input from "../Input";
-import { Checkbox } from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
-import { setTicketData } from "../../../redux/global/globalSlice";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-
-const CreateTicketsForm = () => {
-  const [formData, setFormData] = useState({
-    form: {
-      ticketType: {
-        value: "",
-        type: "text",
-        required: true,
-        placeholder: "Ticket Type",
-      },
-      quantity: {
-        value: "",
-        type: "number",
-        required: true,
-        placeholder: "Quantity",
-      },
-      ticketPerPrice: {
-        value: "",
-        type: "number",
-        required: true,
-        placeholder: "Ticket Per Price",
-      },
-    },
+const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
+  const [ticketType, setTicketType] = useState({
+    type: "",
+    quantity: 0,
+    price: 0,
   });
-
-  const [tableData, setTableData] = useState([]);
-  const [disabledRows, setDisabledRows] = useState([]);
-  const [allowEdit, setAllowEdit] = useState(false);
-  const dispatchRedux = useDispatch();
-
-  const formElementArray = [];
-  for (let key in formData.form) {
-    formElementArray.push({
-      id: key,
-      config: formData.form[key],
-    });
-  }
-
+  const handleTicketTypeChange = (fieldName, value) => {
+    setTicketType((prevTicketTypeData) => ({
+      ...prevTicketTypeData,
+      [fieldName]:
+        fieldName === "quantity" || fieldName === "price"
+          ? parseInt(value, 10)
+          : value,
+    }));
+  };
   const handleAddTicketType = () => {
-    const isEmpty = formElementArray.some(
-      (element) => element.config.value === ""
-    );
-
-    if (!isEmpty) {
-      const newFormElementArray = formElementArray.map((element) => ({
-        id: element.id,
-        config: { ...element.config },
-      }));
-      setTableData([...tableData, newFormElementArray]);
-      const newFormData = { ...formData.form };
-      for (let key in newFormData) {
-        newFormData[key].value = "";
-      }
-      setFormData({
-        form: newFormData,
-      });
-      setDisabledRows([...disabledRows, false]);
-    } else {
-      alert("Please fill in all the textboxes before adding a new row.");
+    if (
+      ticketType.type.trim() == "" ||
+      ticketType.price <= 0 ||
+      ticketType.quantity <= 0
+    ) {
+      toast.error("Field Cannot be Black!!");
+      return;
     }
+
+    setTicketTypesData((prevTicketTypesData) => [
+      ...prevTicketTypesData,
+      ticketType,
+    ]);
+
+    setTicketType({
+      type: "",
+      quantity: 0,
+      price: 0,
+    });
   };
 
-  const handleDeleteRow = (index) => {
-    const updatedTableData = [...tableData];
-    updatedTableData.splice(index, 1);
-    setTableData(updatedTableData);
+  const handleRemoveTicketType = (indexToDelete) => {
+    setTicketTypesData((prevTicketTypesData) => {
+      const updatedTicketTypesData = prevTicketTypesData.filter(
+        (_, index) => index !== indexToDelete
+      );
+      return updatedTicketTypesData;
+    });
   };
-
-  const handleCheckboxChange = (e, index) => {
-    const updatedDisabledRows = [...disabledRows];
-    updatedDisabledRows[index] = !updatedDisabledRows[index];
-    setDisabledRows(updatedDisabledRows);
-  };
-
-  const handleAllCheckboxChange = (e) => {
-    setAllowEdit(!allowEdit);
-  };
-
-  const formattedData = () => {
-    const formattedData = [];
-    for (let key in tableData) {
-      formattedData.push({
-        type: tableData[key][0].config.value,
-        quantity: tableData[key][1].config.value,
-        price: tableData[key][2].config.value,
-      });
-    }
-    return formattedData;
-  };
-
-  useEffect(() => {
-    const data = formattedData();
-    dispatchRedux(setTicketData(data));
-  }, [formattedData()])
-
   return (
-    <div className="mt-[20px] flex flex-col rounded-lg bg-white/10">
-      <div className="h-[100px] w-[1000px] my-[20px] mr-[20px] flex flex-row p-[30px] px-[100px]">
-        {formElementArray.map((formElement) => {
-          return (
-            <Input
-              key={formElement.id}
-              id={formElement.id}
-              type={formElement.config.type}
-              value={formElement.config.value}
-              placeholder={formElement.config.placeholder}
-              required={formElement.config.required}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  form: {
-                    ...formData.form,
-                    [formElement.id]: {
-                      ...formElement.config,
-                      value: e.target.value,
-                    },
-                  },
-                })
-              }
-              style="w-[200px] bg-white/10 border rounded-[20px] p-[10px] px-[20px] text-white focus:bg-blue-gray-700"
-            />
-          );
-        })}
-        <div>
-          <button
-            onClick={handleAddTicketType}
-            className="w-[50px] bg-green-300 p-[10px] border rounded-full text-white hover:text-black hover:bg-blue-gray-"
-          >
-            +
-          </button>
+    <div className="min-h-[60vh] max-h-fit mt-8 w-full">
+      <h1 className="text-xl text-center md:text-3xl">
+        Add Ticket Type For Your Event{" "}
+        <span className="text-sm block md:text-2xl font-light">
+          (Example : type=VIP , quantity=20, amount per ticket=10000)
+        </span>
+      </h1>
+
+      <div className="md:h-14 mt-10  flex flex-wrap h-auto gap-8 items-center mx-auto w-fit pb-3  border-b mb-4">
+        <div className="flex gap-1 items-center ">
+          <lable className="text-sm md:text-base">Ticket Type Name : </lable>
+          <input
+            value={ticketType.type}
+            onChange={(e) => handleTicketTypeChange("type", e.target.value)}
+            className="p-2 rounded-lg text-black focus:outline-none"
+            type="text"
+            placeholder="example: VIP"
+          />
         </div>
+
+        <div className="flex gap-1 items-center">
+          <lable className="text-sm md:text-base">Ticket Quantity : </lable>
+          <input
+            value={ticketType.quantity}
+            onChange={(e) => handleTicketTypeChange("quantity", e.target.value)}
+            className="p-2 rounded-lg text-black focus:outline-none"
+            type="number"
+            placeholder="example: 20"
+          />
+        </div>
+
+        <div className="flex gap-1 items-center">
+          <lable className="text-sm md:text-base">Amount Per Ticket : </lable>
+          <input
+            value={ticketType.price}
+            onChange={(e) => handleTicketTypeChange("price", e.target.value)}
+            className="p-2 rounded-lg text-black focus:outline-none"
+            type="text"
+            placeholder="example: 20,000"
+          />
+        </div>
+
+        <svg
+          onClick={handleAddTicketType}
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="w-8 h-8 rounded-full cursor-pointer bg-green-400 opacity-60 hover:opacity-100 transition-all duration-300"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 4.5v15m7.5-7.5h-15"
+          />
+        </svg>
       </div>
-      {tableData.length > 0 ? (
-        <div className="flex flex-row items-center justify-start">
-          <div className="flex items-center justify-center ml-[20px] px-[20px] py-[5px] border">
-            <Checkbox onChange={handleAllCheckboxChange} />
-            <label className="pr-[20px]">Edit All</label>
-          </div>
-        </div>
-      ) : null}
-      <div className="my-[20px] h-[300px] w-[1300px] mx-[10px]">
-        <table className="table-fixed w-full">
-          {tableData.length > 0 ? (
-            <thead>
-              <tr>
-                <th className="border px-4 py-2">Ticket Type</th>
-                <th className="border px-4 py-2">Quantity</th>
-                <th className="border px-4 py-2">Ticket Per Price</th>
-                <th className="border px-4 py-2 w-[100px]">Edit</th>
-                <th className="border px-4 py-2 w-[100px]">Delete</th>
-              </tr>
-            </thead>
-          ) : null}
-          <tbody>
-            {tableData.map((form, index) => (
-              <tr key={index}>
-                <td className="border px-4 py-2">
-                  <Input
-                    key={form[0].key}
-                    id={form[0].key}
-                    type={form[0].config.type}
-                    value={form[0].config.value}
-                    placeholder={form[0].config.placeholder}
-                    required={form[0].config.required}
-                    style="w-full bg-primary/5 text-white z-50"
-                    disabled={!allowEdit && !disabledRows[index]}
-                    onChange={(e) => {
-                      const updatedTableData = [...tableData];
-                      updatedTableData[index][0].config.value = e.target.value;
-                      setTableData(updatedTableData);
-                    }}
-                  />
-                </td>
-                <td className="border px-4 py-2">
-                  <Input
-                    key={form[1].id}
-                    id={form[1].id}
-                    type={form[1].config.type}
-                    value={form[1].config.value}
-                    placeholder={form[1].config.placeholder}
-                    required={form[1].config.required}
-                    style="w-full bg-primary/5 text-white z-50"
-                    disabled={!allowEdit && !disabledRows[index]}
-                    onChange={(e) => {
-                      const updatedTableData = [...tableData];
-                      updatedTableData[index][1].config.value = e.target.value;
-                      setTableData(updatedTableData);
-                    }}
-                  />
-                </td>
-                <td className="border px-4 py-2">
-                  <Input
-                    key={form[2].id}
-                    id={form[2].id}
-                    type={form[2].config.type}
-                    value={form[2].config.value}
-                    placeholder={form[2].config.placeholder}
-                    required={form[2].config.required}
-                    style="w-full bg-primary/5 text-white z-50"
-                    disabled={!allowEdit && !disabledRows[index]}
-                    onChange={(e) => {
-                      const updatedTableData = [...tableData];
-                      updatedTableData[index][2].config.value = e.target.value;
-                      setTableData(updatedTableData);
-                    }}
-                  />
-                </td>
-                <td className="border px-4 py-2 flex items-center justify-center">
-                  <Checkbox
-                    checked={disabledRows[index]}
-                    onChange={(e) => handleCheckboxChange(e, index)}
-                  />
-                </td>
-                <td class="border px-4 py-2 text-white text-center">
-                  <button
-                    onClick={() => {
-                      handleDeleteRow(index);
-                    }}
-                    class="bg-transparent text-red-400 px-3 py-1 rounded hover:bg-red-500 hover:text-white focus:outline-none"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="h-auto">
+        {ticketTypesData.length > 0 &&
+          ticketTypesData.map((ticketTypeData, index) => (
+            <TicketTypeCard
+              ticketTypeData={ticketTypeData}
+              index={index}
+              setTicketTypesData={setTicketTypesData}
+              handleRemoveTicketType={handleRemoveTicketType}
+            />
+          ))}
       </div>
     </div>
   );
