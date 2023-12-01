@@ -14,7 +14,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
     quantity: 0,
     price: 0,
   });
-
+  console.log(ticketTypesData);
   const handleTicketTypeChange = (fieldName, value) => {
     setTicketType((prevTicketTypeData) => ({
       ...prevTicketTypeData,
@@ -24,9 +24,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
           : value,
     }));
   };
-  console.log(ticketTypesData);
   const handleAddTicketType = () => {
-    console.log("add");
     setTicketTypesData((prevTicketTypesData) => [
       ...prevTicketTypesData,
       ticketType,
@@ -47,7 +45,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
         </span>
       </h1>
 
-      <div className="h-14 mt-10 ml-16 flex gap-8 items-center mx-auto w-fit pb-3  border-b ">
+      <div className="h-14 mt-10 ml-16 flex gap-8 items-center mx-auto w-fit pb-3  border-b mb-4">
         <div className="flex gap-1 items-center">
           <lable>Ticket Type Name : </lable>
           <input
@@ -62,6 +60,8 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
         <div className="flex gap-1 items-center">
           <lable>Ticket Quantity : </lable>
           <input
+            value={ticketType.quantity}
+            onChange={(e) => handleTicketTypeChange("quantity", e.target.value)}
             className="p-2 rounded-lg text-black focus:outline-none"
             type="number"
             placeholder="example: 20"
@@ -71,6 +71,8 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
         <div className="flex gap-1 items-center">
           <lable>Amount Per Ticket : </lable>
           <input
+            value={ticketType.price}
+            onChange={(e) => handleTicketTypeChange("price", e.target.value)}
             className="p-2 rounded-lg text-black focus:outline-none"
             type="text"
             placeholder="example: 20,000"
@@ -93,9 +95,15 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
           />
         </svg>
       </div>
-      <div>
+      <div className="h-auto">
         {ticketTypesData.length > 0 &&
-          ticketTypesData.map((ticketTypeData) => <TicketTypeCard />)}
+          ticketTypesData.map((ticketTypeData, index) => (
+            <TicketTypeCard
+              ticketTypeData={ticketTypeData}
+              index={index}
+              setTicketTypesData={setTicketTypesData}
+            />
+          ))}
       </div>
     </div>
   );

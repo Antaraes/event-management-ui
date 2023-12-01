@@ -15,6 +15,7 @@ const NavBarMenu = () => {
       title: "All Events",
       path: "/event?type=all",
     },
+
     {
       title: isAuthenticated ? "Dashboard" : "Become an Organizer",
       path: isAuthenticated
@@ -23,7 +24,11 @@ const NavBarMenu = () => {
     },
     {
       title: isAuthenticated ? "Invoices" : "Create Event",
-      path: isAuthenticated ? "/organizer/invoices" : "/user/login",
+      path: isAuthenticated ? "/organizer/invoices" : "/organizer/create-event",
+    },
+    {
+      title: isAuthenticated ? "Create Event" : "",
+      path: isAuthenticated ? "/organizer/create-event" : "",
     },
   ];
 
