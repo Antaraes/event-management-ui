@@ -133,7 +133,7 @@ function App() {
               element: <Subscription />,
             },
             {
-              path: "/organizer/eventList/:organizerId",
+              path: "/organizer/eventList",
               element: <OrganizerEventList />,
             },
             {

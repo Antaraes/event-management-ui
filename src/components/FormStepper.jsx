@@ -13,6 +13,7 @@ import useEventRegister from "../hooks/useEventRegister";
 import { setEventData } from "../redux/global/globalSlice";
 import { createEvent } from "../api";
 import toast from 'react-hot-toast'
+import CreateEventForm_Fix from "./forms/Event/CreateEventForm_Fix";
 
 const NEXT_STEP = "NEXT_STEP";
 const PREV_STEP = "PREV_STEP";
@@ -149,7 +150,7 @@ export function FormStepper() {
       </Stepper>
 
       <div className="h-auto ">
-        {state.activeStep === 0 && <CreateEventForm/>}
+        {state.activeStep === 0 && <CreateEventForm_Fix />}
         {state.activeStep === 1 && <CreateTicketsForm/>}
         {state.activeStep === 2 && <CreatePaymentForm />}
       </div>

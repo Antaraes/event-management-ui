@@ -122,7 +122,7 @@ const CreateTicketsForm = () => {
   useEffect(() => {
     // console.log(memoTickets)
     if (localStorage.getItem("ticketType")) {
-      // console.log("Memo tk:",JSON.parse(localStorage.getItem("ticketType")));
+       console.log("Memo tk:",JSON.parse(localStorage.getItem("ticketType")));
       const memoTk = JSON.parse(localStorage.getItem("ticketType"));
       setTableData([...memoTk, ...tableData]);
       // console.log(tableData);

@@ -4,37 +4,46 @@ import useFetchData from "../../hooks/useFetchData";
 import { getEventByOrganizerId, getEvents } from "../../api/index";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from "../../api/axios";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
+import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 const OrganizerEventList = () => {
   const navigate = useNavigate();
-  const { organizerId } = useParams();
   const [init, setInit] = useState(true);
   const [disabledRow, setDisabledRows] = useState([]);
   const [events, setEvents] = useState([]);
 
-  //http://localhost:8080/api/v1/event/events-by-organizer/655db72a40abeabdf4678ec9
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
+
+  //toekn is not dynamically
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJpZCI6IjY1NjgxOWU2ZWQzN2I1YjA1MGYxOWNkOSIsImVtYWlsIjoibGlub2VAZ2FtaWwuY29tIiwicm9sZSI6Im9yZ2FuemllciJ9LCJpYXQiOjE3MDE0MDg5ODYsImV4cCI6MTcwMTQ5NTM4Nn0.lD_lWDG4XFzgeF2um2TFSlZVX9OciX76Txj7YoAQCe0";
+  const decoded = jwtDecode(token);
+  const organizerId = decoded.UserInfo.id;
+
+  console.log("decoded", decoded, cookies, organizerId);
+  if (organizerId == "656819e6ed37b5b050f19cd9") {
+    console.log("true");
+  }
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`/event/events-by-organizer/${organizerId}`);
-      console.log(response.data);
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/event/events-by-organizer/656819e6ed37b5b050f19cd9`
+      );
+      console.log("response", response.data);
       setEvents(response.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-
-  const handleBoost = (index) => {
-    navigate(`/organizer/eventList/655dea0d4b7cb74d641075c2/boostPayment`, {
-      state: { selectedEvent: events[index] },
-    });
-  };
-
-  const handleDetail = (index) => {
-    navigate(`/organizer/eventList/655dea0d4b7cb74d641075c2/detail`, {
-      state: { selectedEvent: events[index] },
+  const handleDetail = (index, id) => {
+    console.log(id, organizerId);
+    navigate(`/event/detail/${id}`, {
+      state: { selectedEvent: events[index], organizerId: { organizerId } },
     });
   };
 
@@ -50,44 +59,6 @@ const OrganizerEventList = () => {
       }
     }, 5000);
   };
-
-  // const events = [
-  //   {
-  //     id: "1",
-  //     name: "name1",
-  //     startDate: "30/12/2023",
-  //     endDate: "30/12/2023",
-  //     location: "yangon",
-  //   },
-  //   {
-  //     id: "2",
-  //     name: "name2",
-  //     startDate: "30/12/2023",
-  //     endDate: "30/12/2023",
-  //     location: "yangon",
-  //   },
-  //   {
-  //     id: "3",
-  //     name: "name3",
-  //     startDate: "30/12/2023",
-  //     endDate: "30/12/2023",
-  //     location: "yangon",
-  //   },
-  //   {
-  //     id: "4",
-  //     name: "name4",
-  //     startDate: "30/12/2023",
-  //     endDate: "30/12/2023",
-  //     location: "yangon",
-  //   },
-  //   {
-  //     id: "5",
-  //     name: "name5",
-  //     startDate: "30/12/2023",
-  //     endDate: "30/12/2023",
-  //     location: "yangon",
-  //   },
-  // ];
 
   useEffect(() => {
     const fetchDataAndInit = async () => {
@@ -132,30 +103,14 @@ const OrganizerEventList = () => {
                       {event.location}
                     </td>
                     <td className="border px-4 py-2 text-center justify-center">
-                      {init && !disabledRow[index] ? (
+                      <div>
                         <button
-                          onClick={() => handleShowAction(index)}
+                          onClick={() => handleDetail(index, event._id)}
                           className="bg-transparent text-lime-400 px-3 py-1 rounded hover:bg-lime-500 hover:text-white focus:outline-none"
                         >
-                          ...
+                          Detail
                         </button>
-                      ) : null}
-                      {disabledRow[index] ? (
-                        <div>
-                          <button
-                            onClick={() => handleDetail(index)}
-                            className="bg-transparent text-lime-400 px-3 py-1 rounded hover:bg-lime-500 hover:text-white focus:outline-none"
-                          >
-                            Detail
-                          </button>
-                          <button
-                            onClick={() => handleBoost(index)}
-                            className="bg-transparent text-deep-orange-300 px-3 py-1 rounded hover:bg-deep-orange-500 hover:text-white focus:outline-none"
-                          >
-                            Boost
-                          </button>
-                        </div>
-                      ) : null}
+                      </div>
                     </td>
                   </tr>
                 );
