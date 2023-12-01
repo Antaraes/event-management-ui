@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { getOrganizerInvoices } from "../../api/index";
 import useFetchData from "../../hooks/useFetchData";
-import { InlineIcon } from "@iconify/react";
 import PaginationServerSide from "../../components/common/PaginationServerSide";
 
 export default function OrganizerInvoices() {
@@ -60,13 +59,29 @@ export default function OrganizerInvoices() {
     }
   }
 
-  console.log();
+  const formatDate = (dateString) => {
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    };
+  
+    const formattedDate = new Date(dateString).toLocaleString('en-US', options);
+  
+    return formattedDate;
+  };
 
   return (
     <div className="pt-20">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
+            <th scope="col" className="px-6 py-3">
+              Transaction ID
+            </th>
             <th scope="col" className="px-6 py-3">
               Event
             </th>
@@ -106,10 +121,16 @@ export default function OrganizerInvoices() {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
+                  {invoice.event._id}
+                </th>
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
                   {invoice.event.name}
                 </th>
                 <td className="px-6 py-4">{invoice.ticketInfo.type}</td>
-                <td className="px-6 py-4">{invoice.payment.createdAt}</td>
+                <td className="px-6 py-4">{formatDate(invoice.payment.createdAt)}</td>
                 <td className="px-6 py-4">{invoice.payment.name}</td>
                 <td className="px-6 py-4">{invoice.ticketInfo.quantity}</td>
                 <td className="px-6 py-4">{invoice.ticketInfo.price}</td>

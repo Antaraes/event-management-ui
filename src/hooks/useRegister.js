@@ -15,7 +15,7 @@ const useRegister = () => {
     password: "",
     companyName: "",
     contact: "",
-    accountLevel: 3,
+    accountLevel: 0,
     bio: "",
     payment: [],
   });

@@ -15,31 +15,29 @@ import EventsByOrganizer from "../../components/Organizer/EventsByOrganizer";
 
 const OrganizerDashboard = () => {
   const location = useLocation();
-  const { organizerId } = useParams();
+
   const [queryParams, setQueryParams] = useState("");
   const navigate = useNavigate();
 
   //init query keys
   const [barDataQueryKey, setBarDataQueryKey] = useState([
     "organizer-dashboard-bardata",
-    organizerId,
   ]);
   const [overviewDataQueryKey, setOverviewDataQueryKey] = useState([
     "organizer-dashboard-overview",
-    organizerId,
   ]);
 
   //fetch datas
   const { data: chartData } = useFetchData(barDataQueryKey, () =>
-    getOrganizerDashboardBarChartData(organizerId, queryParams)
+    getOrganizerDashboardBarChartData(queryParams)
   );
-  const { data: allEventsByOrganizer } = useFetchData(
-    ["event", organizerId],
-    () => getEventsByOrganizerId(organizerId)
+  const { data: allEventsByOrganizer } = useFetchData(["event"], () =>
+    getEventsByOrganizerId()
   );
+  console.log(allEventsByOrganizer);
 
   const { data: overviewData } = useFetchData(overviewDataQueryKey, () =>
-    getOrganizerDashboardOverviewData(organizerId, queryParams)
+    getOrganizerDashboardOverviewData(queryParams)
   );
 
   const searchParams = new URLSearchParams(location.search);
@@ -75,9 +73,9 @@ const OrganizerDashboard = () => {
 
   const handleBackClick = () => {
     setQueryParams("");
-    setBarDataQueryKey(["organizer-dashboard-bardata", organizerId]);
-    setOverviewDataQueryKey(["organizer-dashboard-overview", organizerId]);
-    navigate(`/organizer/dashboard/${organizerId}`);
+    setBarDataQueryKey(["organizer-dashboard-bardata"]);
+    setOverviewDataQueryKey(["organizer-dashboard-overview"]);
+    navigate(`/organizer/dashboard`);
   };
 
   return (
@@ -93,7 +91,7 @@ const OrganizerDashboard = () => {
               )}
           </h1>
 
-          <Link to="/create-event">
+          <Link to="/organizer/create-event">
             <span className="px-3 py-2 rounded bg-green-400 font-semibold">
               Create event
             </span>
@@ -155,13 +153,16 @@ const OrganizerDashboard = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-3 mx-auto w-[85%] text-black">
-          <h1 className=" sm:col-span-2  lg:col-span-3 p-3 mt3 mb-2 font-medium text-2xl text-white">
-            Your Events
-          </h1>
-          {allEventsByOrganizer &&
-            allEventsByOrganizer.map((event) => (
-              <EventsByOrganizer key={event._id} event={event} />
-            ))}
+          {allEventsByOrganizer != undefined ? (
+            <>
+              <h1 className=" sm:col-span-2  lg:col-span-3 p-3 mt3 mb-2 font-medium text-2xl text-white">
+                Your Events
+              </h1>
+              {allEventsByOrganizer.map((event) => (
+                <EventsByOrganizer key={event._id} event={event} />
+              ))}
+            </>
+          ) : null}
         </div>
       </div>
     </>

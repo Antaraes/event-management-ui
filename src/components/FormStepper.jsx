@@ -6,166 +6,161 @@ import CreatePaymentForm from "./forms/Event/CreatePaymentForm";
 import CreateTicketsForm from "./forms/Event/CreateTicketsForm";
 import AlertModal from "./common/AlertModal";
 import { AnimatePresence } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "../api/axios";
-import { useParams } from "react-router-dom";
-import useEventRegister from "../hooks/useEventRegister";
-import { setEventData } from "../redux/global/globalSlice";
-import { createEvent } from "../api";
-import toast from 'react-hot-toast'
-import CreateEventForm_Fix from "./forms/Event/CreateEventForm_Fix";
-
-const NEXT_STEP = "NEXT_STEP";
-const PREV_STEP = "PREV_STEP";
-const stepperReducer = (state, action) => {
-  switch (action.type) {
-    case NEXT_STEP:
-      return { ...state, activeStep: state.activeStep + 1, isFirstStep: false };
-    case PREV_STEP:
-      return { ...state, activeStep: state.activeStep - 1, isLastStep: false };
-    default:
-      return state;
-  }
-};
+import toast from "react-hot-toast";
+import { createEvent, getOTPCode } from "../api/index";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export function FormStepper() {
-  const [isModal, setIsModal] = useState(false);
-  const initialState = {
+  const organizer = useSelector((state) => state.auth.user);
+
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState({
     activeStep: 0,
     isLastStep: false,
     isFirstStep: true,
-  };
-  const { name, onSubmit } = useEventRegister();
-  const [state, dispatch] = useReducer(stepperReducer, initialState);
-  const { organizerId } = useParams();
-  const [form, setForm] = useState({});
-  // const [memoTickets, setMemoTickets] = useState([]);
-  const [selectedPayments, setSelectedPayments] = useState([]);
-  const eventData = useSelector((state) => state.global.eventData);
-  const ticketData = useSelector((state) => state.global.ticketData);
-  const paymentData = useSelector((state) => state.global.paymentType);
-  const ticketDataRaw = useSelector((state) => state.global.ticketTypeRaw);
- // console.log("🚀 ~ file: FormStepper.jsx:44 ~ FormStepper ~ ticketDataRaw:", ticketDataRaw)
-  // console.log(
-  //   "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ paymentData:",
-  //   paymentData
-  // );
-  // console.log("🚀 ~ file: FormStepper.jsx:36 ~ FormStepper ~ event:", event);
-  // console.log(
-  //   "🚀 ~ file: FormStepper.jsx:38 ~ FormStepper ~ ticketData:",
-  //   ticketData
-  // );
-  // console.log("id", organizerId);
+  });
 
-  const localEventDataString = localStorage.getItem("eventData");
-  const localEventData = JSON.parse(localEventDataString);
-  const localTicketTypeString = localStorage.getItem("ticketType");
-  const localTicketType = JSON.parse(localTicketTypeString);
+  const [organizerPaymentIds, setOrganizerPaymentIds] = useState([]);
+  const [eventFormData, setEventFormData] = useState({
+    name: "",
+    contact: "",
+    location: "",
+    description: "",
+    eventStartDate: "",
+    eventEndDate: "",
+    ticketOpenDate: "",
+    ticketCloseDate: "",
+    thumbnail: [],
+  });
+  const [ticketTypesData, setTicketTypesData] = useState([]);
 
-  const handleNext = async () => {
-    if (state.activeStep === 0) {
-      //localStorage.setItem("eventData", JSON.stringify(eventData));
-      dispatch({ type: NEXT_STEP });
-      console.log("success");
-    } else if (state.activeStep === 1) {
-      // localStorage.setItem("ticketType", JSON.stringify(ticketDataRaw));
-      dispatch({ type: NEXT_STEP });
-      console.log("success");
-    }
-    // else {
+  const OTPSuccessFunc = async () => {
+    const eventData = {
+      ...eventFormData,
+      payments: organizerPaymentIds,
+    };
+    const requestData = {
+      event: eventData,
+      ticketInfos: ticketTypesData,
+    };
 
-    //   const formData = { ...eventData, tickets: [...ticketDataRaw], payments: [...paymentData] }
-    //   console.log("Form Data", formData);
-
-    //   createEvent(organizerId, formData)
-    //     .then(() => {
-    //       setIsConfirmModalOpen(false);
-    //       setIsEditing(false);
-    //       setIsOTPOpen(false);
-    //       refetchOrganizerPayment();
-    //       toast.success("Updated Successfully");
-    //     })
-    //     .catch((error) => {
-    //       toast.error(`Something went Wrong`);
-    //     });
-    // }
-    // else if (state.activeStep < 2) {
-    //   // dispatch(setEventData(name))
-    //   dispatch({ type: NEXT_STEP });
-    // }
-    else {
-      const apiEndpoint = "/event/create";
-      const payload = {
-        event: {
-          ...eventData.event,
-          organizer: organizerId,
-          trendingLevel: 0,
-          payments: Object.keys(paymentData),
-          tickets: ticketData,
-        },
-      };
-
-      try {
-        const response = await axios.post(apiEndpoint, payload);
-        console.log("Axios Response:", response.data);
-        //setIsModal(true);
-      } catch (error) {
-        console.error("Axios Error:", error);
-      }
+    try {
+      const responseData = await createEvent(requestData);
+      setIsModalOpen(false);
+      toast.success("Added Event Successfully :3");
+      navigate(`/organizer/eventList/${organizer._id}`);
+    } catch (error) {
+      toast.error("Something went Wrong");
     }
   };
 
-  const handlePrev = () => {
-    if(localEventData !== undefined) {
-      //setForm(localEventData);
+  const handleStepClick = (direction) => {
+    const isAnyFieldEmpty = Object.values(eventFormData).some(
+      (value) => value === "" || (Array.isArray(value) && value.length === 0)
+    );
+
+    if (isAnyFieldEmpty) {
+      toast.error("Event Data Cannot be Black !!");
+      return;
     }
-    if(localTicketType !== undefined) {
-      // setMemoTickets(localTicketType);
+
+    if (
+      direction === "next" &&
+      ticketTypesData.length === 0 &&
+      currentStep.activeStep === 1
+    ) {
+      toast.error("Put a minimum of 1 ticket type!");
+      return;
     }
-    if (state.activeStep > 0) {
-      dispatch({ type: PREV_STEP });
+
+    if (
+      direction === "next" &&
+      organizerPaymentIds.length === 0 &&
+      currentStep.activeStep === 2
+    ) {
+      toast.error("Choose 1 payment minimum");
+      return;
     }
+
+    if (direction === "next" && currentStep.activeStep === 2) {
+      getOTPCode();
+      setIsModalOpen(true);
+      reutrn;
+    }
+    setCurrentStep((prevStep) => {
+      const newStep = { ...prevStep };
+
+      newStep.activeStep =
+        direction === "next" ? newStep.activeStep + 1 : newStep.activeStep - 1;
+      newStep.isLastStep = newStep.activeStep === 3;
+      newStep.isFirstStep = newStep.activeStep === 0;
+
+      return newStep;
+    });
   };
-
-
-  const saveFormData = (formData) => {
-    log("FORM Data", formData);
-  };
-
-  const handleGetEvent = () => {
-    
-  }
 
   return (
     <div className="w-full py-[80px] px-8">
       <Stepper
         lineClassName="bg-black/50"
-        activeStep={state.activeStep}
-        isLastStep={(value) => dispatch({ type: "SET_LAST_STEP", value })}
-        isFirstStep={(value) => dispatch({ type: "SET_FIRST_STEP", value })}
+        activeStep={currentStep.activeStep}
+        isLastStep={currentStep.isLastStep}
+        isFirstStep={currentStep.isFirstStep}
       >
-        <Step onClick={() => dispatch({ type: NEXT_STEP, value: 0 })}>1</Step>
-        <Step onClick={() => dispatch({ type: NEXT_STEP, value: 1 })}>2</Step>
-        <Step onClick={() => dispatch({ type: NEXT_STEP, value: 2 })}>3</Step>
+        <Step>1</Step>
+        <Step>2</Step>
+        <Step>3</Step>
       </Stepper>
 
       <div className="h-auto ">
-        {state.activeStep === 0 && <CreateEventForm_Fix />}
-        {state.activeStep === 1 && <CreateTicketsForm/>}
-        {state.activeStep === 2 && <CreatePaymentForm />}
+        {currentStep.activeStep === 0 && (
+          <CreateEventForm
+            eventFormData={eventFormData}
+            setEventFormData={setEventFormData}
+          />
+        )}
+        {currentStep.activeStep === 1 && (
+          <CreateTicketsForm
+            ticketTypesData={ticketTypesData}
+            setTicketTypesData={setTicketTypesData}
+          />
+        )}
+        {currentStep.activeStep === 2 && (
+          <CreatePaymentForm
+            organizerPaymentIds={organizerPaymentIds}
+            setOrganizerPaymentIds={setOrganizerPaymentIds}
+          />
+        )}
       </div>
 
       <div className="mt-16 flex justify-between">
-        <Button onClick={handlePrev} disabled={state.isFirstStep}>
+        <Button
+          onClick={() => handleStepClick("prev")}
+          disabled={currentStep.isFirstStep}
+        >
           Prev
         </Button>
-        <Button onClick={handleNext} disabled={state.isLastStep}>
-          {state.activeStep === 2 ? "Submit" : "Next"}
+        <Button
+          onClick={() => handleStepClick("next")}
+          disabled={currentStep.isLastStep}
+        >
+          {currentStep.activeStep == 2 ? "Add Event" : "Next"}
         </Button>
       </div>
+
       <AnimatePresence>
-        {isModal && (
-          <AlertModal isModal={setIsModal} children={<OtpComponent />} />
+        {isModalOpen && (
+          <AlertModal
+            isModal={setIsModalOpen}
+            children={
+              <OtpComponent
+                successFunc={OTPSuccessFunc}
+                failFunc={() => toast.error("Wrong Pin ,Try Again • ᴖ • ")}
+              />
+            }
+          />
         )}
       </AnimatePresence>
     </div>
