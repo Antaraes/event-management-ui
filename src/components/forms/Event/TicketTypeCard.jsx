@@ -4,8 +4,9 @@ import { useState } from "react";
 
 const TicketTypeCard = ({
   ticketTypeData: ticketTypePros,
-  index: indexToUpdate,
+  index,
   setTicketTypesData,
+  handleRemoveTicketType,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [ticketType, setTicketType] = useState(null);
@@ -31,7 +32,7 @@ const TicketTypeCard = ({
       setTicketType(editingTicketType);
       setTicketTypesData((prevTicketTypesData) => {
         const updatedTicketTypesData = [...prevTicketTypesData];
-        updatedTicketTypesData[indexToUpdate] = editingTicketType;
+        updatedTicketTypesData[index] = editingTicketType;
         return updatedTicketTypesData;
       });
 
@@ -97,6 +98,7 @@ const TicketTypeCard = ({
           />
         </svg>
         <svg
+          onClick={() => handleRemoveTicketType(index)}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -115,7 +117,7 @@ const TicketTypeCard = ({
   };
 
   return (
-    <div className="ml-14 h-16 bg-gray-700 border-b border-black rounded-lg  bg-opacity-40 flex gap-8 items-center p-3 justify-around">
+    <div className="mx-auto h-16 bg-gray-800  border-b border-black rounded-lg  bg-opacity-40 flex gap-8 items-center p-3 justify-around">
       <div className="flex items-center">
         <label>Ticket Type : </label>
         <input

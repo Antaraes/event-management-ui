@@ -18,6 +18,7 @@ export function FormStepper() {
     isFirstStep: true,
   });
 
+  const [organizerPaymentIds, setOrganizerPaymentIds] = useState([]);
   const [eventFormData, setEventFormData] = useState({
     name: "",
     contact: "",
@@ -36,10 +37,19 @@ export function FormStepper() {
       (value) => value === "" || (Array.isArray(value) && value.length === 0)
     );
 
-    if (isAnyFieldEmpty) {
-      toast.error("Event Data Cannot be Black !!");
-      return;
-    }
+    // if (isAnyFieldEmpty) {
+    //   toast.error("Event Data Cannot be Black !!");
+    //   return;
+    // }
+
+    // if (
+    //   direction === "next" &&
+    //   ticketTypesData.length === 0 &&
+    //   currentStep.activeStep === 1
+    // ) {
+    //   toast.error("Put a minimum of 1 ticket type!");
+    //   return;
+    // }
 
     setCurrentStep((prevStep) => {
       const newStep = { ...prevStep };
@@ -79,7 +89,9 @@ export function FormStepper() {
             setTicketTypesData={setTicketTypesData}
           />
         )}
-        {currentStep.activeStep === 2 && <CreatePaymentForm />}
+        {currentStep.activeStep === 2 && (
+          <CreatePaymentForm setOrganizerPaymentIds={setOrganizerPaymentIds} />
+        )}
       </div>
 
       <div className="mt-16 flex justify-between">
