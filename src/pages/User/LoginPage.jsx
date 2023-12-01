@@ -1,5 +1,7 @@
 import React from "react";
 import LoginForm from "../../components/forms/LoginForm";
+import { Typography } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -11,6 +13,12 @@ const LoginPage = () => {
         <div className="px-0 md:px-5">
           <LoginForm />
         </div>
+        <Typography className="text-center mt-3">
+          If you don't have an account, please make{" "}
+          <Link to={"/user/register"} className="text-blue-500">
+            a register
+          </Link>
+        </Typography>
       </div>
     </>
   );

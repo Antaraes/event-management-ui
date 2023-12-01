@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import NavButton from "../NavButton/NavButton";
 import { useDispatch, useSelector } from "react-redux";
+import * as api from "../../../api/index";
 
 const NavBarMenu = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const NavBarMenu = () => {
     },
   ];
 
+  
   const renderContent = () => {
     return (
       <>
