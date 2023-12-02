@@ -48,7 +48,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
     });
   };
   return (
-    <div className="min-h-[60vh] max-h-fit mt-8 w-full">
+    <div className="min-h-[10vh] md:min-h-[60vh] max-h-fit mt-8 w-full">
       <h1 className="text-xl text-center md:text-3xl">
         Add Ticket Type For Your Event{" "}
         <span className="text-sm block md:text-2xl font-light">
@@ -56,8 +56,8 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
         </span>
       </h1>
 
-      <div className="md:h-14 mt-10  flex flex-wrap h-auto gap-8 items-center mx-auto w-fit pb-3  border-b mb-4">
-        <div className="flex gap-1 items-center ">
+      <div className="md:h-14 mt-10  flex flex-col md:flex-row flex-wrap h-auto gap-8 justify-start   items-end lg:items-center mx-auto w-fit pb-3  border-b mb-4">
+        <div className="flex flex-col lg:flex-row gap-1 items-center ">
           <lable className="text-sm md:text-base">Ticket Type Name : </lable>
           <input
             value={ticketType.type}
@@ -68,7 +68,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
           />
         </div>
 
-        <div className="flex gap-1 items-center">
+        <div className="flex flex-col lg:flex-row gap-1 items-center">
           <lable className="text-sm md:text-base">Ticket Quantity : </lable>
           <input
             value={ticketType.quantity}
@@ -79,7 +79,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
           />
         </div>
 
-        <div className="flex gap-1 items-center">
+        <div className="flex flex-col lg:flex-row gap-1 items-center">
           <lable className="text-sm md:text-base">Amount Per Ticket : </lable>
           <input
             value={ticketType.price}
@@ -106,7 +106,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
           />
         </svg>
       </div>
-      <div className="h-auto">
+      <div className="h-auto w-full">
         {ticketTypesData.length > 0 &&
           ticketTypesData.map((ticketTypeData, index) => (
             <TicketTypeCard
