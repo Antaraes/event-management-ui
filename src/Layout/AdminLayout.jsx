@@ -25,17 +25,19 @@ const AdminLayout = () => {
         }
       />
       <div className="p-4 xl:ml-80">
-        <DashboardNavbar />
-        {/* <Configurator /> */}
-        <IconButton
-          size="lg"
-          color="white"
-          className="fixed bottom-8 right-8 z-40 rounded-full shadow-blue-gray-900/10"
-          ripple={false}
-          onClick={() => setOpenConfigurator(dispatch, true)}
-        >
-          <Cog6ToothIcon className="h-5 w-5" />
-        </IconButton>
+        <div className="w-[600px]">
+          <DashboardNavbar />
+          <Configurator />
+          <IconButton
+            size="lg"
+            color="white"
+            className="fixed bottom-8 right-8 z-40 rounded-full shadow-blue-gray-900/10"
+            ripple={false}
+            onClick={() => setOpenConfigurator(dispatch, true)}
+          >
+            <Cog6ToothIcon className="h-5 w-5" />
+          </IconButton>
+        </div>
         <Outlet />
 
         <div className="text-blue-gray-600">

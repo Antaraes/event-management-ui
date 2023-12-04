@@ -10,9 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
     "@iconify/react": "^4.1.1",
     "@material-tailwind/react": "^2.1.4",
+    "@mui/material": "^5.14.19",
+    "@mui/styled-engine": "^5.14.19",
+    "@mui/x-data-grid-generator": "^6.18.2",
     "@mui/x-data-grid-pro": "^6.18.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@reduxjs/toolkit": "^1.9.7",
