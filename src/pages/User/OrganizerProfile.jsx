@@ -9,6 +9,7 @@ import {
 import toast from "react-hot-toast";
 import OrganizerProfilePayments from "../../components/Organizer/OrganizerProfilePayments";
 import OrganizerProfileAddPaymentForm from "../../components/Organizer/OrganizerProfileAddPaymentForm";
+import { useSelector } from "react-redux";
 
 function OrganizerProfile() {
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ function OrganizerProfile() {
   const [isPaymentAdd, setIsPaymentAdd] = useState(false);
   const [organizerData, setOrganizerData] = useState(null);
   const [shouldUpdateBtnAppear, setShouldUpdateBtnAppear] = useState(false);
-
+  const isAuthenticated = useSelector((state) => state.auth.user);
+  console.log("🚀 ~ file: OrganizerEventList.jsx:20 ~ OrganizerEventList ~ isAuthenticated:", isAuthenticated)
   useEffect(() => {
     if (organizerDetail) setOrganizerData(organizerDetail);
   }, [organizerDetail]);
@@ -50,6 +52,11 @@ function OrganizerProfile() {
     navigate("/");
     toast.success("Successfully Updated!");
   };
+
+  const handleEventList = (e) => {
+    e.preventDefault;
+    navigate("/organizer/eventList")
+  }
 
   return (
     <>
@@ -262,6 +269,9 @@ function OrganizerProfile() {
           )}
         </div>
       </div>
+      <button onClick={handleEventList}>
+        EventList
+      </button>
     </>
   );
 }
