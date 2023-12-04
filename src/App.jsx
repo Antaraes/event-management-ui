@@ -37,6 +37,8 @@ import { useCookies } from "react-cookie";
 import Verification from "./pages/User/Verification";
 import EmailVerify from "./pages/User/EmailVerify";
 import SuccessTicketBought from "./pages/User/SuccessTicketBought";
+import Dashboard from "./pages/Admin/Dashboard";
+import Profile from "./pages/Admin/Profile";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +46,9 @@ function App() {
   console.log("cookies", cookies);
   console.log(user, isAuthenticated);
   function getCookie(name) {
-    const cookieValue = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+    const cookieValue = document.cookie.match(
+      "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)",
+    );
     return cookieValue ? decodeURIComponent(cookieValue.pop()) : null;
   }
   console.log("getockk", getCookie("accessToken"));
@@ -116,7 +120,7 @@ function App() {
         },
         {
           path: "/organizer",
-          element: <ProtectedRoute />,
+          // element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",
@@ -179,8 +183,12 @@ function App() {
       element: <AdminLayout />,
       children: [
         {
-          path: "/admin/sidebar",
-          element: <Sidebar />,
+          path: "/admin/home",
+          element: <Dashboard />,
+        },
+        {
+          path: "/admin/profile",
+          element: <Profile />,
         },
       ],
     },

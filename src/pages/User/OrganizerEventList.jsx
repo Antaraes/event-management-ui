@@ -4,7 +4,6 @@ import useFetchData from "../../hooks/useFetchData";
 import { getEventByOrganizerId, getEvents } from "../../api/index";
 import { useState } from "react";
 import { useEffect } from "react";
-import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
@@ -31,7 +30,7 @@ const OrganizerEventList = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/event/events-by-organizer/656819e6ed37b5b050f19cd9`
+        `http://localhost:8080/api/v1/event/events-by-organizer/656819e6ed37b5b050f19cd9`,
       );
       console.log("response", response.data);
       setEvents(response.data);
@@ -73,10 +72,10 @@ const OrganizerEventList = () => {
   }, [init]);
 
   return (
-    <div className="w-full h-full bg-primary/10">
-      <div className="w-full h-full pt-[50px] px-[50px]">
-        <div className="my-[20px] h-[300px] w-[1300px] mx-[10px] ">
-          <table className="table-fixed w-full text-[#ccc]">
+    <div className="h-full w-full bg-primary/10">
+      <div className="h-full w-full px-[50px] pt-[50px]">
+        <div className="mx-[10px] my-[20px] h-[300px] w-[1300px] ">
+          <table className="w-full table-fixed text-[#ccc]">
             <thead>
               <tr>
                 <th className="border px-4 py-5 text-xl">Name</th>
@@ -90,23 +89,23 @@ const OrganizerEventList = () => {
               {events.map((event, index) => {
                 return (
                   <tr key={index}>
-                    <td className="border px-4 py-2 text-center justify-center">
+                    <td className="justify-center border px-4 py-2 text-center">
                       {event.name}
                     </td>
-                    <td className="border px-4 py-2 text-center justify-center">
+                    <td className="justify-center border px-4 py-2 text-center">
                       {event.eventStartDate}
                     </td>
-                    <td className="border px-4 py-2 text-center justify-center">
+                    <td className="justify-center border px-4 py-2 text-center">
                       {event.eventEndDate}
                     </td>
-                    <td className="border px-4 py-2 text-center justify-center">
+                    <td className="justify-center border px-4 py-2 text-center">
                       {event.location}
                     </td>
-                    <td className="border px-4 py-2 text-center justify-center">
+                    <td className="justify-center border px-4 py-2 text-center">
                       <div>
                         <button
                           onClick={() => handleDetail(index, event._id)}
-                          className="bg-transparent text-lime-400 px-3 py-1 rounded hover:bg-lime-500 hover:text-white focus:outline-none"
+                          className="rounded bg-transparent px-3 py-1 text-lime-400 hover:bg-lime-500 hover:text-white focus:outline-none"
                         >
                           Detail
                         </button>
