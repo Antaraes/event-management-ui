@@ -5,14 +5,14 @@ function BarChartVertical({ barDataProps }) {
   const [barData, setBarData] = useState([]);
 
   useEffect(() => {
-    if (barDataProps.length > 0) {
+    if (barDataProps?.length > 0) {
       setBarData(barDataProps);
     }
   }, [barDataProps]);
 
   return (
     <>
-      {barData.length > 0 && (
+      {barData?.length > 0 ? (
         <Chart
           width={"100%"}
           height={"450px"}
@@ -25,6 +25,10 @@ function BarChartVertical({ barDataProps }) {
           }}
           rootProps={{ "data-testid": "1" }}
         />
+      ) : (
+        <h2 className="border-b border-gray-400 pb-3 text-center text-xl ">
+          No Bar Chart Data yet
+        </h2>
       )}
     </>
   );

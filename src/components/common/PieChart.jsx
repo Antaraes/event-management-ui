@@ -4,14 +4,14 @@ import Chart from "react-google-charts";
 function PieChart({ pieChartData }) {
   const [pieData, setPieData] = useState([]);
   useEffect(() => {
-    if (pieChartData.length > 0) {
+    if (pieChartData?.length > 0) {
       setPieData(pieChartData);
     }
   }, [pieChartData]);
 
   return (
     <>
-      {pieData.length > 0 && (
+      {pieData?.length > 0 ? (
         <Chart
           width={"100%"}
           height={"300px"}
@@ -36,6 +36,10 @@ function PieChart({ pieChartData }) {
           }}
           rootProps={{ "data-testid": "2" }}
         />
+      ) : (
+        <h2 className="border-b border-gray-400 pb-3 text-center text-xl ">
+          No Pie Chart Data yet
+        </h2>
       )}
     </>
   );
