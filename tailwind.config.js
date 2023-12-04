@@ -28,5 +28,5 @@ export default withMT({
       },
     },
   },
-  plugins: [],
+  plugins: ["prettier-plugin-tailwindcss"],
 });

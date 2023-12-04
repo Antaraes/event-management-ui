@@ -31,7 +31,7 @@ const CreatePaymentForm = ({ organizerPaymentIds, setOrganizerPaymentIds }) => {
   const handleImage = (organizerPaymentName) => {
     const lowerCaseName = organizerPaymentName.toLowerCase();
     const matchedImageData = IMAGES.find(
-      (image) => image.name.toLowerCase() === lowerCaseName
+      (image) => image.name.toLowerCase() === lowerCaseName,
     );
     return matchedImageData
       ? matchedImageData.image
@@ -40,32 +40,32 @@ const CreatePaymentForm = ({ organizerPaymentIds, setOrganizerPaymentIds }) => {
 
   const { data: organizerPayments } = useFetchData(
     ["organizer-payment", organizer._id],
-    getAllPaymentFromOrganizer
+    getAllPaymentFromOrganizer,
   );
 
   const handleCheckboxChange = (organizerPaymentId, isChecked) => {
     setOrganizerPaymentIds((prevOrganizerIds) =>
       isChecked
         ? [...prevOrganizerIds, organizerPaymentId]
-        : prevOrganizerIds.filter((id) => id !== organizerPaymentId)
+        : prevOrganizerIds.filter((id) => id !== organizerPaymentId),
     );
   };
 
   return (
-    <div className="mt-8 min-h-[60vh] h-auto md:p-4  ">
+    <div className="mt-8 h-auto min-h-[60vh] md:p-4  ">
       <h1
         className="
-      text-3xl text-center"
+      text-center text-3xl"
       >
         Choose Your Payment For This Event
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8 mx-auto w-full md:w-[50%] ">
+      <div className="mx-auto mt-8 grid w-full grid-cols-1 gap-3 md:w-[50%] md:grid-cols-2 ">
         {organizerPayments &&
           organizerPayments.map((organizerPayment) => (
-            <div className="bg-white text-gray-700 shadow-md shadow-gray-800 border rounded-lg w-full p-3 object-cover flex justify-evenly gap-6 items-center">
+            <div className="flex w-full items-center justify-evenly gap-6 rounded-lg border bg-white object-cover p-3 text-gray-700 shadow-md shadow-gray-800">
               <img
                 src={handleImage(organizerPayment.name)}
-                className="rounded-2xl min-h-[60px] min-w-[40px] max-h-[60px] max-w-[60px]"
+                className="max-h-[60px] min-h-[60px] min-w-[40px] max-w-[60px] rounded-2xl"
               />
               <div className="flex flex-col gap-2">
                 <span className="text-xl ">{organizerPayment.name}</span>
@@ -78,7 +78,7 @@ const CreatePaymentForm = ({ organizerPaymentIds, setOrganizerPaymentIds }) => {
                 }
                 type="checkbox"
                 checked={organizerPaymentIds.includes(organizerPayment._id)}
-                className="w-4 h-4 rounded-2xl accent-secondary overflow-hidden"
+                className="h-4 w-4 overflow-hidden rounded-2xl accent-secondary"
               />
             </div>
           ))}
