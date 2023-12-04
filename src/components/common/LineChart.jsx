@@ -5,13 +5,14 @@ const LineChart = ({ lineData }) => {
   const [lineChartData, setLineChartData] = useState([]);
 
   useEffect(() => {
-    if (lineData.length > 0) {
+    if (lineData?.length > 0) {
       setLineChartData(lineData);
     }
   }, [lineData]);
+
   return (
     <>
-      {lineChartData.length > 0 && (
+      {lineChartData?.length > 0 ? (
         <Chart
           width={"100%"}
           height={"300px"}
@@ -25,6 +26,10 @@ const LineChart = ({ lineData }) => {
           }}
           rootProps={{ "data-testid": "1" }}
         />
+      ) : (
+        <h2 className="border-b border-gray-400 pb-3 text-center text-xl ">
+          No Line Chart Data yet
+        </h2>
       )}
     </>
   );
