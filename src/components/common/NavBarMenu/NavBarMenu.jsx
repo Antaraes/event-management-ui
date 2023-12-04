@@ -28,12 +28,11 @@ const NavBarMenu = () => {
       path: isAuthenticated ? "/organizer/invoices" : "/organizer/create-event",
     },
     {
-      title: isAuthenticated ? "Create Event" : "",
-      path: isAuthenticated ? "/organizer/create-event" : "",
+      title: isAuthenticated ? "Create Event" : "All Contributors",
+      path: isAuthenticated ? "/organizer/create-event" : "/contributor",
     },
   ];
 
-  
   const renderContent = () => {
     return (
       <>
@@ -45,7 +44,7 @@ const NavBarMenu = () => {
   };
 
   return (
-    <div className="bg-[#ffffff3a] text-[0.8rem] sm:text-[1rem] relative z-50">
+    <div className="relative z-50 bg-[#ffffff3a] text-[0.8rem] sm:text-[1rem]">
       {renderContent()}
     </div>
   );
