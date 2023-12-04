@@ -42,7 +42,7 @@ import Profile from "./pages/Admin/Profile";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies();
+  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
   console.log("cookies", cookies);
   console.log(user, isAuthenticated);
   function getCookie(name) {
