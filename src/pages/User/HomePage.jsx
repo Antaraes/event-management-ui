@@ -38,41 +38,23 @@ const HomePage = (props) => {
     },
   ];
 
-  const contributors = [
-    {
-      img: "https://www.svgrepo.com/show/303445/dell-2-logo.svg",
-    },
-    {
-      img: "https://www.svgrepo.com/show/303260/tiktok-logo-logo.svg",
-    },
-    {
-      img: "https://www.svgrepo.com/show/303235/salesforce-2-logo.svg",
-    },
-    {
-      img: "https://www.svgrepo.com/show/303132/coca-cola-logo.svg",
-    },
-    {
-      img: "https://www.svgrepo.com/show/303126/heineken-14-logo.svg",
-    },
-  ];
-
   return (
     <div>
       <Jumboltron />
-      <div className="px-3 md:px-10 mb-5">
-        <h1 className="flex text-start text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold my-10">
+      <div className="mb-5 px-3 md:px-10">
+        <h1 className="my-10 flex text-start text-lg font-bold text-white sm:text-xl md:text-2xl lg:text-4xl">
           Upcoming Popular Events
         </h1>
-        <EventsCarousel events={events} />
-        <h1 className="flex text-start text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold my-10">
+        <EventsCarousel />
+        <h1 className="my-10 flex text-start text-lg font-bold text-white sm:text-xl md:text-2xl lg:text-4xl">
           Popular Events Today
         </h1>
-        <EventCardCarousel events={events} />
-        <h1 className="flex text-start text-white text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold my-10">
+        <EventCardCarousel />
+        <h1 className="my-10 flex text-start text-lg font-bold text-white sm:text-xl md:text-2xl lg:text-4xl">
           Top Contributors
         </h1>
         <div>
-        <ContributorCarousel contributors={contributors} />
+          <ContributorCarousel />
         </div>
       </div>
     </div>
