@@ -56,7 +56,7 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
         </span>
       </h1>
 
-      <div className="md:h-14 mt-10  flex flex-col md:flex-row flex-wrap h-auto gap-8 justify-start   items-end lg:items-center mx-auto w-fit pb-3  border-b mb-4">
+      <div className="md:h-14 mt-10  flex flex-col md:flex-row  md:flex-nowrap h-auto gap-8 md:gap-2 lg:gap-8 justify-start   items-end lg:items-center mx-auto w-fit pb-3  border-b mb-4">
         <div className="flex flex-col lg:flex-row gap-1 items-center ">
           <lable className="text-sm md:text-base">Ticket Type Name : </lable>
           <input
@@ -67,7 +67,6 @@ const CreateTicketsForm = ({ ticketTypesData, setTicketTypesData }) => {
             placeholder="example: VIP"
           />
         </div>
-
         <div className="flex flex-col lg:flex-row gap-1 items-center">
           <lable className="text-sm md:text-base">Ticket Quantity : </lable>
           <input
