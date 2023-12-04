@@ -19,7 +19,7 @@ const OrganizerEventList = () => {
 
   //toekn is not dynamically
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJpZCI6IjY1NjgxOWU2ZWQzN2I1YjA1MGYxOWNkOSIsImVtYWlsIjoibGlub2VAZ2FtaWwuY29tIiwicm9sZSI6Im9yZ2FuemllciJ9LCJpYXQiOjE3MDE0MDg5ODYsImV4cCI6MTcwMTQ5NTM4Nn0.lD_lWDG4XFzgeF2um2TFSlZVX9OciX76Txj7YoAQCe0";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJpZCI6IjY1NjgxOWU2ZWQzN2I1YjA1MGYxOWNkOSIsImVtYWlsIjoibGlub2VAZ2FtaWwuY29tIiwicm9sZSI6Im9yZ2FuemllciJ9LCJpYXQiOjE3MDE2NzE2MTcsImV4cCI6MTcwMTc1ODAxN30.OgX-sgPiX8Fin_fCl8GUaeFbTfwegEhG7VufYBHOuAc";
   const decoded = jwtDecode(token);
   const organizerId = decoded.UserInfo.id;
 
@@ -31,7 +31,7 @@ const OrganizerEventList = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/v1/event/events-by-organizer/656819e6ed37b5b050f19cd9`
+        `http://localhost:8080/api/v1/event/events-by-organizer`
       );
       console.log("response", response.data);
       setEvents(response.data);
