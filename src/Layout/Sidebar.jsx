@@ -4,16 +4,31 @@ import "react-modern-drawer/dist/index.css";
 import NavBarMenu from "../components/common/NavBarMenu/NavBarMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { setDrawer, setUserActive } from "../redux/global/globalSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import * as api from "../api/index";
+import { logout } from "../redux/auth/authSlice";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const isDrawer = useSelector((state) => state.global.isDrawer);
   const isUserActive = useSelector((state) => state.global.isUserActive);
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const organizer = useSelector((state) => state.auth.user);
   const handleClose = () => {
     dispatch(setDrawer(false));
+  };
+
+  const handleLogout = () => {
+    dispatch(setUserActive(false));
+    dispatch(logout());
+    api.logout();
+    navigate("/");
+    dispatch(setDrawer(false));
+    toast.success("Log out Successfully");
   };
 
   return (
@@ -24,44 +39,42 @@ const Sidebar = () => {
       style={{
         backgroundColor: "#002C32",
       }}
-      className="mt-[40px] min-w-[320px] relative overflow-hidden right -0 sm:rounded-tl-2xl"
+      className="right -0 relative mt-[40px] min-w-[320px] overflow-hidden sm:rounded-tl-2xl"
     >
-      <span className="h-14 w-[1200px] z-10 -left-[376.3px] overflow-hidden top-10 absolute -rotate-[62deg] bg-navbrand/80"></span>
+      <span className="absolute -left-[376.3px] top-10 z-10 h-14 w-[1200px] -rotate-[62deg]  overflow-hidden bg-navbrand/40"></span>
       <NavBarMenu />
       {isAuthenticated && (
-        <div className="bg-[#ffffff3a] z-50 absolute ps-5 pt-10 py-20 w-full bottom-0 flex justify-center items-center gap-x-2 shadow-md">
-          <Link to="/organizer/profile/655db72a40abeabdf4678ec9">
+        <div className="absolute bottom-0 z-50  flex w-full flex-wrap items-center  justify-evenly gap-x-2 bg-[#ffffff3a] py-11  pt-3 shadow-md">
+          <Link to={`/organizer/profile`}>
             <img
-              className="w-[100px] h-[100px] rounded-[40px]"
-              src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+              className="h-[60px] w-[60px] rounded-full object-cover"
+              src={`${organizer.thumbnail}`}
               alt=""
             />
           </Link>
           <div className="px-5">
-            <h2 className="text-lg text-start font-semibold truncate">
-              <Link to="/organizer/profile/655db72a40abeabdf4678ec9">
-                Username : Super Man
+            <p className="font-semibol truncate text-start text-lg">
+              {organizer.name}
+            </p>
+            <p className="truncate text-start text-base ">{organizer.email}</p>
+
+            {/* <div className="mt-5 flex justify-end px-3">
+              <Link
+                onClick={() => {
+                  dispatch(setUserActive(false));
+                  handleClose();
+                }}
+                to="/"
+                className="rounded bg-red-500 px-2 py-1 text-xs text-white"
+              >
+                Log out
               </Link>
-            </h2>
-            <h5 className="text-[1rem] text-gray-200 text-start font-semibold truncate">
-              <Link to="/organizer/profile/655db72a40abeabdf4678ec9">
-                superman@gmail.com
-              </Link>
-            </h5>
-            <div className="flex justify-end px-3 mt-5">
-              <Link onClick={() => dispatch(setUserActive(false))} to="/">
-                <button
-                  className="px-2 py-1 rounded text-white bg-red-500"
-                  onClick={() => {
-                    dispatch(setUserActive(false));
-                    handleClose();
-                  }}
-                >
-                  Log out
-                </button>
-              </Link>
-            </div>
+            </div> */}
           </div>
+          <i
+            onClick={handleLogout}
+            className="fa-solid fa-right-from-bracket cursor-pointer transition-all duration-300 hover:-translate-y-1"
+          ></i>
         </div>
       )}
     </Drawer>
