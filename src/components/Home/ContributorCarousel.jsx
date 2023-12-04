@@ -25,6 +25,7 @@ const ContributorCarousel = () => {
     fetchOrganizers("?sortBy=blueMark"),
   );
   const [firstFiveContributors, setFirstFiveContributors] = useState(null);
+
   useEffect(() => {
     if (contributors) {
       setFirstFiveContributors(contributors.content.slice(0, 5));
