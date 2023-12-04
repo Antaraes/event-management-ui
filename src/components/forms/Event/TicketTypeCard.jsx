@@ -119,11 +119,11 @@ const TicketTypeCard = ({
   };
 
   return (
-    <div className="mx-auto min-h-16 max-h-auto bg-gray-800  border-b border-black rounded-lg bg-opacity-40 flex flex-col md:flex-row  gap-2 md:gap-8 items-center p-3 justify-around">
-      <div className="flex flex-col lg:flex-row md:items-center">
+    <div className="mx-auto min-h-16 max-h-auto bg-gray-800  border-b border-black rounded-lg bg-opacity-40 flex flex-col md:flex-row  gap-2 md:gap-8 md:items-center p-3 justify-around">
+      <div className="flex items-center">
         <label>Ticket Type : </label>
         <input
-          className={`p-2 bg-transparent focus:outline-none focus:border-secondary ${
+          className={`p-2 bg-transparent w-[5rem] focus:outline-none focus:border-secondary ${
             isEditing ? "border-b" : ""
           }`}
           onChange={(e) => handleTicketTypeChange("type", e.target.value)}
@@ -132,10 +132,10 @@ const TicketTypeCard = ({
           value={editingTicketType?.type}
         />
       </div>
-      <div className="flex flex-col lg:flex-row md:items-center">
+      <div className="flex items-center">
         <label>Ticket Quantity :</label>
         <input
-          className={`p-2 bg-transparent focus:outline-none focus:border-secondary ${
+          className={`p-2 bg-transparent w-[5rem] focus:outline-none focus:border-secondary ${
             isEditing ? "border-b" : ""
           }`}
           onChange={(e) => handleTicketTypeChange("quantity", e.target.value)}
@@ -144,10 +144,10 @@ const TicketTypeCard = ({
           value={editingTicketType?.quantity}
         />
       </div>
-      <div className="flex flex-col lg:flex-row md:items-center">
+      <div className="flex items-center">
         <label>Price By Ticket :</label>
         <input
-          className={`p-2 bg-transparent focus:outline-none focus:border-secondary ${
+          className={`p-2 bg-transparent w-[5rem] focus:outline-none focus:border-secondary ${
             isEditing ? "border-b" : ""
           }`}
           onChange={(e) => handleTicketTypeChange("price", e.target.value)}
