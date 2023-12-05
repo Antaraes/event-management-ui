@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import AdminPaymentCard from "./AdminPaymentCard";
+import AlertModal from "../common/AlertModal";
 import useFetchData from "../../hooks/useFetchData";
-import { getUpgradePayments, addUpgradePayment } from "../../api/index";
+import OTPComponent from "../common/OtpComponent";
+import {
+  getUpgradePayments,
+  addUpgradePayment,
+  getOTPCode,
+} from "../../api/index";
 import toast from "react-hot-toast";
 
 const UPGRADEPAYMENTSELECTBOXVALUES = [
@@ -14,6 +20,7 @@ const UPGRADEPAYMENTSELECTBOXVALUES = [
 
 const AdminPaymentComponent = () => {
   const [formData, setFormData] = useState({ name: "", phone: "" });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     data: upgradePayments,
@@ -27,19 +34,25 @@ const AdminPaymentComponent = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleAddNewPayment = async () => {
-    if (formData.name.trim() == "" || formData.phone.trim() == "") {
-      toast.error("Field cannot be empty !!");
-      return;
-    }
+  const OTPSuccessFunc = async () => {
     try {
       const responseData = await addUpgradePayment(formData);
       setShouldAddFormAppear(false);
+      setIsModalOpen(false);
       toast.success("Successfully Added :3");
       refetch();
     } catch (error) {
       toast.error("Something went Wrong TwT");
     }
+  };
+
+  const handleAddNewPayment = () => {
+    if (formData.name.trim() == "" || formData.phone.trim() == "") {
+      toast.error("Field cannot be empty !!");
+      return;
+    }
+    getOTPCode("linthit2745@gmail.com");
+    setIsModalOpen(true);
   };
 
   return (
@@ -158,6 +171,19 @@ const AdminPaymentComponent = () => {
           </svg>
         )}
       </div>
+      {isModalOpen && (
+        <AlertModal
+          isModal={setIsModalOpen}
+          children={
+            <OTPComponent
+              className="text-white"
+              successFunc={OTPSuccessFunc}
+              failFunc={() => toast.error("Incorrect Pin, Try Again")}
+              email={"linthit2745@gmail.com"}
+            />
+          }
+        />
+      )}
     </div>
   );
 };
