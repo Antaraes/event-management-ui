@@ -33,7 +33,7 @@ const AdminPaymentCard = ({ upgradePayment }) => {
       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu0AflxyhTW4J84YQm1BkeLRy-oQWoskFf3w&usqp=CAU";
   };
   return (
-    <div className="my-0 flex !max-h-[200px] flex-col rounded-xl border border-blue-gray-100 p-2">
+    <div className="my-0 flex  !max-h-[200px] !min-h-[200px] flex-col rounded-xl border border-blue-gray-100 p-2">
       <div className="mb-4 flex items-center justify-between p-1">
         <img
           className="h-[60px] w-[60px] rounded-xl"
