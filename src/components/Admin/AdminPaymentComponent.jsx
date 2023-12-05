@@ -12,11 +12,20 @@ const UPGRADEPAYMENTSELECTBOXVALUES = [
 ];
 
 const AdminPaymentComponent = () => {
+  const [formData, setFormData] = useState({ name: "", phone: "" });
+
   const { data: upgradePayments, isLoading } = useFetchData(
     ["upgrade-payments"],
     () => getUpgradePayments(),
   );
   const [shouldAddFormAppear, setShouldAddFormAppear] = useState(false);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  console.log(formData);
 
   return (
     <div className="mt-3 grid h-fit w-[90%] grid-cols-2 gap-4 overflow-auto rounded-2xl border border-blue-gray-100 p-6 text-gray-700">
@@ -34,7 +43,15 @@ const AdminPaymentComponent = () => {
           <div className="flex flex-col items-center justify-center gap-4 p-1">
             <div className="flex items-center gap-2">
               <label>Payment Type : </label>
-              <select className="cursor-pointer rounded-xl bg-blue-gray-50 p-1 focus:outline-blue-gray-100">
+              <select
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="cursor-pointer rounded-xl bg-blue-gray-50 p-1 focus:outline-blue-gray-100"
+              >
+                <option value="" disabled hidden>
+                  Select payment
+                </option>
                 {UPGRADEPAYMENTSELECTBOXVALUES.map((value, index) => (
                   <option className="rounded-md" key={index} value={value}>
                     {value}
@@ -46,6 +63,9 @@ const AdminPaymentComponent = () => {
             <div className="flex items-center gap-2">
               <label>Number : </label>
               <input
+                name="phone"
+                value={formData.phone}
+                onChange={handleInputChange}
                 type="number"
                 className="w-[60%] border-b border-gray-600 bg-transparent p-1 focus:outline-none"
               />
@@ -55,7 +75,12 @@ const AdminPaymentComponent = () => {
       )}
 
       <div
-        onClick={() => setShouldAddFormAppear(!shouldAddFormAppear)}
+        onClick={() => {
+          setShouldAddFormAppear(!shouldAddFormAppear);
+          if (!shouldAddFormAppear) {
+            setFormData({ name: "", phone: "" });
+          }
+        }}
         className={`group my-0 flex max-h-[200px] min-h-[140px]  cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed border-blue-gray-100  p-2 hover:border-solid`}
       >
         {shouldAddFormAppear ? (
