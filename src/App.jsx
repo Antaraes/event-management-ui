@@ -189,7 +189,7 @@ function App() {
         },
         {
           path: "/admin/profile",
-          element: <AdminProfileCard />,
+          element: <Profile />,
         },
       ],
     },
