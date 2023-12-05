@@ -80,6 +80,9 @@ const EventList = () => {
         ticketEndDate: event.ticketEndDate
           ? format(new Date(event.ticketEndDate), "dd-MM-yyyy")
           : "ticket end date not found",
+        organizerId: event.organizer
+          ? event.organizer._id
+          : "organizer Id not found",
         organizerName: event.organizer
           ? event.organizer.name
           : "organizer name not found",
@@ -130,7 +133,7 @@ const EventList = () => {
   };
 
   return (
-    <div className="w-[90vw]">
+    <div className="w-[70vw]">
       <div className="flex">
         {/* <div className="items-center justify-center">
           <label className="text-black" htmlFor="pageInput">
@@ -183,6 +186,7 @@ const EventList = () => {
           { field: "organizerContact", headerName: "Organizer Contact", width: 200 },
           { field: "organierAccountLevel", headerName: "Organizer Account Level", width: 200 },
           { field: "organierBio", headerName: "Organizer Bio", width: 200 },
+          { field: "organizerId", headerName: "Organizer Id", width: 200 },
           {
             field: "organizerPhone",
             headerName: "Organizer Phone",
@@ -201,7 +205,7 @@ const EventList = () => {
         }}
         rowCount={total}
         columnBuffer={calculateColumnBuffer(pageSize, total)}
-        pageSizeOptions={[5, 10, 25]}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
         loading={events.length === 0}
         rowHeight={38}
         disableRowSelectionOnClick
