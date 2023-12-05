@@ -1,6 +1,13 @@
 import React from "react";
+import useFetchData from "../../hooks/useFetchData";
+import { useParams } from "react-router-dom";
+import { getAdminById } from "../../api/index";
 
 const AdminProfileCard = () => {
+  const { adminId } = useParams();
+  const { data: adminData, isLoading } = useFetchData(["admin", adminId], () =>
+    getAdminById(adminId),
+  );
   return (
     <>
       <div className=" mt-3 h-auto w-[60%] rounded-2xl border border-blue-gray-100 p-6 text-gray-700">
@@ -10,8 +17,20 @@ const AdminProfileCard = () => {
             className="h-[100px] w-[100px] rounded-lg object-cover"
           />
           <div className="flex flex-col items-start">
-            <span className="text-center text-xl font-semibold">John Doe</span>
-            <span className="text-center text-lg opacity-80">Admin</span>
+            {adminData && (
+              <>
+                <span className="text-center text-xl font-semibold">
+                  {adminData.name}
+                </span>
+                <span className="text-center text-lg opacity-80">
+                  {" "}
+                  {adminData.role}
+                </span>
+              </>
+            )}
+            {isLoading && (
+              <span className="text-center text-lg opacity-80">Loading...</span>
+            )}
           </div>
 
           <svg
@@ -45,7 +64,8 @@ const AdminProfileCard = () => {
                 d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
               />
             </svg>
-            <span>admin@gmail.com</span>
+            {adminData && <span>{adminData.email}</span>}
+            {isLoading && <span>Loading....</span>}
           </div>
 
           <div className=" flex gap-3">
@@ -64,7 +84,8 @@ const AdminProfileCard = () => {
               />
             </svg>
 
-            <span>+959 95648 2005</span>
+            {adminData && <span>{adminData.phone}</span>}
+            {isLoading && <span>Loading....</span>}
           </div>
 
           <div className=" flex gap-3">
