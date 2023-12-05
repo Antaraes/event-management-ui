@@ -39,6 +39,7 @@ import EmailVerify from "./pages/User/EmailVerify";
 import SuccessTicketBought from "./pages/User/SuccessTicketBought";
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
+import OrgList from "./pages/Admin/OrgList";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
@@ -189,6 +190,10 @@ function App() {
         {
           path: "/admin/profile",
           element: <Profile />,
+        },
+        {
+          path: "/admin/organizer",
+          element: <OrgList />,
         },
       ],
     },

@@ -28,6 +28,11 @@ export const routes = [
         name: "profile",
         path: "/profile",
       },
+      {
+        icon:<UserCircleIcon {...icon} />,
+        name:"organizer",
+        path: "/organizer",
+      }
     ],
   },
   {
