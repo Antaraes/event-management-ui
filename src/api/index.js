@@ -1,11 +1,13 @@
 import API from "./interceptors";
 
 //Auth
-export const verification = (userId, token) => API.get(`/auth/verify/${userId}/${token}`);
+export const verification = (userId, token) =>
+  API.get(`/auth/verify/${userId}/${token}`);
 
 export const staffSignup = (data) => API.post(`/auth/signup_staff`, data);
 export const staffLogin = (data) => API.post(`/auth/login_staff`, data);
-export const organizerSignup = (data) => API.post(`/auth/signup_organizer`, data);
+export const organizerSignup = (data) =>
+  API.post(`/auth/signup_organizer`, data);
 export const organizerLogin = (data) => API.post(`/auth/login_organizer`, data);
 export const getOTPCode = (data) => API.post(`/auth/get_otpcode`, data);
 export const verifyOTPcode = (data) => API.post(`/auth/verify_otpcode`, data);
@@ -33,7 +35,8 @@ export const getPublicSideOrganizerDetail = (organizerId) =>
   API.get(`/public-organizer/${organizerId}`);
 
 //Organizer Payment
-export const getAllPaymentFromOrganizer = () => API.get(`/organizer-payment/all`);
+export const getAllPaymentFromOrganizer = () =>
+  API.get(`/organizer-payment/all`);
 export const updateOrganizerPayment = (paymentId, paymentData) =>
   API.put(`/organizer-payment/update/${paymentId}`, paymentData);
 export const addOrganizerPayment = (paymentData) =>
@@ -51,7 +54,8 @@ export const createEvent = (data) => API.post(`/event/create`, data);
 export const boostEvent = (eventId) => API.post(`/event/boots/${eventId}`);
 
 //Customer
-export const getCustomerById = (customerId) => API.get(`/customer/customerById/${customerId}`);
+export const getCustomerById = (customerId) =>
+  API.get(`/customer/customerById/${customerId}`);
 export const addCustomer = (data) => API.post(`customer/add-customer`, data);
 
 //Ticket
@@ -62,9 +66,11 @@ export const getAllAvailableTicketsByEvent = (eventId) =>
 
 //Account Upgrade Payment
 export const getUpgradePayments = () => API.get(`/upgrade-payment/all`);
-export const getUpgradePaymentById = (paymentId) => API.get(`/upgrade-payment/${paymentId}`);
+export const getUpgradePaymentById = (paymentId) =>
+  API.get(`/upgrade-payment/${paymentId}`);
 
-export const addUpgradePayment = (data) => API.post(`/upgrade-payment/add`, data);
+export const addUpgradePayment = (data) =>
+  API.post(`/upgrade-payment/add`, data);
 
 export const activateUpgradePaymentStatus = (paymentId, data) =>
   API.put(`/upgrade-payment/update/${paymentId}`, data);
@@ -72,25 +78,31 @@ export const deactivateUpgradePaymentStatus = (paymentId, data) =>
   API.put(`/upgrade-payment/disable/${paymentId}`, data);
 
 //Organizer Invoice
-export const getOrganizerInvoices = (query) => API.get(`/ticket/get_tickets${query}`);
-export const getOrganizerInvoiceById = (invoiceId) => API.get(`/organizer-invoice/${invoiceId}`);
+export const getOrganizerInvoices = (query) =>
+  API.get(`/ticket/get_tickets${query}`);
+export const getOrganizerInvoiceById = (invoiceId) =>
+  API.get(`/organizer-invoice/${invoiceId}`);
 
-export const createOrganizer = (data) => API.post(`/organizer-invoice/create`, data);
+export const createOrganizer = (data) =>
+  API.post(`/organizer-invoice/create`, data);
 
 //Admin
 export const getAdmins = () => API.get(`/admin/find-all-admin`);
-export const getAdminById = (adminId) => API.get(`/admin/${adminId}`);
+export const getAdminById = (adminId) => API.get(`/admin/find/${adminId}`);
 
 export const addAdmin = (data) => API.post(`/admin/create`, data);
 
-export const promoteToAdmin = (staffId, data) => API.put(`/admin/update/${staffId}`, data);
+export const promoteToAdmin = (staffId, data) =>
+  API.put(`/admin/update/${staffId}`, data);
 export const deactivateAccount = (accountId, data) =>
   API.put(`/admin/deactivate/${accountId}`, data);
-export const subscription = (data) => API.post(`/organizer-invoice/upgradeOrganizerLevel`, data);
+export const subscription = (data) =>
+  API.post(`/organizer-invoice/upgradeOrganizerLevel`, data);
 
 //Organizer Dashboard
 export const getOrganizerDashboardBarChartData = (queryParams) =>
   API.get(`/organizer-dashboard/barchart?${queryParams}`);
 export const getOrganizerDashboardOverviewData = (queryParams) =>
   API.get(`/organizer-dashboard/overview-data?${queryParams}`);
-export const getEventsByOrganizerId = () => API.get(`/event/events-by-organizer`);
+export const getEventsByOrganizerId = () =>
+  API.get(`/event/events-by-organizer`);

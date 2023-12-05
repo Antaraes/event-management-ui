@@ -188,7 +188,7 @@ function App() {
           element: <Dashboard />,
         },
         {
-          path: "/admin/profile",
+          path: "/admin/profile/:adminId",
           element: <Profile />,
         },
       ],
