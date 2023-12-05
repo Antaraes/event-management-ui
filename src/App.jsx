@@ -39,10 +39,11 @@ import EmailVerify from "./pages/User/EmailVerify";
 import SuccessTicketBought from "./pages/User/SuccessTicketBought";
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
+import AdminProfileCard from "./components/Admin/AdminProfileCard";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   console.log("cookies", cookies);
   console.log(user, isAuthenticated);
   function getCookie(name) {
