@@ -39,6 +39,7 @@ import EmailVerify from "./pages/User/EmailVerify";
 import SuccessTicketBought from "./pages/User/SuccessTicketBought";
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
+import EventList from "./pages/Admin/EventList";
 import AdminProfileCard from "./components/Admin/AdminProfileCard";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
@@ -121,7 +122,7 @@ function App() {
         },
         {
           path: "/organizer",
-          // element: <ProtectedRoute />,
+          //element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",
@@ -191,6 +192,10 @@ function App() {
           path: "/admin/profile/:adminId",
           element: <Profile />,
         },
+        {
+          path: "/admin/event",
+          element: <EventList />,
+        }
       ],
     },
   ]);
