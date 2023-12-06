@@ -40,10 +40,11 @@ import SuccessTicketBought from "./pages/User/SuccessTicketBought";
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
 import OrgList from "./pages/Admin/OrgList";
+import OrganizerDetail from "./pages/Admin/OrganizerDetail";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   console.log("cookies", cookies);
   console.log(user, isAuthenticated);
   function getCookie(name) {
@@ -194,6 +195,10 @@ function App() {
         {
           path: "/admin/organizer",
           element: <OrgList />,
+        },
+        {
+          path: "/admin/organizer/:id",
+          element: <OrganizerDetail />,
         },
       ],
     },
