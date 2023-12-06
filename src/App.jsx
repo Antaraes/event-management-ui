@@ -36,13 +36,16 @@ import ProtectedRoute from "./helper/ProtectedRoute";
 import { useCookies } from "react-cookie";
 import Verification from "./pages/User/Verification";
 import EmailVerify from "./pages/User/EmailVerify";
-import SuccessTicketBought from "./pages/User/SuccessTicketBought";
+
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
+import EventList from "./pages/Admin/EventList";
+import AdminProfileCard from "./components/Admin/AdminProfileCard";
+import SuccessTicketPage from "./pages/User/SuccessTicketPage";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(['accessToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
   console.log("cookies", cookies);
   console.log(user, isAuthenticated);
   function getCookie(name) {
@@ -116,11 +119,11 @@ function App() {
 
         {
           path: "/ticket-success",
-          element: <SuccessTicketBought />,
+          element: <SuccessTicketPage />,
         },
         {
           path: "/organizer",
-          // element: <ProtectedRoute />,
+          //element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",
@@ -187,8 +190,12 @@ function App() {
           element: <Dashboard />,
         },
         {
-          path: "/admin/profile",
+          path: "/admin/profile/:adminId",
           element: <Profile />,
+        },
+        {
+          path: "/admin/event",
+          element: <EventList />,
         },
       ],
     },
