@@ -5,21 +5,30 @@ const ConfirmAlert = ({
   confirmMessage,
   handleCancel,
   titleText,
+  shouldTextWhite,
 }) => {
   return (
-    <div className="h-72 w-full p-3  overflow-hidden rounded-md flex flex-col justify-between">
-      <h1 className="mx-auto text-xl text-center w-full">{titleText}</h1>
+    <div
+      className={`flex h-72 w-full  flex-col justify-between overflow-hidden rounded-md p-3 ${
+        shouldTextWhite ? "text-white" : ""
+      }`}
+    >
+      <div className="flex flex-col gap-3">
+        <h1 className="mx-auto w-full text-center text-sm">Confirm Alert</h1>
 
-      <div className="flex justify-between mb-6">
+        <h1 className="mx-auto w-full text-center text-xl">{titleText}</h1>
+      </div>
+
+      <div className="mb-6 flex justify-between">
         <button
           onClick={handleCancel}
-          className="ml-10 bg-gray-900 p-3 w-24 rounded-lg bg-opacity-60 hover:bg-opacity-100"
+          className="ml-10 w-24 rounded-lg bg-gray-900 bg-opacity-60 p-3 hover:bg-opacity-100"
         >
           Cancel
         </button>
         <button
           onClick={handleConfirm}
-          className="mr-10 bg-gray-900 p-3 w-24 rounded-lg bg-opacity-60 hover:bg-opacity-100"
+          className="mr-10 w-24 rounded-lg bg-gray-900 bg-opacity-60 p-3 hover:bg-opacity-100"
         >
           {confirmMessage}
         </button>

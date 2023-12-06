@@ -14,16 +14,27 @@ import {
   addCustomer,
   getAllAvailableTicketsByEvent,
   getOTPCode,
-  verifyOTPcode,
+  getEventByIdForBuyTicket,
 } from "../../api/index";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
 const BuyTicket = () => {
-  const { name, email, payment, onChange } = useCreateTicket();
+  const { name, email, onChange } = useCreateTicket();
   const [isModal, setIsModal] = useState(false);
   const [totalSelectedTicketCount, setTotalSelectedTicketCount] = useState(0);
   const [totalSelectedTicketPrice, setTotalSelectedTicketPrice] = useState(0);
   const [boughtTicket, setBoughtTicket] = useState([]);
   const [customerData, setCustomerData] = useState(null);
+  const [selectedPayment, setSelectedPayment] = useState(null);
+
+  //For ticketvoucher
+  const [ticketVoucher, setTicketVoucher] = useState({
+    ticketTypes: [],
+    event: null,
+    totalPrice: 0,
+  });
+  //For ticketvoucher
+
   const { eventId } = useParams();
   const navigate = useNavigate();
 
@@ -35,9 +46,24 @@ const BuyTicket = () => {
     getAllAvailableTicketsByEvent(eventId),
   );
 
-  // const {data:paymentData} = useFetchData(['payment',eventId],()=>)
+  const { data: eventData } = useFetchData(["event", eventId], () =>
+    getEventByIdForBuyTicket(eventId),
+  );
+  useEffect(() => {
+    if (eventData) {
+      setTicketVoucher((prevTicketVoucher) => ({
+        ...prevTicketVoucher,
+        event: eventData,
+      }));
+    }
+  }, [eventData]);
 
-  const handleSelectTicket = (isIncrease, ticketPrice, paymentInfoId) => {
+  const handleSelectTicket = (
+    isIncrease,
+    ticketPrice,
+    paymentInfoId,
+    ticketType,
+  ) => {
     setTotalSelectedTicketPrice(
       isIncrease
         ? totalSelectedTicketPrice + ticketPrice
@@ -53,16 +79,31 @@ const BuyTicket = () => {
         {
           event: eventId,
           ticketInfo: paymentInfoId,
-          payment: "655ebd59f6e19936a4353dc1",
         },
       ]);
-    } else {
-      setBoughtTicket((prevBoughtTickets) => {
-        const newBoughtTickets = [...prevBoughtTickets];
-        newBoughtTickets.pop();
-        return newBoughtTickets;
-      });
+      setTicketVoucher((prevTicketVoucher) => ({
+        ...prevTicketVoucher,
+        ticketTypes: [...prevTicketVoucher.ticketTypes, ticketType],
+      }));
+
+      return;
     }
+
+    setBoughtTicket((prevBoughtTickets) => {
+      const newBoughtTickets = [...prevBoughtTickets];
+      newBoughtTickets.pop();
+      return newBoughtTickets;
+    });
+
+    setTicketVoucher((prevTicketVoucher) => {
+      const newTicketTypes = [...prevTicketVoucher.ticketTypes];
+      newTicketTypes.pop();
+
+      return {
+        ...prevTicketVoucher,
+        ticketTypes: newTicketTypes,
+      };
+    });
   };
 
   const OTPSuccessFunc = async () => {
@@ -87,7 +128,7 @@ const BuyTicket = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (email.trim() == "" || name.trim() == "") {
+    if (email.trim() == "" || name.trim() == "" || !selectedPayment) {
       toast.error("Field Cannot be Blank!");
       return;
     }
@@ -96,17 +137,30 @@ const BuyTicket = () => {
       toast.error("You need to buy atleast 1 ticket");
       return;
     }
+    const newBoughtTickets = boughtTicket.map((ticket) => ({
+      ...ticket,
+      payment: selectedPayment,
+    }));
+    setTicketVoucher((prevTicketVoucher) => ({
+      ...prevTicketVoucher,
+      totalPrice: totalSelectedTicketPrice,
+    }));
+
+    setBoughtTicket(newBoughtTickets);
     getOTPCode({ email: email });
     setCustomerData({ email, name });
     setIsModal(true);
-
-    //const isVerified = await verifyOTPcode();
   };
 
   const event = {
     thumbnail:
       "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   };
+
+  //ticket voucher
+  console.log(ticketVoucher);
+
+  //ticket voucher
 
   return (
     <>
@@ -169,29 +223,21 @@ const BuyTicket = () => {
                 >
                   {"Your Email"}
                 </Input>
-
-                <Select
-                  key={"payment"}
-                  labelId={"payment"}
-                  labelText={"Payment"}
-                  onChange={(event) => onChange("payment", event)}
-                  value={payment}
-                  required
-                  options={[
-                    {
-                      value: 0,
-                      label: "Kpay",
-                    },
-                    {
-                      value: 1,
-                      label: "Wave Money",
-                    },
-                    {
-                      value: 2,
-                      label: "PayPal",
-                    },
-                  ]}
-                />
+                <select
+                  onChange={(e) => setSelectedPayment(e.target.value)}
+                  className="rounded-xl p-3 text-black focus:outline-none"
+                  defaultValue=""
+                >
+                  <option value="" disabled hidden>
+                    Select payment
+                  </option>
+                  {eventData &&
+                    eventData.payments.map((payment) => (
+                      <option key={payment._id} value={payment._id}>
+                        {payment.name} - {payment.phone}
+                      </option>
+                    ))}
+                </select>
               </div>
               <div className="mt-2 flex flex-col justify-between md:flex-row">
                 <p>Total Ticket : {totalSelectedTicketCount} x</p>

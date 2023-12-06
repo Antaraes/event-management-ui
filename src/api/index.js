@@ -45,6 +45,8 @@ export const addOrganizerPayment = (paymentData) =>
 //Event
 export const getEvents = (query) => API.get(`/event${query}`);
 export const getEventById = (eventId) => API.get(`/event/find/${eventId}`);
+export const getEventByIdForBuyTicket = (eventId) =>
+  API.get(`/event/payments/${eventId}`);
 export const searchEvents = (query) => API.get(`/event/search${query}`);
 export const sortEvents = (query) => API.get(`/event/sort${query}`);
 export const sortTrending = (query) => API.get(`/event/boots${query}`);
@@ -74,8 +76,8 @@ export const addUpgradePayment = (data) =>
 
 export const activateUpgradePaymentStatus = (paymentId, data) =>
   API.put(`/upgrade-payment/update/${paymentId}`, data);
-export const deactivateUpgradePaymentStatus = (paymentId, data) =>
-  API.put(`/upgrade-payment/disable/${paymentId}`, data);
+export const deactivateUpgradePaymentStatus = (paymentId) =>
+  API.put(`/upgrade-payment/disable/${paymentId}`);
 
 //Organizer Invoice
 export const getOrganizerInvoices = (query) =>
