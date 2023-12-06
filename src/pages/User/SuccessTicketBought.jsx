@@ -4,17 +4,41 @@ import { Link, useNavigate } from "react-router-dom";
 const SuccessTicketBought = () => {
   const navigate = useNavigate();
   return (
-    <div className="pt-14 h-[80vh] flex flex-col items-center gap-8 sm:gap-12 lg:gap-24">
-      <div className="h-auto mt-10 text-base sm:text-lg lg:text-3xl px-1 flex flex-col gap-3 items-center">
-        <h1 className="font-semibold text-center">
+    <div className="flex max-h-fit min-h-[80vh] flex-col items-center gap-8 pt-14 sm:gap-12 ">
+      <div className="mt-10 flex h-auto flex-col items-center gap-3 px-1 text-base sm:text-lg lg:text-3xl">
+        <h1 className="text-center font-semibold">
           You Have Successfully Bought a Ticket
         </h1>
-        <h1 className="pt-3 animate-bounce">♡⸜(˶˃ ᵕ ˂˶)⸝♡</h1>
+        <h1 className="animate-bounce pt-3">♡⸜(˶˃ ᵕ ˂˶)⸝♡</h1>
       </div>
-      <div className="flex   justify-center gap-4 sm:gap-12 mb-10 w-[80%] sm:w-auto">
+      <div className="relative mx-auto max-h-fit min-h-[15rem] w-[80%] rounded-xl border p-3 lg:w-[40%]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="absolute -z-40 h-full w-full opacity-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+          />
+        </svg>
+        <h3 className=" text-center text-2xl font-semibold">Ticket Voucher</h3>
+        <div className="mt-5 grid grid-cols-1 gap-14 p-3 md:grid-cols-2">
+          <span>Total Tickets : </span>
+          <span>Total Amount : </span>
+          <span>Paid Amount : </span>
+          <span>Bought Tickets : </span>
+          <span>Purchase Date : </span>
+        </div>
+      </div>
+      <div className="mb-10   flex w-[80%] justify-center gap-4 sm:w-auto sm:gap-12">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 bg-secondary p-2 rounded-lg bg-opacity-70 cursor-pointer hover:bg-opacity-100 transition-all duration-700 hover:shadow-md shadow hover:shadow-secondary"
+          className="flex cursor-pointer items-center gap-2 rounded-lg bg-secondary bg-opacity-70 p-2 shadow transition-all duration-700 hover:bg-opacity-100 hover:shadow-md hover:shadow-secondary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +46,7 @@ const SuccessTicketBought = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"
@@ -35,7 +59,7 @@ const SuccessTicketBought = () => {
 
         <Link
           to={"/"}
-          className="flex items-center gap-2 bg-secondary p-2 rounded-lg bg-opacity-70 cursor-pointer hover:bg-opacity-100 transition-all duration-700 hover:shadow-md shadow hover:shadow-secondary"
+          className="flex cursor-pointer items-center gap-2 rounded-lg bg-secondary bg-opacity-70 p-2 shadow transition-all duration-700 hover:bg-opacity-100 hover:shadow-md hover:shadow-secondary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +67,7 @@ const SuccessTicketBought = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"
