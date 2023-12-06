@@ -45,6 +45,8 @@ export const addOrganizerPayment = (paymentData) =>
 //Event
 export const getEvents = (query) => API.get(`/event${query}`);
 export const getEventById = (eventId) => API.get(`/event/find/${eventId}`);
+export const getEventByIdForBuyTicket = (eventId) =>
+  API.get(`/event/payments/${eventId}`);
 export const searchEvents = (query) => API.get(`/event/search${query}`);
 export const sortEvents = (query) => API.get(`/event/sort${query}`);
 export const sortTrending = (query) => API.get(`/event/boots${query}`);
