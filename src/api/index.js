@@ -74,8 +74,8 @@ export const addUpgradePayment = (data) =>
 
 export const activateUpgradePaymentStatus = (paymentId, data) =>
   API.put(`/upgrade-payment/update/${paymentId}`, data);
-export const deactivateUpgradePaymentStatus = (paymentId, data) =>
-  API.put(`/upgrade-payment/disable/${paymentId}`, data);
+export const deactivateUpgradePaymentStatus = (paymentId) =>
+  API.put(`/upgrade-payment/disable/${paymentId}`);
 
 //Organizer Invoice
 export const getOrganizerInvoices = (query) =>

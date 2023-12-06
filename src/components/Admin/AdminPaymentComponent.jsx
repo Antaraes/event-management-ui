@@ -62,6 +62,7 @@ const AdminPaymentComponent = () => {
           <AdminPaymentCard
             key={upgradePayment._id}
             upgradePayment={upgradePayment}
+            refetch={refetch}
           />
         ))}
       {isLoading && <p>Loading....</p>}
