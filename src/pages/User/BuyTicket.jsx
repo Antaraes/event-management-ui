@@ -32,7 +32,7 @@ const BuyTicket = () => {
     isLoading: isTicketDataLoading,
     isError: isTicketDataError,
   } = useFetchData(["available-tickets", eventId], () =>
-    getAllAvailableTicketsByEvent(eventId)
+    getAllAvailableTicketsByEvent(eventId),
   );
 
   // const {data:paymentData} = useFetchData(['payment',eventId],()=>)
@@ -41,10 +41,10 @@ const BuyTicket = () => {
     setTotalSelectedTicketPrice(
       isIncrease
         ? totalSelectedTicketPrice + ticketPrice
-        : totalSelectedTicketPrice - ticketPrice
+        : totalSelectedTicketPrice - ticketPrice,
     );
     setTotalSelectedTicketCount(
-      isIncrease ? totalSelectedTicketCount + 1 : totalSelectedTicketCount - 1
+      isIncrease ? totalSelectedTicketCount + 1 : totalSelectedTicketCount - 1,
     );
 
     if (isIncrease) {
@@ -73,8 +73,9 @@ const BuyTicket = () => {
 
     try {
       const responseData = await addCustomer(requestData);
+      const dataObject = { key: "value" };
       navigate("/ticket-success");
-      toast.success("Successfully Bought Tickets :3");
+      toast.success("Successfully Bought Tickets :3", { state: dataObject });
     } catch (error) {
       toast.error("Something went Wrong");
     }
@@ -109,15 +110,15 @@ const BuyTicket = () => {
 
   return (
     <>
-      <section className="min-w-full max-w-fit inline-block">
+      <section className="inline-block min-w-full max-w-fit">
         <div className="min-w-full">
           <img
             src={event.thumbnail}
             alt=""
-            className="w-full h-[40vh] object-cover rounded-md grayscale-0"
+            className="h-[40vh] w-full rounded-md object-cover grayscale-0"
           />
         </div>
-        <div className="flex w-full flex-col lg:flex-row lg:gap-8 my-5 lg:justify-around">
+        <div className="my-5 flex w-full flex-col lg:flex-row lg:justify-around lg:gap-8">
           <div className="w-full lg:w-[55%]">
             {ticketData &&
               ticketData.map((availableTicket) => (
@@ -132,22 +133,22 @@ const BuyTicket = () => {
                 />
               ))}
             {isTicketDataLoading && (
-              <span className="text-4xl w-full h-full text-center mt-20 inline-block">
+              <span className="mt-20 inline-block h-full w-full text-center text-4xl">
                 Loading...
               </span>
             )}
 
             {isTicketDataError && (
-              <span className="text-4xl w-full h-full text-center mt-20 inline-block">
+              <span className="mt-20 inline-block h-full w-full text-center text-4xl">
                 Something went wrong TwT
               </span>
             )}
           </div>
 
-          <div className="w-[92%] mx-auto lg:w-[35%] p-4 border border-gray-300 rounded-lg mt-4 lg:mt-0">
+          <div className="mx-auto mt-4 w-[92%] rounded-lg border border-gray-300 p-4 lg:mt-0 lg:w-[35%]">
             <h1 className="text-center text-2xl">Purchase</h1>
             <form action="" method="POST" className="my-5 ">
-              <div className="px-5 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 gap-10 px-5 py-10 md:grid-cols-2">
                 <Input
                   key={"name"}
                   labelId={"name"}
@@ -192,14 +193,14 @@ const BuyTicket = () => {
                   ]}
                 />
               </div>
-              <div className="flex flex-col md:flex-row justify-between mt-2">
+              <div className="mt-2 flex flex-col justify-between md:flex-row">
                 <p>Total Ticket : {totalSelectedTicketCount} x</p>
 
                 <p>Total Price : {totalSelectedTicketPrice} MMK</p>
               </div>
-              <div className="flex h-full  justify-center  mt-10">
+              <div className="mt-10 flex  h-full  justify-center">
                 <button
-                  className="rounded-full bg-secondary p-2 text-center w-[80%] bg-opacity-70 hover:opacity-100 transition-all duration-200 hover:-translate-y-1 cursor-pointer "
+                  className="w-[80%] cursor-pointer rounded-full bg-secondary bg-opacity-70 p-2 text-center transition-all duration-200 hover:-translate-y-1 hover:opacity-100 "
                   onClick={(e) => onSubmit(e)}
                 >
                   Purchase
