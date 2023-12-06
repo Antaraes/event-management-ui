@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Switch } from "@material-tailwind/react";
 import AlertModal from "../common/AlertModal";
 import ConfirmAlert from "../common/ConfirmAlert";
-import { deactivateUpgradePaymentStatus } from "../../api/index";
+import { deactivateUpgradePaymentStatus, getOTPCode } from "../../api/index";
 import toast from "react-hot-toast";
+import OtpComponent from "../common/OtpComponent";
 
 const IMAGES = [
   {
@@ -30,6 +31,7 @@ const IMAGES = [
 const AdminPaymentCard = ({ upgradePayment, refetch }) => {
   const [shouldConfirmModalAppear, setShouldConfirmModalAppear] =
     useState(false);
+  const [shouldOTPAppear, setShouldOTPAppear] = useState(false);
 
   const handleImage = (upgradePaymentName) => {
     const lowerCaseName = upgradePaymentName?.toLowerCase();
@@ -41,11 +43,12 @@ const AdminPaymentCard = ({ upgradePayment, refetch }) => {
       : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu0AflxyhTW4J84YQm1BkeLRy-oQWoskFf3w&usqp=CAU";
   };
 
-  const handleConfirm = async () => {
+  const OPTSuccessFunc = async () => {
     try {
       await deactivateUpgradePaymentStatus(upgradePayment._id);
       refetch();
       setShouldConfirmModalAppear(false);
+      setShouldOTPAppear(false);
       toast.success("Successful");
     } catch (error) {
       toast.error("Something went Wrong");
@@ -75,10 +78,8 @@ const AdminPaymentCard = ({ upgradePayment, refetch }) => {
           onChange={() => setShouldConfirmModalAppear(true)}
         />
       </div>
-
       {shouldConfirmModalAppear && (
         <AlertModal
-          className="text-white"
           isModal={setShouldConfirmModalAppear}
           children={
             <ConfirmAlert
@@ -92,7 +93,22 @@ const AdminPaymentCard = ({ upgradePayment, refetch }) => {
                   : "Do You Want To Enable Payment"
               }`}
               handleCancel={() => setShouldConfirmModalAppear(false)}
-              handleConfirm={handleConfirm}
+              handleConfirm={() => {
+                setShouldOTPAppear(true);
+                getOTPCode("linthit2745@gmail.com");
+              }}
+            />
+          }
+        />
+      )}
+      {shouldOTPAppear && (
+        <AlertModal
+          isModal={setShouldOTPAppear}
+          children={
+            <OtpComponent
+              email={"linthit27455@gmail.com"}
+              successFunc={OPTSuccessFunc}
+              failFunc={() => toast.error("Invalid Pin")}
             />
           }
         />
