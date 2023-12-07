@@ -1,20 +1,30 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 
-const SuccessTicketBought = () => {
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import SuccessTicketCard from "../../components/Ticket/SuccessTicketCard/SuccessTicketCard";
+
+const SuccessTicketPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location.state", location.state);
+
   return (
-    <div className="pt-14 h-[80vh] flex flex-col items-center gap-8 sm:gap-12 lg:gap-24">
-      <div className="h-auto mt-10 text-base sm:text-lg lg:text-3xl px-1 flex flex-col gap-3 items-center">
-        <h1 className="font-semibold text-center">
+    <div
+      id="image-container"
+      style={{ background: "#000" }}
+      className="flex max-h-fit  min-h-[80vh] flex-col items-center gap-8 pt-14 sm:gap-12 "
+    >
+      <div className="mt-10 flex h-auto flex-col items-center gap-3 px-1 text-base sm:text-lg lg:text-3xl">
+        <h1 className="text-center font-semibold">
           You Have Successfully Bought a Ticket
         </h1>
-        <h1 className="pt-3 animate-bounce">♡⸜(˶˃ ᵕ ˂˶)⸝♡</h1>
+        <h1 className="animate-bounce pt-3">♡⸜(˶˃ ᵕ ˂˶)⸝♡</h1>
       </div>
-      <div className="flex   justify-center gap-4 sm:gap-12 mb-10 w-[80%] sm:w-auto">
+      <SuccessTicketCard ticketDetail={location.state} />
+      <div className="mb-10   flex w-[80%] justify-center gap-4 sm:w-auto sm:gap-12">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 bg-secondary p-2 rounded-lg bg-opacity-70 cursor-pointer hover:bg-opacity-100 transition-all duration-700 hover:shadow-md shadow hover:shadow-secondary"
+          className="flex cursor-pointer items-center gap-2 rounded-lg bg-secondary bg-opacity-70 p-2 shadow transition-all duration-700 hover:bg-opacity-100 hover:shadow-md hover:shadow-secondary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +32,7 @@ const SuccessTicketBought = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"
@@ -35,7 +45,7 @@ const SuccessTicketBought = () => {
 
         <Link
           to={"/"}
-          className="flex items-center gap-2 bg-secondary p-2 rounded-lg bg-opacity-70 cursor-pointer hover:bg-opacity-100 transition-all duration-700 hover:shadow-md shadow hover:shadow-secondary"
+          className="flex cursor-pointer items-center gap-2 rounded-lg bg-secondary bg-opacity-70 p-2 shadow transition-all duration-700 hover:bg-opacity-100 hover:shadow-md hover:shadow-secondary"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +53,7 @@ const SuccessTicketBought = () => {
             viewBox="0 0 24 24"
             strokeWidth="1.5"
             stroke="currentColor"
-            className="w-6 h-6"
+            className="h-6 w-6"
           >
             <path
               strokeLinecap="round"
@@ -59,4 +69,4 @@ const SuccessTicketBought = () => {
   );
 };
 
-export default SuccessTicketBought;
+export default SuccessTicketPage;

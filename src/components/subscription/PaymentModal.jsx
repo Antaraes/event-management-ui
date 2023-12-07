@@ -14,9 +14,18 @@ import * as api from "../../api/index";
 import useFetchData from "../../hooks/useFetchData";
 import paymentSuccess from "../../assets/icons/payment-successful.png";
 import useScriptions from "../../hooks/useSubscription";
+import { useSelector } from "react-redux";
 
-export function PaymentModal({ title, price, features, isModal, accountLevel }) {
-  const { data: payments, isLoading } = useFetchData(["organizer"], () => api.getUpgradePayments());
+export function PaymentModal({
+  title,
+  price,
+  features,
+  isModal,
+  accountLevel,
+}) {
+  const { data: payments, isLoading } = useFetchData(["upgradepayment"], () =>
+    api.getUpgradePayments(),
+  );
   const { subscription, payment, onSubmit } = useScriptions();
 
   const [selectedPaymentId, setSelectedPaymentId] = useState(null);
@@ -43,14 +52,14 @@ export function PaymentModal({ title, price, features, isModal, accountLevel }) 
       transition={{ duration: 0.3 }}
       id=""
       tabIndex={-1}
-      className="overflow-y-auto bg-black/40 overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center md:inset-0 h-full  flex"
+      className="fixed left-0 right-0 top-0 z-50 flex h-full items-center justify-center overflow-y-auto overflow-x-hidden bg-black/40  md:inset-0"
     >
       <form
         action=""
-        className="w-[80%] mx-auto bg-white my-auto p-10 md:flex md:flex-col justify-between h-full md:h-[90%] "
+        className="mx-auto my-auto h-full w-[80%] justify-between bg-white p-10 md:flex md:h-[90%] md:flex-col "
       >
         <div className="md:flex ">
-          <Tabs value="html" className="md:w-1/2 w-full ">
+          <Tabs value="html" className="w-full md:w-1/2 ">
             <TabsHeader
               className="bg-transparent"
               indicatorProps={{
@@ -77,28 +86,30 @@ export function PaymentModal({ title, price, features, isModal, accountLevel }) 
               ))}
             </TabsBody>
           </Tabs>
-          <div className="md:w-1/2 w-full">
+          <div className="w-full md:w-1/2">
             <h1>Summary</h1>
-            <div className="flex items-center justify-center  my-auto">
+            <div className="my-auto flex items-center  justify-center">
               <div
-                className={`bg-[#f5f5f5]  rounded-[10px] shadow-[0px 1px 2px primary] border-[3px] divide-y`}
+                className={`shadow-[0px  1px 2px primary] divide-y rounded-[10px] border-[3px] bg-[#f5f5f5]`}
               >
                 <div className="flex justify-center">
                   <img src={paymentSuccess} alt="Success" width={200} />
                 </div>
 
                 <div
-                  className={`pt-[15px] px-[25px] pb-[25px] h-full w-[400px] relative overflow-hidden`}
+                  className={`relative h-full w-[400px] overflow-hidden px-[25px] pb-[25px] pt-[15px]`}
                 >
-                  <p className={` text-black text-center text-3xl leading-[28px] font-bold `}>
+                  <p
+                    className={` text-center text-3xl font-bold leading-[28px] text-black `}
+                  >
                     {title} Account
                   </p>
-                  <hr class="h-px my-8 bg-black border-0 dark:bg-gray-700" />
+                  <hr class="my-8 h-px border-0 bg-black dark:bg-gray-700" />
                   <div className="flex justify-between text-black">
                     <Typography>Discount</Typography>
                     <p className={` r text-[15px]  font-bold`}>10%</p>
                   </div>
-                  <hr class="h-px my-8 bg-black border-0 dark:bg-gray-700" />
+                  <hr class="my-8 h-px border-0 bg-black dark:bg-gray-700" />
                   <div className="flex justify-between text-black">
                     <Typography>Total</Typography>
                     <p className={` r text-[15px]  font-bold`}>{price}</p>
@@ -109,11 +120,15 @@ export function PaymentModal({ title, price, features, isModal, accountLevel }) 
           </div>
         </div>
         <div className=" flex justify-between">
-          <CustomButton type="click" title={"Cancel"} onClickFunc={handleModal} />
-          <Typography className="text-black text-[8px] md:text-xs  text-center w-[40%]">
-            Term and Condition: A no refund policy informs your customers that all sales are final,
-            and they shouldn't expect a monetary refund or replacement item even if they're
-            unsatisfied with their purchase
+          <CustomButton
+            type="click"
+            title={"Cancel"}
+            onClickFunc={handleModal}
+          />
+          <Typography className="w-[40%] text-center text-[8px]  text-black md:text-xs">
+            Term and Condition: A no refund policy informs your customers that
+            all sales are final, and they shouldn't expect a monetary refund or
+            replacement item even if they're unsatisfied with their purchase
           </Typography>
           <CustomButton onClickFunc={onSubmit} title={"Submit"} />
         </div>
@@ -125,11 +140,11 @@ export function PaymentModal({ title, price, features, isModal, accountLevel }) 
 const CustomButton = ({ type, title, onClickFunc }) => (
   <button
     type={type}
-    class="relative inline-block px-4 py-2 h-10 mt-2 font-medium group"
+    class="group relative mt-2 inline-block h-10 px-4 py-2 font-medium"
     onClick={onClickFunc}
   >
-    <span class="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
-    <span class="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
+    <span class="absolute inset-0 h-full w-full translate-x-1 translate-y-1 transform bg-black transition duration-200 ease-out group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
+    <span class="absolute inset-0 h-full w-full border-2 border-black bg-white group-hover:bg-black"></span>
     <span class="relative text-black group-hover:text-white">{title}</span>
   </button>
 );

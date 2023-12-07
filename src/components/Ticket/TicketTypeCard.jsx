@@ -25,9 +25,12 @@ export function TicketTypeCard({
       quantity: "23/04/18",
     },
   ];
-
-  console.log(availableTicket.totalAvailableTickets);
-  const handleClickQuantity = (isIncrease, ticketPrice, ticketInfoId) => {
+  const handleClickQuantity = (
+    isIncrease,
+    ticketPrice,
+    ticketInfoId,
+    ticketType,
+  ) => {
     if (isIncrease) {
       if (availableTicket.totalAvailableTickets == 0) {
         toast.error("No Ticket Available For You to Buy • ᴖ •  ");
@@ -35,7 +38,7 @@ export function TicketTypeCard({
       }
       if (totalSelectedTicketCount < 5) {
         setQuantity(quantity + 1);
-        handleSelectTicket(true, ticketPrice, ticketInfoId);
+        handleSelectTicket(true, ticketPrice, ticketInfoId, ticketType);
         return;
       }
 
@@ -44,7 +47,7 @@ export function TicketTypeCard({
     }
     if (quantity > 0) {
       setQuantity(quantity - 1);
-      handleSelectTicket(false, ticketPrice, ticketInfoId);
+      handleSelectTicket(false, ticketPrice, ticketInfoId, ticketType);
       return;
     }
 
@@ -52,16 +55,16 @@ export function TicketTypeCard({
   };
 
   return (
-    <Card className="w-[98%] my-4 lg:w-[70%] flex flex-col md:flex-row bg-transparent px-2 lg:ml-6">
+    <Card className="my-4 flex w-[98%] flex-col bg-transparent px-2 md:flex-row lg:ml-6 lg:w-[70%]">
       <CardHeader
         shadow={false}
         floated={false}
-        className="m-0 relative  w-full h-40 md:w-2/5 shrink-0  lg:rounded-r-none overflow-hidden"
+        className="relative m-0  h-40 w-full shrink-0 overflow-hidden  md:w-2/5 lg:rounded-r-none"
       >
-        <p className="absolute  top-4 px-10 -right-[2.5rem] rotate-45 bg-yellow-500 text-black font-bold ">
+        <p className="absolute  -right-[2.5rem] top-4 rotate-45 bg-yellow-500 px-10 font-bold text-black ">
           {availableTicket.type}
         </p>
-        <p className="absolute bottom-2  left-2 text-white tracking-wide">
+        <p className="absolute bottom-2  left-2 tracking-wide text-white">
           {availableTicket.totalAvailableTickets}x Avaiable
         </p>
         <img
@@ -70,7 +73,7 @@ export function TicketTypeCard({
           className="h-full w-full  object-cover"
         />
       </CardHeader>
-      <CardBody className="bg-gray-800 w-full lg:w-fit text-white bg-opacity-25 rounded-b-lg lg:rounded-e-lg ">
+      <CardBody className="w-full rounded-b-lg bg-gray-800 bg-opacity-25 text-white lg:w-fit lg:rounded-e-lg ">
         <table className="w-full text-left">
           <thead>
             <tr>
@@ -79,7 +82,7 @@ export function TicketTypeCard({
                   <Typography
                     variant="small"
                     color="blue-gray"
-                    className="font-bold text-base leading-none text-white"
+                    className="text-base font-bold leading-none text-white"
                   >
                     {head}
                   </Typography>
@@ -90,7 +93,7 @@ export function TicketTypeCard({
           <tbody className="text-start lg:text-center">
             <tr>
               <td>
-                <Typography variant="small" className="font-normal py-3">
+                <Typography variant="small" className="py-3 font-normal">
                   {availableTicket.type}
                 </Typography>
               </td>
@@ -102,7 +105,7 @@ export function TicketTypeCard({
               <td>
                 <Typography
                   variant="small"
-                  className="font-normal flex  items-center justify-start lg:justify-center gap-4"
+                  className="flex items-center  justify-start gap-4 font-normal lg:justify-center"
                 >
                   <Icon
                     icon={"fluent:subtract-12-filled"}
@@ -111,7 +114,8 @@ export function TicketTypeCard({
                       handleClickQuantity(
                         false,
                         availableTicket.price,
-                        availableTicket._id
+                        availableTicket._id,
+                        availableTicket.type,
                       )
                     }
                   />
@@ -128,7 +132,8 @@ export function TicketTypeCard({
                       handleClickQuantity(
                         true,
                         availableTicket.price,
-                        availableTicket._id
+                        availableTicket._id,
+                        availableTicket.type,
                       )
                     }
                   />
