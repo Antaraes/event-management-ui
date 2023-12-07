@@ -10,7 +10,6 @@ const SuccessTicketPage = () => {
 
   return (
     <div
-      id="image-container"
       style={{ background: "#000" }}
       className="flex max-h-fit  min-h-[80vh] flex-col items-center gap-8 pt-14 sm:gap-12 "
     >
