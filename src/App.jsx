@@ -39,6 +39,11 @@ import EmailVerify from "./pages/User/EmailVerify";
 
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
+
+import OrgList from "./pages/Admin/OrgList";
+import OrganizerDetail from "./pages/Admin/OrganizerDetail";
+import OrganizerEventDetail from "./pages/Admin/component/organizerEventDetail";
+
 import EventList from "./pages/Admin/EventList";
 import AdminProfileCard from "./components/Admin/AdminProfileCard";
 import SuccessTicketPage from "./pages/User/SuccessTicketPage";
@@ -46,6 +51,7 @@ function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+
   console.log(user, isAuthenticated);
 
   useEffect(() => {
@@ -187,8 +193,20 @@ function App() {
           element: <Profile />,
         },
         {
+          path: "/admin/organizer",
+          element: <OrgList />,
+        },
+        {
+          path: "/admin/organizer/:id",
+          element: <OrganizerDetail />,
+        },
+        {
           path: "/admin/event",
           element: <EventList />,
+        },
+        {
+          path: "/admin/event/:id",
+          element: <OrganizerEventDetail />,
         },
       ],
     },
