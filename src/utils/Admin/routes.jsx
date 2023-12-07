@@ -30,6 +30,11 @@ export const routes = [
       },
       {
         icon: <UserCircleIcon {...icon} />,
+        name: "organizer",
+        path: "/organizer",
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
         name: "event",
         path: "/event",
       },

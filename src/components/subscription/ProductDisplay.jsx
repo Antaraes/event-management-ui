@@ -3,34 +3,45 @@ import { subscriptions } from "../../utils/subscription";
 import { AnimatePresence } from "framer-motion";
 
 import { PaymentModal } from "./PaymentModal";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 
 const PlanCard = ({ title, price, features, product_id, recommend }) => {
   const [isModal, setModal] = useState(false);
+
+  const user = useSelector((state) => state.auth.user);
+
+  if (!user) {
+    return <Navigate to={"/user/login"} replace />;
+  }
+
   return (
     <div className="flex items-center justify-center">
       <div
         className={` ${
           recommend
-            ? "lg:h-[450px] lg:w-[350px] h-[400px] mt-2 w-[300px]"
-            : "h-[400px] mt-2 w-[300px]"
+            ? "mt-2 h-[400px] w-[300px] lg:h-[450px] lg:w-[350px]"
+            : "mt-2 h-[400px] w-[300px]"
         } ${
           title == "Platinum"
-            ? "text-cyan-300 border-cyan-300"
+            ? "border-cyan-300 text-cyan-300"
             : title == "Gold"
-            ? "text-amber-400 border-amber-400"
-            : "text-white border-white"
-        } bg-transparent rounded-[10px] shadow-[0px 1px 2px primary] border-[3px] divide-y`}
+              ? "border-amber-400 text-amber-400"
+              : "border-white text-white"
+        } shadow-[0px 1px 2px primary] divide-y rounded-[10px] border-[3px] bg-transparent`}
       >
-        <div className={`pt-[15px] px-[25px] pb-[25px] h-[80%] relative overflow-hidden`}>
+        <div
+          className={`relative h-[80%] overflow-hidden px-[25px] pb-[25px] pt-[15px]`}
+        >
           {recommend && (
             <p>
               {title == "Gold" && (
-                <span className="py-1 p-5 -z-1 overflow-hidden absolute -rotate-[45deg] bg-yellow-400 text-black top-[18px] -left-6 text-xs">
+                <span className="-z-1 absolute -left-6 top-[18px] -rotate-[45deg] overflow-hidden bg-yellow-400 p-5 py-1 text-xs text-black">
                   Recommend
                 </span>
               )}
               {title == "Platinum" && (
-                <span className="py-1 p-5 -z-50 overflow-hidden absolute -rotate-[45deg] bg-cyan-900 text-white top-[18px] -left-6 text-xs">
+                <span className="absolute -left-6 top-[18px] -z-50 -rotate-[45deg] overflow-hidden bg-cyan-900 p-5 py-1 text-xs text-white">
                   Recommend
                 </span>
               )}
@@ -42,15 +53,19 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => {
                 title == "Platinum"
                   ? "text-cyan-300"
                   : title == "Gold"
-                  ? "text-amber-400"
-                  : "text-white"
-              } text-center text-3xl leading-[28px] font-bold`}
+                    ? "text-amber-400"
+                    : "text-white"
+              } text-center text-3xl font-bold leading-[28px]`}
             >
               {title}
             </p>
           </div>
           <div>
-            <p className={` text-center py-5 text-[15px] leading-[24px] font-bold`}>{price}</p>
+            <p
+              className={` py-5 text-center text-[15px] font-bold leading-[24px]`}
+            >
+              {price}
+            </p>
           </div>
 
           <div className=" ">
@@ -61,9 +76,9 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => {
                   title == "Platinum"
                     ? "text-cyan-400"
                     : title == "Gold"
-                    ? "text-yellow-500"
-                    : "text-white"
-                } text-[14px] lg:text-[15px] xl:text-[18px] leading-[45px] font-medium `}
+                      ? "text-yellow-500"
+                      : "text-white"
+                } text-[14px] font-medium leading-[45px] lg:text-[15px] xl:text-[18px] `}
               >
                 {feature}
               </li>
@@ -73,24 +88,27 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => {
         <div
           className={`${
             title == "Platinum"
-              ? "pt-[26px] border-t-cyan-300"
+              ? "border-t-cyan-300 pt-[26px]"
               : title == "Gold"
-              ? "pt-5 border-t-yellow-500"
-              : "pt-5 border-t-white"
-          }  px-5 border-none`}
+                ? "border-t-yellow-500 pt-5"
+                : "border-t-white pt-5"
+          }  border-none px-5`}
         >
           <button
             onClick={() => setModal(true)}
             className={`${
               title == "Platinum"
-                ? "bg-transparent border border-cyan-300 text-cyan-300 hover:bg-cyan-300"
+                ? "border border-cyan-300 bg-transparent text-cyan-300 hover:bg-cyan-300"
                 : title == "Gold"
-                ? "bg-transparent border border-yellow-400 text-yellow-400 hover:bg-yellow-400"
-                : "bg-transparent border border-white hover:bg-white"
-            } hover:text-black hover:font-bold m-0 rounded-3xl w-full py-2 text-sidemenu text-[14px] leading-[17px] font-semibold`}
+                  ? "border border-yellow-400 bg-transparent text-yellow-400 hover:bg-yellow-400"
+                  : "border border-white bg-transparent hover:bg-white"
+            } m-0 w-full rounded-3xl py-2 text-[14px] font-semibold leading-[17px] text-sidemenu hover:font-bold hover:text-black`}
             type="submit"
+            disabled={user.accountLevel == product_id ? true : false}
           >
-            Check out
+            {user.accountLevel == product_id
+              ? "Already Checked Out"
+              : "Check out"}
           </button>
         </div>
       </div>
@@ -117,7 +135,7 @@ const ProductDisplay = () => {
           <div className="min-w-full">
             {/* Your other content */}
 
-            <div className="grid grid-cols-1 gap-7 lg:grid-cols-3 mt-16">
+            <div className="mt-16 grid grid-cols-1 gap-7 lg:grid-cols-3">
               {subscriptions.map((item, index) => (
                 <PlanCard
                   key={index}

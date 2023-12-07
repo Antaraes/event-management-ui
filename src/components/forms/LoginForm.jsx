@@ -22,7 +22,14 @@ const LoginForm = ({}) => {
       required: true,
     },
   ];
-  return <Form config={config} btnText="Login" onChange={onChange} onSubmit={onSubmit} />;
+  return (
+    <Form
+      config={config}
+      btnText="Login"
+      onChange={onChange}
+      onSubmit={onSubmit}
+    />
+  );
 };
 
 export default LoginForm;
