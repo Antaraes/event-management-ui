@@ -122,7 +122,7 @@ function App() {
         },
         {
           path: "/organizer",
-          //element: <ProtectedRoute />,
+          element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",

@@ -3,8 +3,8 @@ import { Icon } from '@iconify/react'
 
 export default function SummaryCard() {
   return (
-    <div className='flex justify-center gap-5'>
-        <div className='w-[300px] h-[100px] border rounded-lg flex justify-evenly'>
+    <div className='flex justify-center gap-5 my-5'>
+        <div className='w-[300px] h-[100px] border border-black rounded-lg flex justify-evenly'>
             <div className='w-full flex flex-col justify-center items-center'>
                 <Icon icon="ic:round-event" color='black' width="90" height="90" />
             </div>
@@ -17,7 +17,7 @@ export default function SummaryCard() {
                 </div>
             </div>
         </div>
-        <div className='w-[300px] h-[100px] border rounded-lg flex justify-evenly'>
+        <div className='w-[300px] h-[100px] border border-black rounded-lg flex justify-evenly'>
             <div className='w-full flex flex-col justify-center items-center'>
                 <Icon icon="clarity:users-solid" color="black" width="90" height="90" />
             </div>
@@ -34,7 +34,7 @@ export default function SummaryCard() {
                 </div>
             </div>
         </div>
-        <div className='w-[300px] h-[100px] border rounded-lg flex justify-evenly'>
+        <div className='w-[300px] h-[100px] border border-black rounded-lg flex justify-evenly'>
             <div className='w-full flex flex-col justify-center items-center'>
                 <Icon icon="fa6-solid:file-invoice-dollar" color="black" width="75" height="75" />
             </div>
