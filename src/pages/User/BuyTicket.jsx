@@ -115,7 +115,7 @@ const BuyTicket = () => {
     try {
       const responseData = await addCustomer(requestData);
       const dataObject = { key: "value" };
-      navigate("/ticket-success");
+      navigate("/ticket-success", { state: ticketVoucher });
       toast.success("Successfully Bought Tickets :3", { state: dataObject });
     } catch (error) {
       toast.error("Something went Wrong");

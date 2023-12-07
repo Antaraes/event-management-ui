@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
-import { QRCode } from "antd";
-const SuccessTicketCard = () => {
+import { format } from "date-fns";
+const SuccessTicketCard = ({ ticketDetail }) => {
   const [imageData, setImageData] = useState();
 
   const downloadImage = async () => {
@@ -29,13 +29,21 @@ const SuccessTicketCard = () => {
         </div>
 
         <div className=" ml-4 flex w-3/4 flex-col border-l-2 border-black  ">
-          <p className="mb-4 p-2 text-2xl text-gray-500">Music Event</p>
-          <h2 className="mb-6 p-2 text-4xl text-[#030303]">Live In Sydney</h2>
+          <h2 className="mb-6 p-2 text-4xl text-[#030303]">
+            {ticketDetail.event.name}
+          </h2>
+          <p className="mb-4 p-2 text-2xl text-gray-500">
+            {ticketDetail.event.description}
+          </p>
           <table className="w-full   border-b-2 border-t-2 text-[#030303] ">
             <tbody>
               <tr className="border-t-2 border-black text-center">
-                <td className="border-r-2  border-black p-4">Live In Sydney</td>
-                <td>10.12.2025</td>
+                <td className="border-r-2  border-black p-4">
+                  {ticketDetail.event.location}
+                </td>
+                <td>
+                  {format(new Date(ticketDetail.event.EventStart), "MMMM")}
+                </td>
               </tr>
               <tr className="border-t-2 border-black text-center">
                 <td className="border-r-2  border-black p-4">Live In Sydney</td>
@@ -46,11 +54,6 @@ const SuccessTicketCard = () => {
         </div>
 
         <div className="relative border-l-4 border-dotted border-black  p-12">
-          <QRCode
-            errorLevel="H"
-            value="apple.com"
-            icon="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-          />
           <span className="absolute right-0 top-0 h-10 w-10 -translate-x-56 -translate-y-4 transform rounded-full bg-black" />
           <span className="absolute bottom-0 right-0 h-10 w-10 -translate-x-56 translate-y-4 transform rounded-full bg-black" />
         </div>

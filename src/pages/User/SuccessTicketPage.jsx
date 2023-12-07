@@ -1,10 +1,12 @@
 import React from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SuccessTicketCard from "../../components/Ticket/SuccessTicketCard/SuccessTicketCard";
 
 const SuccessTicketPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location.state", location.state);
 
   return (
     <div
@@ -18,7 +20,7 @@ const SuccessTicketPage = () => {
         </h1>
         <h1 className="animate-bounce pt-3">♡⸜(˶˃ ᵕ ˂˶)⸝♡</h1>
       </div>
-      <SuccessTicketCard />
+      <SuccessTicketCard ticketDetail={location.state} />
       <div className="mb-10   flex w-[80%] justify-center gap-4 sm:w-auto sm:gap-12">
         <button
           onClick={() => navigate(-1)}
