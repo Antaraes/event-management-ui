@@ -36,31 +36,25 @@ import ProtectedRoute from "./helper/ProtectedRoute";
 import { useCookies } from "react-cookie";
 import Verification from "./pages/User/Verification";
 import EmailVerify from "./pages/User/EmailVerify";
-import SuccessTicketBought from "./pages/User/SuccessTicketBought";
+
 import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
 import EventList from "./pages/Admin/EventList";
 import AdminProfileCard from "./components/Admin/AdminProfileCard";
+import SuccessTicketPage from "./pages/User/SuccessTicketPage";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
-  const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
-  console.log("cookies", cookies);
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   console.log(user, isAuthenticated);
-  function getCookie(name) {
-    const cookieValue = document.cookie.match(
-      "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)",
-    );
-    return cookieValue ? decodeURIComponent(cookieValue.pop()) : null;
-  }
-  console.log("getockk", getCookie("accessToken"));
+
   useEffect(() => {
     const { accessToken } = cookies;
     console.log("accessToken", accessToken);
     const checkTokenExpiration = async () => {
       if (accessToken) {
         try {
-          if (exp * 1000 - Date.now() < 5 * 60 * 1000) {
+          if (30 * 1000 - Date.now() < 5 * 60 * 1000) {
             await api.generateAccessToken();
           }
         } catch (error) {
@@ -118,11 +112,11 @@ function App() {
 
         {
           path: "/ticket-success",
-          element: <SuccessTicketBought />,
+          element: <SuccessTicketPage />,
         },
         {
           path: "/organizer",
-          //element: <ProtectedRoute />,
+          element: <ProtectedRoute />,
           children: [
             {
               path: "/organizer/create-event",
@@ -195,7 +189,7 @@ function App() {
         {
           path: "/admin/event",
           element: <EventList />,
-        }
+        },
       ],
     },
   ]);

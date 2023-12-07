@@ -6,6 +6,7 @@ export const verification = (userId, token) =>
 
 export const staffSignup = (data) => API.post(`/auth/signup_staff`, data);
 export const staffLogin = (data) => API.post(`/auth/login_staff`, data);
+export const adminLogin = (data) => API.post(`/auth/login_admin`, data);
 export const organizerSignup = (data) =>
   API.post(`/auth/signup_organizer`, data);
 export const organizerLogin = (data) => API.post(`/auth/login_organizer`, data);

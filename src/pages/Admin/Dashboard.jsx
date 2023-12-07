@@ -1,20 +1,23 @@
-import React from "react";
-import { DataGridPro } from "@mui/x-data-grid-pro";
+import React, { useState } from "react";
+import { DataGrid } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
 const Dashboard = () => {
+  const [pageSize, setPageSize] = React.useState(5);
+
   const { data } = useDemoData({
     dataSet: "Commodity",
-    rowLength: 10,
-    editable: true,
+    rowLength: 100,
+    maxColumns: 6,
   });
+
   return (
-    <div className="w-[90vw]">
-      <DataGridPro
+    <div style={{ height: 400, width: "100%" }}>
+      <DataGrid
+        pageSize={pageSize}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        rowsPerPageOptions={[5, 10, 20]}
+        pagination
         {...data}
-        loading={data.rows.length === 0}
-        rowHeight={38}
-        checkboxSelection
-        disableRowSelectionOnClick
       />
     </div>
   );
