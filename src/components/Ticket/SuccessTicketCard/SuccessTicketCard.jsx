@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import html2canvas from "html2canvas";
 import { format } from "date-fns";
+import { QRCode } from "react-qr-code";
+import { Icon } from "@iconify/react";
 const SuccessTicketCard = ({ ticketDetail }) => {
   const [imageData, setImageData] = useState();
 
@@ -16,13 +18,14 @@ const SuccessTicketCard = ({ ticketDetail }) => {
     link.click();
   };
   console.log(imageData);
+  const uniqueTicketTypes = Array.from(new Set(ticketDetail.ticketTypes));
 
   return (
-    <div className=" image-container">
-      <div className="my-10 flex h-[400px] w-full overflow-hidden rounded-md bg-[#f3f0e8]">
+    <div className=" image-container" id="image-container">
+      <div className="mx-auto my-10 flex h-[400px] w-[80%] overflow-hidden rounded-md bg-[#f3f0e8]">
         <div className="w-[30rem]">
           <img
-            src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZXZlbnR8ZW58MHx8MHx8fDA%3D"
+            src={`${ticketDetail.event.thumbnail[0]}`}
             alt=""
             className=" object-fit h-full w-full"
           />
@@ -35,6 +38,20 @@ const SuccessTicketCard = ({ ticketDetail }) => {
           <p className="mb-4 p-2 text-2xl text-gray-500">
             {ticketDetail.event.description}
           </p>
+          <p className="mx-10 text-lg text-black opacity-60">
+            {uniqueTicketTypes.map((ticketType) => (
+              <span key={ticketType}>
+                {ticketType}{" "}
+                {ticketDetail.ticketTypes.filter((t) => t === ticketType)
+                  .length > 1
+                  ? `x ${
+                      ticketDetail.ticketTypes.filter((t) => t === ticketType)
+                        .length
+                    }`
+                  : ""}
+              </span>
+            ))}
+          </p>
           <table className="w-full   border-b-2 border-t-2 text-[#030303] ">
             <tbody>
               <tr className="border-t-2 border-black text-center">
@@ -42,27 +59,42 @@ const SuccessTicketCard = ({ ticketDetail }) => {
                   {ticketDetail.event.location}
                 </td>
                 <td>
-                  {format(new Date(ticketDetail.event.EventStart), "MMMM")}
+                  {format(
+                    new Date(ticketDetail.event.eventStartDate),
+                    "dd-MM-yyyy",
+                  )}
                 </td>
               </tr>
               <tr className="border-t-2 border-black text-center">
-                <td className="border-r-2  border-black p-4">Live In Sydney</td>
-                <td>10.12.2025</td>
+                <td className="border-r-2  border-black p-4">
+                  {ticketDetail.event.contact}
+                </td>
               </tr>
             </tbody>
           </table>
+          <small className="text-wrap mx-10 text-black">
+            Thanks for using our website and enjoy in event. You can save your
+            event Ticket if you want
+          </small>
         </div>
-
         <div className="relative border-l-4 border-dotted border-black  p-12">
+          <QRCode
+            value={`http://localhost:5173/event/detail/${ticketDetail.event._id}`}
+            size={100}
+          />
           <span className="absolute right-0 top-0 h-10 w-10 -translate-x-56 -translate-y-4 transform rounded-full bg-black" />
           <span className="absolute bottom-0 right-0 h-10 w-10 -translate-x-56 translate-y-4 transform rounded-full bg-black" />
+          <button
+            onClick={downloadImage}
+            className="mt-10 flex w-full items-center justify-center  text-white"
+          >
+            <Icon
+              icon={"ion:download"}
+              color="black"
+              className="text-center text-5xl"
+            />
+          </button>
         </div>
-        <button
-          onClick={downloadImage}
-          className="mt-4 bg-blue-500 px-4 py-2 text-white"
-        >
-          Download Image
-        </button>
       </div>
     </div>
   );
