@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../../api/index";
 
 const NavBarMenu = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userValue = sessionStorage.getItem("user");
 
   const navButtons = [
     {
@@ -18,18 +17,16 @@ const NavBarMenu = () => {
     },
 
     {
-      title: isAuthenticated ? "Dashboard" : "Become an Organizer",
-      path: isAuthenticated
-        ? "/organizer/dashboard"
-        : "/organizer/subscriptions",
+      title: userValue ? "Dashboard" : "Become an Organizer",
+      path: userValue ? "/organizer/dashboard" : "/organizer/subscriptions",
     },
     {
-      title: isAuthenticated ? "Invoices" : "Create Event",
-      path: isAuthenticated ? "/organizer/invoices" : "/organizer/create-event",
+      title: userValue ? "Invoices" : "Create Event",
+      path: userValue ? "/organizer/invoices" : "/organizer/create-event",
     },
     {
-      title: isAuthenticated ? "Create Event" : "All Contributors",
-      path: isAuthenticated ? "/organizer/create-event" : "/contributor",
+      title: userValue ? "Create Event" : "All Contributors",
+      path: userValue ? "/organizer/create-event" : "/contributor",
     },
   ];
 
