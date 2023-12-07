@@ -41,6 +41,7 @@ import Dashboard from "./pages/Admin/Dashboard";
 import Profile from "./pages/Admin/Profile";
 import OrgList from "./pages/Admin/OrgList";
 import OrganizerDetail from "./pages/Admin/OrganizerDetail";
+import OrganizerEventDetail from "./pages/Admin/component/organizerEventDetail";
 function App() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const [isOpen, setIsOpen] = useState(false);
@@ -199,6 +200,10 @@ function App() {
         {
           path: "/admin/organizer/:id",
           element: <OrganizerDetail />,
+        },
+        {
+          path: "/admin/event/:id",
+          element: <OrganizerEventDetail />,
         },
       ],
     },

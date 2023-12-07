@@ -51,17 +51,22 @@ const OrgList = () => {
 
   const columns = useMemo(
     () => [
-      { field: "col1", headerName: "No", width: 50 },
-      { field: "col2", headerName: "Organizer-name", width: 150 },
-      { field: "col3", headerName: "Company-name", width: 150 },
-      { field: "col4", headerName: "email", width: 200 },
-      { field: "col5", headerName: "phone", width: 130 },
+      { field: "col1", headerName: "No", width: 50,
+      editable: false },
+      { field: "col2", headerName: "Organizer-name", width: 150 ,
+      editable: false},
+      { field: "col3", headerName: "Company-name", width: 150 ,
+      editable: false},
+      { field: "col4", headerName: "email", width: 200 ,
+      editable: false},
+      { field: "col5", headerName: "phone", width: 130 ,
+      editable: false},
       {
         field: "col6",
         headerName: "Verify",
         width: 100,
         type: "boolean",
-        editable: true,
+        editable: false,
       },
       {
         field: "col7",
@@ -85,7 +90,7 @@ const OrgList = () => {
     [rowId],
   );
   return (
-    <div className="w-auto max-w-full text-center">
+    <div className="w-auto max-w-full text-center min-h-screen">
       <DataGrid
         rows={rows}
         columns={columns}

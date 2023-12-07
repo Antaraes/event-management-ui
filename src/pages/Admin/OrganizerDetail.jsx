@@ -103,7 +103,7 @@ const OrganizerDetail = () => {
       </div>
       {events && (
         <div className="mt-5">
-          <CardList data={events} link={"/event/detail/"} />
+          <CardList data={events} link={"/admin/event/"} />
         </div>
       )}
     </div>
