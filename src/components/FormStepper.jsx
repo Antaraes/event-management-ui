@@ -50,7 +50,7 @@ export function FormStepper() {
       const responseData = await createEvent(requestData);
       setIsModalOpen(false);
       toast.success("Added Event Successfully :3");
-      navigate(`/organizer/eventList/${organizer._id}`);
+      navigate(`/organizer/eventList/`);
     } catch (error) {
       toast.error("Something went Wrong");
     }

@@ -29,9 +29,8 @@ export const routes = [
         path: "/profile",
       },
       {
-        feature/org_list
-        icon:<UserCircleIcon {...icon} />,
-        name:"organizer",
+        icon: <UserCircleIcon {...icon} />,
+        name: "organizer",
         path: "/organizer",
       },
       {
@@ -39,7 +38,6 @@ export const routes = [
         name: "event",
         path: "/event",
       },
-
     ],
   },
   {
