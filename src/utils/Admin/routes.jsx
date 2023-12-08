@@ -29,8 +29,8 @@ export const routes = [
         path: "/profile",
       },
       {
-        icon: <UserCircleIcon {...icon} />,
-        name: "organizer",
+        icon:<UserCircleIcon {...icon} />,
+        name:"organizer",
         path: "/organizer",
       },
       {

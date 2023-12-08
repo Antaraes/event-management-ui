@@ -30,11 +30,18 @@ const NavBarMenu = () => {
     },
   ];
 
+  if (isAuthenticated) {
+    navButtons.push({
+      title: "Your events",
+      path: '/organizer/eventList'
+    });
+  }
+
   const renderContent = () => {
     return (
       <>
-        {navButtons.map((item) => (
-          <NavButton title={item.title} href={item.path} key={item.title} />
+        {navButtons.map((item,index) => (
+          <NavButton title={item.title} href={item.path} key={index} />
         ))}
       </>
     );

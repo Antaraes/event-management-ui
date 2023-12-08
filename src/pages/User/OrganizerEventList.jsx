@@ -76,7 +76,7 @@ const OrganizerEventList = () => {
   return (
     <div className="h-full w-full bg-primary/10">
       <div className="h-full w-full px-[50px] pt-[50px]">
-        <div className="mx-[10px] my-[20px] h-[300px] w-[1300px] ">
+        <div className="mt-8">
           <table className="w-full table-fixed text-[#ccc]">
             <thead>
               <tr>
