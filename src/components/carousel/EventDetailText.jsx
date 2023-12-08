@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BoostPayment } from "../subscription/BoostPayment";
+import * as api from "../../api/index"
 
 const EventDetailText = ({ eventDetail, orgId }) => {
   const [isPaymentShow, setIsPaymentShow] = useState(false);
   const { id: eventId } = useParams();
+  const navigate =useNavigate()
   const [isOrg, setIsIrg] = useState(false);
   const formatDate = (date) => {
     const eventDate = new Date(date);
@@ -29,10 +31,10 @@ const EventDetailText = ({ eventDetail, orgId }) => {
   const boostEvent = (info) => {
     
     console.log('Info',info);
-    axios.post(`http://localhost:8080/api/v1/event/boost`, {
+    api.boostEvent({
       body: info
     }).then((res) => {
-      alert('Successfully Boost the event')
+      navigate("/organizer/eventList")
     })
     .catch((err) => {
         console.log(err);

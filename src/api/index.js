@@ -54,7 +54,7 @@ export const sortTrending = (query) => API.get(`/event/boots${query}`);
 export const getEventByOrganizerId = (OrganizerId) =>
   API.get(`/event/events-by-organizer/${OrganizerId}`);
 export const createEvent = (data) => API.post(`/event/create`, data);
-export const boostEvent = (eventId) => API.post(`/event/boots/${eventId}`);
+export const boostEvent = (data) => API.post(`/event/boost`, data);
 
 //Customer
 export const getCustomerById = (customerId) =>
