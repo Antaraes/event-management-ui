@@ -26,7 +26,7 @@ const IMAGES = [
 ];
 
 const CreatePaymentForm = ({ organizerPaymentIds, setOrganizerPaymentIds }) => {
-  const organizer = useSelector((state) => state.auth.user);
+  const userValue = JSON.parse(sessionStorage.getItem("user"));
 
   const handleImage = (organizerPaymentName) => {
     const lowerCaseName = organizerPaymentName.toLowerCase();
@@ -39,7 +39,7 @@ const CreatePaymentForm = ({ organizerPaymentIds, setOrganizerPaymentIds }) => {
   };
 
   const { data: organizerPayments } = useFetchData(
-    ["organizer-payment", organizer._id],
+    ["organizer-payment", userValue._id],
     getAllPaymentFromOrganizer,
   );
 

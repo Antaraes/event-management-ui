@@ -9,11 +9,13 @@ import { Icon } from "@iconify/react";
 import * as api from "../api/index";
 import { logout } from "../redux/auth/authSlice";
 import toast from "react-hot-toast";
+import { useCookies } from "react-cookie";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const isDrawer = useSelector((state) => state.global.isDrawer);
   const dispatch = useDispatch();
+  const [cookie, setCookie, removeCookie] = useCookies();
 
   const userValue = JSON.parse(sessionStorage.getItem("user"));
   const handleClose = () => {
@@ -24,6 +26,7 @@ const Sidebar = () => {
     sessionStorage.removeItem("user");
     dispatch(setUserActive(false));
     dispatch(logout());
+    removeCookie("user");
     api.logout();
     navigate("/");
     dispatch(setDrawer(false));
