@@ -2,8 +2,17 @@ import React from "react";
 import SummaryCard from "../../components/Admin/SummaryCard";
 import BarChart from "../../components/Admin/Charts/BarChart";
 import LineChart from "../../components/Admin/Charts/LineChart";
+import useFetchData from "../../hooks/useFetchData";
+import { getAllPaymentFromOrganizer, getTotalEvents, getTotalOrganizers } from "../../api";
+import { useState } from "react";
 
 const Dashboard = () => {
+
+  const { data: events } = useFetchData('[events]',() => getTotalEvents());
+  const { data: organizers } = useFetchData('[organizers]',() => getTotalOrganizers());
+
+  console.log(events && events);
+
   const userBarData = [
     ["Year", "Normal", "Premium", "Bluemark"],
     ["2014", 1000, 400, 200],
@@ -96,7 +105,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <SummaryCard />
+      <SummaryCard totalEvent={events && events.total} totalOrganizer={organizers && organizers} />
       <BarChart data={userBarData} options={userBarOptions} />
       <LineChart data={userLineData} options={userLineOptions} />
       <LineChart data={invoiceLineData} options={invoiceLineOptions} />

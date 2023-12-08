@@ -1,4 +1,4 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Typography,
@@ -25,8 +25,10 @@ import {
   setOpenConfigurator,
   setOpenSidenav,
 } from "../../context/index";
+import { Icon } from "@iconify/react";
 
 export function DashboardNavbar() {
+  const navigate = useNavigate()
   const [controller, dispatch] = useMaterialTailwindController();
   const { fixedNavbar, openSidenav } = controller;
   const { pathname } = useLocation();
@@ -73,9 +75,7 @@ export function DashboardNavbar() {
           </Breadcrumbs>
         </div>
         <div className="flex items-center">
-          <div className="mr-auto md:mr-4 md:w-56">
-            <Input label="Search" />
-          </div>
+        
           <IconButton
             variant="text"
             color="blue-gray"
@@ -84,23 +84,7 @@ export function DashboardNavbar() {
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
-          <Link to="/auth/sign-in">
-            <Button
-              variant="text"
-              color="blue-gray"
-              className="hidden items-center gap-1 px-4 normal-case xl:flex"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-              Sign In
-            </Button>
-            <IconButton
-              variant="text"
-              color="blue-gray"
-              className="grid xl:hidden"
-            >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-            </IconButton>
-          </Link>
+         
           <Menu>
             <MenuHandler>
               <IconButton variant="text" color="blue-gray">
@@ -179,6 +163,13 @@ export function DashboardNavbar() {
               </MenuItem>
             </MenuList>
           </Menu>
+          <IconButton
+            variant="text"
+            color="blue-gray"
+            onClick={() => navigate("/") }
+          >
+            <Icon icon={"ion:home"}  width={20} />
+            </IconButton>
           <IconButton
             variant="text"
             color="blue-gray"

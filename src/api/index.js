@@ -109,3 +109,7 @@ export const getOrganizerDashboardOverviewData = (queryParams) =>
   API.get(`/organizer-dashboard/overview-data?${queryParams}`);
 export const getEventsByOrganizerId = () =>
   API.get(`/event/events-by-organizer`);
+
+//Admin Dashboard
+export const getTotalEvents = () => API.get(`/dashboard/event`);
+export const getTotalOrganizers = () => API.get(`/dashboard/organizer`)
