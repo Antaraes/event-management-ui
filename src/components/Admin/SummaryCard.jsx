@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
 
-export default function SummaryCard() {
+export default function SummaryCard({ totalEvent,totalOrganizer }) {
   return (
     <div className='flex justify-center gap-5 my-5'>
         <div className='w-[300px] h-[100px] border border-black rounded-lg flex justify-evenly'>
@@ -10,7 +10,7 @@ export default function SummaryCard() {
             </div>
             <div className='w-full flex flex-col justify-center gap-4'>
                 <div className='flex flex-col gap-1 justify-center items-start'>
-                <p className='text-black text-2xl justify-start'>250</p>
+                <p className='text-black text-2xl justify-start'>{totalEvent}</p>
                 </div>
                 <div className='flex flex-col gap-1 justify-center items-start'>
                     <p className='text-black justify-start'>Total Events</p>
@@ -28,9 +28,9 @@ export default function SummaryCard() {
                     <p className='text-black'>Blumark</p>
                 </div>
                 <div className='flex flex-col gap-1 justify-center items-start'>
-                    <p className='text-black text-md'>1</p>
-                    <p className='text-black text-md'>2</p>
-                    <p className='text-black text-md'>2</p>
+                    <p className='text-black text-md'>{ totalOrganizer && totalOrganizer.normalCount }</p>
+                    <p className='text-black text-md'>{ totalOrganizer && totalOrganizer.premiumCount }</p>
+                    <p className='text-black text-md'>{ totalOrganizer && totalOrganizer.blueMarkCount }</p>
                 </div>
             </div>
         </div>
