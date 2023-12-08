@@ -4,7 +4,7 @@ import axios from "axios";
 
 const EventDetailText = ({ eventDetail, orgId }) => {
   const { id: eventId } = useParams();
-  const [isOrg, setIsIrg] = useState(false);
+  const [isOrg, setIsOrg] = useState(false);
   const formatDate = (date) => {
     const eventDate = new Date(date);
     const day = eventDate.getDate();
@@ -20,7 +20,7 @@ const EventDetailText = ({ eventDetail, orgId }) => {
   if (orgId !== undefined) {
     response = axios
       .get(`http://localhost:8080/api/v1/organizer/all/${orgId}`)
-      .then((res) => (res ? setIsIrg(true) : setIsIrg(false)))
+      .then((res) => (res ? setIsOrg(true) : setIsOrg(false)))
       .catch((err) => console.log(err));
   }
 
@@ -35,6 +35,11 @@ const EventDetailText = ({ eventDetail, orgId }) => {
         console.log(err);
       });
   };
+  const currentDate = new Date();
+  const ticketOpenDate = new Date(eventDetail.ticketOpenDate);
+  const ticketCloseDate = new Date(eventDetail.ticketCloseDate);
+  const isTicketOpen =
+    currentDate >= ticketOpenDate && currentDate <= ticketCloseDate;
 
   return (
     <div className="w-full py-0 text-white">
@@ -43,14 +48,11 @@ const EventDetailText = ({ eventDetail, orgId }) => {
           <div className="rounded-lg border border-secondary bg-transparent px-3 py-1 text-secondary">
             Trending
           </div>
-
-          <div className="ml-3 hidden rounded-lg border border-secondary bg-transparent px-3 py-1 text-secondary md:block">
-            Open Now
-          </div>
-
-          <div className="ml-3 rounded-lg border border-secondary bg-transparent px-3 py-1 text-[15px] text-secondary md:hidden">
-            Open
-          </div>
+          {isTicketOpen && (
+            <div className="ml-3 rounded-lg border border-secondary bg-transparent px-3 py-1 text-[15px] text-secondary ">
+              Open
+            </div>
+          )}
         </div>
 
         {isOrg ? (
@@ -63,7 +65,9 @@ const EventDetailText = ({ eventDetail, orgId }) => {
         ) : (
           <Link
             to={`/buy-ticket/${eventId}`}
-            className="ml-2 hidden rounded-3xl bg-purchase px-5 py-2 hover:bg-amber-800 md:ml-0 md:block"
+            className={`ml-2 hidden rounded-3xl bg-purchase px-5 py-2 hover:bg-amber-800 md:ml-0 md:block ${
+              isTicketOpen ? "" : "hidden"
+            }`}
           >
             go to purchase
           </Link>
