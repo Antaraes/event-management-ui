@@ -11,13 +11,12 @@ import { useState, useEffect } from "react";
 const EventDetail = () => {
   const { id: eventId } = useParams();
   const { data: eventDetail } = useFetchData(["event", eventId], () =>
-    getEventById(eventId)
+    getEventById(eventId),
   );
-  const location = useLocation();
-  const organizerId = location.state?.organizerId.organizerId;
+  const userValue = JSON.parse(sessionStorage.getItem("user"));
   const [query, setQuery] = useState("?page=1&pageSize=6&sortBy=trending");
   const { data: allEvent } = useFetchData(["events", query], () =>
-    getEvents(query)
+    getEvents(query),
   );
 
   const [page, setPage] = useState(1);
@@ -29,10 +28,10 @@ const EventDetail = () => {
   const pageCount = Math.ceil(allEvent?.total / 6);
 
   return (
-    <div className="px-2 sm:px-2 md:px-3 lg:px-6 xl:px-10 2xl:px-16 pt-14">
+    <div className="px-2 pt-14 sm:px-2 md:px-3 lg:px-6 xl:px-10 2xl:px-16">
       <EventDetailCarousel thumbnail={eventDetail?.thumbnail} />
       {eventDetail && (
-        <EventDetailText eventDetail={eventDetail} orgId={organizerId} />
+        <EventDetailText eventDetail={eventDetail} orgId={userValue._id} />
       )}
       {allEvent && (
         <CardList data={allEvent?.content} link={"/event/detail/"} />

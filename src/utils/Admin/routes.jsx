@@ -2,6 +2,9 @@ import {
   HomeIcon,
   UserCircleIcon,
   TableCellsIcon,
+  UserGroupIcon,
+  BuildingOffice2Icon,
+  CalendarIcon,
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
@@ -13,6 +16,8 @@ import Profile from "../../pages/Admin/Profile";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
+
+const userValue = JSON.parse(sessionStorage.getItem("user"));
 
 export const routes = [
   {
@@ -26,34 +31,17 @@ export const routes = [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: "/profile",
+        path: `/profile/${userValue?._id}`,
       },
       {
-        icon:<UserCircleIcon {...icon} />,
-        name:"organizer",
+        icon: <UserGroupIcon {...icon} />,
+        name: "organizer",
         path: "/organizer",
       },
       {
-        icon: <UserCircleIcon {...icon} />,
+        icon: <CalendarIcon {...icon} />,
         name: "event",
         path: "/event",
-      },
-
-    ],
-  },
-  {
-    title: "auth pages",
-    layout: "auth",
-    pages: [
-      {
-        icon: <ServerStackIcon {...icon} />,
-        name: "sign in",
-        path: "/sign-in",
-      },
-      {
-        icon: <RectangleStackIcon {...icon} />,
-        name: "sign up",
-        path: "/sign-up",
       },
     ],
   },

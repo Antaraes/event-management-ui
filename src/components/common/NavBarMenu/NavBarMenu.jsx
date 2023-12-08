@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../../api/index";
 
 const NavBarMenu = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const userValue = JSON.parse(sessionStorage.getItem("user"));
 
   const navButtons = [
     {
@@ -18,32 +17,34 @@ const NavBarMenu = () => {
     },
 
     {
-      title: isAuthenticated ? "Dashboard" : "Become an Organizer",
-      path: isAuthenticated
-        ? "/organizer/dashboard"
+      title: userValue ? "Dashboard" : "Become an Organizer",
+      path: userValue
+        ? userValue.role === "admin"
+          ? `admin/home`
+          : "organizer/dashboard"
         : "/organizer/subscriptions",
     },
     {
-      title: isAuthenticated ? "Invoices" : "Create Event",
-      path: isAuthenticated ? "/organizer/invoices" : "/organizer/create-event",
+      title: userValue ? "Invoices" : "Create Event",
+      path: userValue ? "/organizer/invoices" : "/organizer/create-event",
     },
     {
-      title: isAuthenticated ? "Create Event" : "All Contributors",
-      path: isAuthenticated ? "/organizer/create-event" : "/contributor",
+      title: userValue ? "Create Event" : "All Contributors",
+      path: userValue ? "/organizer/create-event" : "/contributor",
     },
   ];
 
-  if (isAuthenticated) {
+  if (userValue) {
     navButtons.push({
       title: "Your events",
-      path: '/organizer/eventList'
+      path: "/organizer/eventList",
     });
   }
 
   const renderContent = () => {
     return (
       <>
-        {navButtons.map((item,index) => (
+        {navButtons.map((item, index) => (
           <NavButton title={item.title} href={item.path} key={index} />
         ))}
       </>

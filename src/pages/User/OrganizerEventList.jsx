@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
+import * as api from "../../api/index";
 import Cookies from "js-cookie";
 
 const OrganizerEventList = () => {
@@ -15,11 +16,10 @@ const OrganizerEventList = () => {
   const [disabledRow, setDisabledRows] = useState([]);
   const [events, setEvents] = useState([]);
   const [cookies, setCookie, removeCookie] = useCookies(["accessToken"]);
-  const isAuthenticated = useSelector((state) => state.auth.user);
-  console.log("🚀 ~ file: OrganizerEventList.jsx:20 ~ OrganizerEventList ~ isAuthenticated:", isAuthenticated)
-  const organizerId = isAuthenticated._id;
-  console.log("🚀 ~ file: OrganizerEventList.jsx:22 ~ OrganizerEventList ~ organizerId:", organizerId)
-  
+
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const organizerId = user._id;
+  console.log("organizerId: ", user._id);
   //toekn is not dynamically
   // const token =
   //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySW5mbyI6eyJpZCI6IjY1NjgxOWU2ZWQzN2I1YjA1MGYxOWNkOSIsImVtYWlsIjoibGlub2VAZ2FtaWwuY29tIiwicm9sZSI6Im9yZ2FuemllciJ9LCJpYXQiOjE3MDE2NzE2MTcsImV4cCI6MTcwMTc1ODAxN30.OgX-sgPiX8Fin_fCl8GUaeFbTfwegEhG7VufYBHOuAc";
@@ -33,9 +33,7 @@ const OrganizerEventList = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/event/events-by-organizer/${organizerId}`
-      );
+      const response = await api.getEventsByOrganizerId();
       console.log("response", response.data);
       setEvents(response.data);
     } catch (error) {
