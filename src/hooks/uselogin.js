@@ -34,9 +34,9 @@ export default function useLogin() {
       if (loginFunction === api.organizerLogin) {
         navigate("/organizer/profile");
       } else if (loginFunction === api.staffLogin) {
-        navigate("/admin");
+        navigate("/admin/home");
       } else if (loginFunction === api.adminLogin) {
-        navigate("/admin");
+        navigate("/admin/home");
       }
 
       return true;

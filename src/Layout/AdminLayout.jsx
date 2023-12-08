@@ -27,7 +27,7 @@ const AdminLayout = () => {
       <div className="p-4 xl:ml-80">
         <div className="w-[600px]">
           <DashboardNavbar />
-          <Configurator />
+          {/* <Configurator /> */}
           <IconButton
             size="lg"
             color="white"

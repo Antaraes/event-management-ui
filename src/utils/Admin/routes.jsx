@@ -2,6 +2,9 @@ import {
   HomeIcon,
   UserCircleIcon,
   TableCellsIcon,
+  UserGroupIcon,
+  BuildingOffice2Icon,
+  CalendarIcon,
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
@@ -29,33 +32,18 @@ export const routes = [
         path: "/profile",
       },
       {
-        icon: <UserCircleIcon {...icon} />,
+        icon: <UserGroupIcon {...icon} />,
         name: "organizer",
         path: "/organizer",
       },
       {
-        icon: <UserCircleIcon {...icon} />,
+        icon: <CalendarIcon {...icon} />,
         name: "event",
         path: "/event",
       },
     ],
   },
-  {
-    title: "auth pages",
-    layout: "auth",
-    pages: [
-      {
-        icon: <ServerStackIcon {...icon} />,
-        name: "sign in",
-        path: "/sign-in",
-      },
-      {
-        icon: <RectangleStackIcon {...icon} />,
-        name: "sign up",
-        path: "/sign-up",
-      },
-    ],
-  },
+  
 ];
 
 export default routes;
