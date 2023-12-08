@@ -31,7 +31,7 @@ const EventDetail = () => {
     <div className="px-2 pt-14 sm:px-2 md:px-3 lg:px-6 xl:px-10 2xl:px-16">
       <EventDetailCarousel thumbnail={eventDetail?.thumbnail} />
       {eventDetail && (
-        <EventDetailText eventDetail={eventDetail} orgId={userValue._id} />
+        <EventDetailText eventDetail={eventDetail} orgId={userValue?._id} />
       )}
       {allEvent && (
         <CardList data={allEvent?.content} link={"/event/detail/"} />
