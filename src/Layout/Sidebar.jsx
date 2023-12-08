@@ -15,8 +15,7 @@ const Sidebar = () => {
   const isDrawer = useSelector((state) => state.global.isDrawer);
   const dispatch = useDispatch();
 
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const organizer = useSelector((state) => state.auth.user);
+  const userValue = JSON.parse(sessionStorage.getItem("user"));
   const handleClose = () => {
     dispatch(setDrawer(false));
   };
@@ -43,20 +42,20 @@ const Sidebar = () => {
     >
       <span className="absolute -left-[376.3px] top-10 z-10 h-14 w-[1200px] -rotate-[62deg]  overflow-hidden bg-navbrand/40"></span>
       <NavBarMenu />
-      {isAuthenticated && (
+      {userValue && (
         <div className="absolute bottom-0 z-50  flex w-full flex-wrap items-center  justify-evenly gap-x-2 bg-[#ffffff3a] py-11  pt-3 shadow-md">
           <Link to={`/organizer/profile`}>
             <img
               className="h-[60px] w-[60px] rounded-full object-cover"
-              src={`${organizer.thumbnail}`}
+              src={`${userValue.thumbnail}`}
               alt=""
             />
           </Link>
           <div className="px-5">
             <p className="font-semibol truncate text-start text-lg">
-              {organizer.name}
+              {userValue.name}
             </p>
-            <p className="truncate text-start text-base ">{organizer.email}</p>
+            <p className="truncate text-start text-base ">{userValue.email}</p>
 
             {/* <div className="mt-5 flex justify-end px-3">
               <Link
