@@ -17,6 +17,8 @@ const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
+const userValue = JSON.parse(sessionStorage.getItem("user"));
+
 export const routes = [
   {
     layout: "admin",
@@ -29,7 +31,7 @@ export const routes = [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: "/profile",
+        path: `/profile/${userValue._id}`,
       },
       {
         icon: <UserGroupIcon {...icon} />,
@@ -43,7 +45,6 @@ export const routes = [
       },
     ],
   },
-  
 ];
 
 export default routes;

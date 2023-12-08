@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as api from "../../../api/index";
 
 const NavBarMenu = () => {
-  const userValue = sessionStorage.getItem("user");
+  const userValue = JSON.parse(sessionStorage.getItem("user"));
 
   const navButtons = [
     {
@@ -18,7 +18,11 @@ const NavBarMenu = () => {
 
     {
       title: userValue ? "Dashboard" : "Become an Organizer",
-      path: userValue ? "/organizer/dashboard" : "/organizer/subscriptions",
+      path: userValue
+        ? userValue.role === "admin"
+          ? `admin/home`
+          : "organizer/dashboard"
+        : "/organizer/subscriptions",
     },
     {
       title: userValue ? "Invoices" : "Create Event",
@@ -33,14 +37,14 @@ const NavBarMenu = () => {
   if (userValue) {
     navButtons.push({
       title: "Your events",
-      path: '/organizer/eventList'
+      path: "/organizer/eventList",
     });
   }
 
   const renderContent = () => {
     return (
       <>
-        {navButtons.map((item,index) => (
+        {navButtons.map((item, index) => (
           <NavButton title={item.title} href={item.path} key={index} />
         ))}
       </>
