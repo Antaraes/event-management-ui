@@ -137,7 +137,7 @@ function App() {
               element: <OrganizerDashboard />,
             },
             {
-              path: "/organizer/invoices/:organizerId",
+              path: "/organizer/invoices/",
               element: <OrganizerInvoices />,
             },
             {

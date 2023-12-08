@@ -5,14 +5,15 @@ import useFetchData from "../../hooks/useFetchData";
 import PaginationServerSide from "../../components/common/PaginationServerSide";
 
 export default function OrganizerInvoices() {
-  const { organizerId } = useParams();
+  const userValue = JSON.parse(sessionStorage.getItem("user"));
+  const organizerId = userValue._id;
 
   const [query, setQuery] = useState(
-    `?organizerId=${organizerId}&page=1&pageSize=20&sort=&order=&startDate=&endDate=&customerName=&eventName=&paymentType=&ticketType=`
+    `?organizerId=${organizerId}&page=1&pageSize=20&sort=&order=&startDate=&endDate=&customerName=&eventName=&paymentType=&ticketType=`,
   );
   const queryKey = ["ticketInvoice", query];
-  const { data:invoices } = useFetchData(queryKey, () =>
-    getOrganizerInvoices(query)
+  const { data: invoices } = useFetchData(queryKey, () =>
+    getOrganizerInvoices(query),
   );
 
   const navigate = useNavigate();
@@ -44,7 +45,7 @@ export default function OrganizerInvoices() {
   }, [queryObj.sort, queryObj.order, queryObj.page]);
 
   const pageCount = Math.ceil(invoices?.totalCount / queryObj.pageSize);
-  const [currentPage,setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const addQuery = (key, value) => {
     setQueryObj((prevQueryObj) => {
@@ -55,29 +56,29 @@ export default function OrganizerInvoices() {
 
   const handlePageChange = (value) => {
     if (value > 0 && pageCount >= value) {
-      setQueryObj({...queryObj, page: value})
+      setQueryObj({ ...queryObj, page: value });
     }
-  }
+  };
 
   const formatDate = (dateString) => {
     const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
       hour12: true,
     };
-  
-    const formattedDate = new Date(dateString).toLocaleString('en-US', options);
-  
+
+    const formattedDate = new Date(dateString).toLocaleString("en-US", options);
+
     return formattedDate;
   };
 
   return (
     <div className="pt-20">
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-left text-sm text-gray-500 rtl:text-right dark:text-gray-400">
+        <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
               Transaction ID
@@ -89,24 +90,16 @@ export default function OrganizerInvoices() {
               Ticket Type
             </th>
             <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Payment Date
-              </div>
+              <div className="flex items-center">Payment Date</div>
             </th>
             <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Payment Type
-              </div>
+              <div className="flex items-center">Payment Type</div>
             </th>
             <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Quantity
-              </div>
+              <div className="flex items-center">Quantity</div>
             </th>
             <th scope="col" className="px-6 py-3">
-              <div className="flex items-center">
-                Price
-              </div>
+              <div className="flex items-center">Price</div>
             </th>
           </tr>
         </thead>
@@ -115,22 +108,24 @@ export default function OrganizerInvoices() {
             return (
               <tr
                 key={index}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                className="border-b bg-white dark:border-gray-700 dark:bg-gray-800"
               >
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
                 >
                   {invoice.event._id}
                 </th>
                 <th
                   scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  className="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white"
                 >
                   {invoice.event.name}
                 </th>
                 <td className="px-6 py-4">{invoice.ticketInfo.type}</td>
-                <td className="px-6 py-4">{formatDate(invoice.payment.createdAt)}</td>
+                <td className="px-6 py-4">
+                  {formatDate(invoice.payment.createdAt)}
+                </td>
                 <td className="px-6 py-4">{invoice.payment.name}</td>
                 <td className="px-6 py-4">{invoice.ticketInfo.quantity}</td>
                 <td className="px-6 py-4">{invoice.ticketInfo.price}</td>
