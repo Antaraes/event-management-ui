@@ -54,7 +54,7 @@ const HomePage = (props) => {
           Top Contributors
         </h1>
         <div>
-          <ContributorCarousel />
+          {/* <ContributorCarousel /> */}
         </div>
       </div>
     </div>

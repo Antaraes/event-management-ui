@@ -53,11 +53,6 @@ function OrganizerProfile() {
     toast.success("Successfully Updated!");
   };
 
-  const handleEventList = (e) => {
-    e.preventDefault;
-    navigate("/organizer/eventList")
-  }
-
   return (
     <>
       <div className="bg-gray-800 bg-opacity-60 min-h-full sm:min-h-[93vh] max-h-fit w-full sm:w-[80%] md:w-[90%] mb-2 mx-auto pt-14 border-2 border-gray-900 p-6 sm:p-10 rounded-lg shadow-sm shadow-slate-800">
@@ -269,9 +264,6 @@ function OrganizerProfile() {
           )}
         </div>
       </div>
-      <button onClick={handleEventList}>
-        EventList
-      </button>
     </>
   );
 }
