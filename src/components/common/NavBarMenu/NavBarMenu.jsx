@@ -30,7 +30,7 @@ const NavBarMenu = () => {
     },
   ];
 
-  if (isAuthenticated) {
+  if (userValue) {
     navButtons.push({
       title: "Your events",
       path: '/organizer/eventList'
