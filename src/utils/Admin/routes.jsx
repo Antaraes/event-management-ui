@@ -31,7 +31,7 @@ export const routes = [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "profile",
-        path: `/profile/${userValue._id}`,
+        path: `/profile/${userValue?._id}`,
       },
       {
         icon: <UserGroupIcon {...icon} />,
