@@ -16,72 +16,74 @@ const EventDetailText = ({ eventDetail, orgId }) => {
     return formattedDate;
   };
 
-  let response ;
-  if(orgId !== undefined) {
+  let response;
+  if (orgId !== undefined) {
     response = axios
       .get(`http://localhost:8080/api/v1/organizer/all/${orgId}`)
-      .then((res) => res ? setIsIrg(true) : setIsIrg(false) )
+      .then((res) => (res ? setIsIrg(true) : setIsIrg(false)))
       .catch((err) => console.log(err));
   }
 
-  const handleBoost = (id) =>{
-    console.log('id',id);
-    axios.post(`http://localhost:8080/api/v1/event/boost/${id}`).then((res) => {
-      alert('Successfully Boost the event')
-    })
-    .catch((err) => {
+  const handleBoost = (id) => {
+    console.log("id", id);
+    axios
+      .post(`http://localhost:8080/api/v1/event/boost/${id}`)
+      .then((res) => {
+        alert("Successfully Boost the event");
+      })
+      .catch((err) => {
         console.log(err);
-    });
-  }
+      });
+  };
 
   return (
-    <div className="text-white py-0 w-full">
-      <div className="flex justify-between items-center text-lg mt-7">
+    <div className="w-full py-0 text-white">
+      <div className="mt-7 flex items-center justify-between text-lg">
         <div className="flex justify-evenly font-serif text-sm lg:text-lg">
-          <div className="bg-transparent border border-secondary text-secondary py-1 px-3 rounded-lg">
+          <div className="rounded-lg border border-secondary bg-transparent px-3 py-1 text-secondary">
             Trending
           </div>
 
-          <div className="bg-transparent border border-secondary text-secondary py-1 px-3 rounded-lg ml-3 hidden md:block">
+          <div className="ml-3 hidden rounded-lg border border-secondary bg-transparent px-3 py-1 text-secondary md:block">
             Open Now
           </div>
 
-          <div className="bg-transparent border border-secondary text-secondary py-1 px-3 rounded-lg ml-3 text-[15px] md:hidden">
+          <div className="ml-3 rounded-lg border border-secondary bg-transparent px-3 py-1 text-[15px] text-secondary md:hidden">
             Open
           </div>
         </div>
 
         {isOrg ? (
           <button
-            onClick={() => handleBoost(eventDetail._id) }
-            className="bg-purchase py-2 px-5 rounded-3xl ml-2 md:ml-0 hover:bg-amber-800 hidden md:block"
+            onClick={() => handleBoost(eventDetail._id)}
+            className="ml-2 hidden rounded-3xl bg-purchase px-5 py-2 hover:bg-amber-800 md:ml-0 md:block"
           >
             Boost
           </button>
         ) : (
           <Link
             to={`/buy-ticket/${eventId}`}
-            className="bg-purchase py-2 px-5 rounded-3xl ml-2 md:ml-0 hover:bg-amber-800 hidden md:block"
+            className="ml-2 hidden rounded-3xl bg-purchase px-5 py-2 hover:bg-amber-800 md:ml-0 md:block"
           >
             go to purchase
           </Link>
         )}
       </div>
 
-      <div className="mt-2 md:mt-7 flex flex-col gap-8 justify-center md:p-0 items-center md:items-start">
-        <div className="border-b border-white flex justify-between items-center w-full pb-1 m-0">
-          <h2 className="text-xl lg:text-2xl font-semibold font-serif">
-            {eventDetail.name} {eventDetail._id}
+      <div className="mt-2 flex flex-col items-center justify-center gap-8 md:mt-7 md:items-start md:p-0">
+        <div className="m-0 flex w-full items-center justify-between border-b border-white pb-1">
+          <h2 className="font-serif text-xl font-semibold lg:text-2xl">
+            {eventDetail.name}
           </h2>
           <Link
             to="/create-ticket"
-            className="bg-purchase py-2 px-5 rounded-3xl hover:bg-amber-800 md:hidden"
+            className="rounded-3xl bg-purchase px-5 py-2 hover:bg-amber-800 md:hidden"
           >
             purchase
           </Link>
         </div>
 
-        <div className="flex flex-col gap-4 text-[15px] md:text-[18px] font-extralight">
+        <div className="flex flex-col gap-4 text-[15px] font-extralight md:text-[18px]">
           <span>
             <i className="fa-solid fa-calendar-days"></i> {"\t"} Start Date :
             {"\t"}
@@ -113,7 +115,7 @@ const EventDetailText = ({ eventDetail, orgId }) => {
           </span>
         </div>
 
-        <p className="text-[15px] md:text-[18px] pb-5">
+        <p className="pb-5 text-[15px] md:text-[18px]">
           {eventDetail.description}
         </p>
       </div>
