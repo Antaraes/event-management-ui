@@ -38,6 +38,7 @@ export default function useScriptions() {
           console.error(`Unexpected status code: ${res.status}`);
           toast.error("Failed to subscribe");
         }
+        navigate("/organizer/profile");
       })
       .catch((error) => {
         if (error.response) {

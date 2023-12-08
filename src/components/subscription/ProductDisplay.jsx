@@ -5,11 +5,18 @@ import { AnimatePresence } from "framer-motion";
 import { PaymentModal } from "./PaymentModal";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import useFetchData from "../../hooks/useFetchData";
+import { getOrganizerProfile } from "../../api";
 
 const PlanCard = ({ title, price, features, product_id, recommend }) => {
   const [isModal, setModal] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
+  const { data: organizerDetail, isLoading: isOrganizerDetailLoading } = useFetchData(
+    ["organizer"],
+    () => getOrganizerProfile()
+  );
+  console.log("pyament modal user", user);
 
   if (!user) {
     return <Navigate to={"/user/login"} replace />;
@@ -104,9 +111,9 @@ const PlanCard = ({ title, price, features, product_id, recommend }) => {
                   : "border border-white bg-transparent hover:bg-white"
             } m-0 w-full rounded-3xl py-2 text-[14px] font-semibold leading-[17px] text-sidemenu hover:font-bold hover:text-black`}
             type="submit"
-            disabled={user.accountLevel == product_id ? true : false}
+            disabled={organizerDetail.accountLevel == product_id ? true : false}
           >
-            {user.accountLevel == product_id
+            {organizerDetail.accountLevel == product_id
               ? "Already Checked Out"
               : "Check out"}
           </button>
