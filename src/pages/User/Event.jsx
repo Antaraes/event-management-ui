@@ -9,6 +9,7 @@ export default function Event() {
 
   const queryParams = new URLSearchParams(window.location.search);
   const type = queryParams.get('type');
+  const term = queryParams.get('name');
 
   const [query, setQuery] = useState('?page=1&pageSize=6&name=&eventStartDate=&eventEndDate=&isUpcoming=&location=&organizerId=&sortBy=');
   const queryKey = ["events",query]
@@ -21,7 +22,7 @@ export default function Event() {
   const pageSize = 6;
 
   const [page, setPage] = useState(1)
-  const [name, setName] = useState('')
+  const [name, setName] = useState(term && term)
   const [eventDate, setEventDate] = useState({
     startDate: null,
     endDate: null
