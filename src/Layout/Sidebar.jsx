@@ -13,7 +13,6 @@ import toast from "react-hot-toast";
 const Sidebar = () => {
   const navigate = useNavigate();
   const isDrawer = useSelector((state) => state.global.isDrawer);
-  const isUserActive = useSelector((state) => state.global.isUserActive);
   const dispatch = useDispatch();
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -23,6 +22,7 @@ const Sidebar = () => {
   };
 
   const handleLogout = () => {
+    sessionStorage.removeItem("user");
     dispatch(setUserActive(false));
     dispatch(logout());
     api.logout();

@@ -6,7 +6,7 @@ import { BoostPayment } from "../subscription/BoostPayment";
 const EventDetailText = ({ eventDetail, orgId }) => {
   const [isPaymentShow, setIsPaymentShow] = useState(false);
   const { id: eventId } = useParams();
-  const [isOrg, setIsIrg] = useState(false);
+  const [isOrg, setIsOrg] = useState(false);
   const formatDate = (date) => {
     const eventDate = new Date(date);
     const day = eventDate.getDate();
@@ -18,11 +18,11 @@ const EventDetailText = ({ eventDetail, orgId }) => {
     return formattedDate;
   };
 
-  let response ;
-  if(orgId !== undefined) {
+  let response;
+  if (orgId !== undefined) {
     response = axios
       .get(`http://localhost:8080/api/v1/organizer/all/${orgId}`)
-      .then((res) => res ? setIsIrg(true) : setIsIrg(false) )
+      .then((res) => (res ? setIsOrg(true) : setIsOrg(false)))
       .catch((err) => console.log(err));
   }
 
@@ -36,8 +36,13 @@ const EventDetailText = ({ eventDetail, orgId }) => {
     })
     .catch((err) => {
         console.log(err);
-    });
-  }
+      });
+  };
+  const currentDate = new Date();
+  const ticketOpenDate = new Date(eventDetail.ticketOpenDate);
+  const ticketCloseDate = new Date(eventDetail.ticketCloseDate);
+  const isTicketOpen =
+    currentDate >= ticketOpenDate && currentDate <= ticketCloseDate;
 
   return (
     <>
@@ -56,13 +61,11 @@ const EventDetailText = ({ eventDetail, orgId }) => {
               Trending
             </div>
 
-            <div className="bg-transparent border border-secondary text-secondary py-1 px-3 rounded-lg ml-3 hidden md:block">
-              Open Now
-            </div>
-
-            <div className="bg-transparent border border-secondary text-secondary py-1 px-3 rounded-lg ml-3 text-[15px] md:hidden">
+           {isTicketOpen && (
+            <div className="ml-3 rounded-lg border border-secondary bg-transparent px-3 py-1 text-[15px] text-secondary ">
               Open
             </div>
+          )}
           </div>
 
           {isOrg ? (
@@ -74,11 +77,13 @@ const EventDetailText = ({ eventDetail, orgId }) => {
             </button>
           ) : (
             <Link
-              to={`/buy-ticket/${eventId}`}
-              className="bg-purchase py-2 px-5 rounded-3xl ml-2 md:ml-0 hover:bg-amber-800 hidden md:block"
-            >
-              go to purchase
-            </Link>
+            to={`/buy-ticket/${eventId}`}
+            className={`ml-2 hidden rounded-3xl bg-purchase px-5 py-2 hover:bg-amber-800 md:ml-0 md:block ${
+              isTicketOpen ? "" : "hidden"
+            }`}
+          >
+            go to purchase
+          </Link>
           )}
         </div>
 
@@ -107,7 +112,6 @@ const EventDetailText = ({ eventDetail, orgId }) => {
               {"\t"}
               {formatDate(eventDetail.eventEndDate)}
             </span>
-
             <span>
               <i className="fa-solid fa-location-dot"></i>
               {"\t"}Location :{"\t"}
@@ -131,6 +135,9 @@ const EventDetailText = ({ eventDetail, orgId }) => {
             {eventDetail.description}
           </p>
         </div>
+        <p className="pb-5 text-[15px] md:text-[18px]">
+          {eventDetail.description}
+        </p>
       </div>
     </>
   );

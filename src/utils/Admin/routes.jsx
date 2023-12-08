@@ -38,7 +38,6 @@ export const routes = [
         name: "event",
         path: "/event",
       },
-
     ],
   },
   {
